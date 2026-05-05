@@ -110,40 +110,89 @@ export default function LabPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-      {/* Status board */}
-      <div className="mb-6">
-        <div className="flex items-center gap-2 mb-4">
-          <span className="text-xs font-mono tracking-widest text-egg-400 uppercase flex items-center gap-2">
-            <span className="w-4 h-px bg-egg-400/50" />
-            Lab Status Board
-          </span>
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-egg-400/10 border border-egg-400/20 text-egg-400 text-[10px] font-mono">
-            <span className="w-1 h-1 rounded-full bg-egg-400 animate-pulse" />
-            live
-          </span>
-        </div>
-        <p className="text-sm text-slate-500 mb-6 max-w-xl">
-          Real-time view of all Eggthropic experiments — status, category, progress, and last run.
-          Click any card to read the full experiment.
+      {/* Page header */}
+      <div className="mb-12">
+        <span className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-egg-400 uppercase mb-3">
+          <span className="w-6 h-px bg-egg-400/50" />
+          Lab
+          <span className="w-6 h-px bg-egg-400/50" />
+        </span>
+        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">What's being built here</h1>
+        <p className="text-slate-400 max-w-2xl leading-relaxed">
+          The lab is where Eggthropic experiments with tools before writing about them.
+          Each section below corresponds to a different experiment or area under active development.
         </p>
-        <LabStatusBoard experiments={boardExperiments} />
       </div>
 
-      {/* Community lab section */}
-      <div className="mt-20 border-t border-white/5 pt-16">
-        <div className="text-center mb-12">
-          <div className="flex justify-center mb-6">
-            <div className="w-14 h-14 rounded-2xl bg-lab-500/30 border border-lab-300/20 flex items-center justify-center">
-              <FlaskConical className="w-7 h-7 text-lab-100" />
+      {/* ── Section 1: Claude Design prototype ─────────────────────────────── */}
+      <section className="mb-20">
+        <div className="flex items-start justify-between gap-4 mb-6">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="font-mono text-[10px] tracking-widest text-rose-400 uppercase">
+                Experiment · Claude Design
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-rose-400/10 border border-rose-400/20 text-rose-400 text-[10px] font-mono">
+                research preview
+              </span>
             </div>
+            <h2 className="text-xl font-semibold text-white mb-1">Lab Status Board</h2>
+            <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
+              This dashboard was prototyped using{" "}
+              <a
+                href="https://www.anthropic.com/news/claude-design-anthropic-labs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-rose-400 hover:text-rose-300 transition-colors"
+              >
+                Claude Design
+              </a>{" "}
+              (Anthropic Labs) and implemented in React + Tailwind. It maps all
+              Eggthropic experiments to a mission-control style board — category
+              color-coded, filterable, and linked to each experiment's full page.
+            </p>
           </div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-egg-400/10 border border-egg-400/20 text-egg-400 text-xs font-mono mb-4">
-            Coming soon
+          <Link
+            href="/experiments/claude-design-prototype-to-code"
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-rose-400 hover:text-rose-300 transition-colors whitespace-nowrap"
+          >
+            Read the experiment
+            <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+
+        <LabStatusBoard experiments={boardExperiments} />
+
+        <div className="mt-3 sm:hidden">
+          <Link
+            href="/experiments/claude-design-prototype-to-code"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-rose-400"
+          >
+            Read the experiment <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+      </section>
+
+      {/* ── Section 2: Community Lab ────────────────────────────────────────── */}
+      <section className="border-t border-white/5 pt-16">
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase">
+              Next up
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-500/10 border border-slate-500/20 text-slate-400 text-[10px] font-mono">
+              coming soon
+            </span>
           </div>
-          <h2 className="text-3xl font-bold text-white mb-3">Community Lab</h2>
-          <p className="text-slate-400 leading-relaxed max-w-xl mx-auto">
-            Soon: a controlled public lab where contributors can propose
-            Claude-powered experiments through GitHub pull requests.
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-9 h-9 rounded-xl bg-lab-500/30 border border-lab-300/20 flex items-center justify-center">
+              <FlaskConical className="w-4 h-4 text-lab-100" />
+            </div>
+            <h2 className="text-xl font-semibold text-white">Community Lab</h2>
+          </div>
+          <p className="text-slate-400 leading-relaxed max-w-xl">
+            A controlled public lab where contributors can propose Claude-powered
+            experiments through GitHub pull requests — sandboxed, documented, and published.
           </p>
         </div>
 
@@ -182,7 +231,7 @@ export default function LabPage() {
           })}
         </div>
 
-        <div className="text-center mt-10">
+        <div className="mt-8">
           <Link
             href="/experiments"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass border border-white/10 text-white text-sm font-medium hover:border-white/20 transition-colors"
@@ -191,7 +240,7 @@ export default function LabPage() {
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
