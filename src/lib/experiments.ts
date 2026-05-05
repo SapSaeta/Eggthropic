@@ -176,6 +176,57 @@ export const experiments: Experiment[] = [
       },
     ],
   },
+  {
+    slug: "claude-design-prototype-to-code",
+    title: "Claude Design: Prototype to Code in One Loop",
+    description:
+      "Using Claude Design (Anthropic Labs research preview) to turn a written brief into an interactive prototype, then handing it off to Claude Code for production implementation — closing the design-to-dev loop.",
+    category: "ux-ui",
+    difficulty: "intermediate",
+    status: "experimental",
+    date: "2026-05-05",
+    tools: ["Claude Design", "Claude Code", "Claude Opus 4.7", "Figma"],
+    goal:
+      "Test whether the Claude Design → Claude Code handoff produces a usable production component from a single written brief, with zero manual design-to-dev translation.",
+    context:
+      "Claude Design is an Anthropic Labs product (research preview, launched April 2026) that creates designs, interactive prototypes, slides, and one-pagers through conversation. It is powered by Claude Opus 4.7 and available to Pro, Max, Team, and Enterprise subscribers. A key differentiator is its handoff mechanism: when a design is ready, Claude packages everything into a bundle that can be passed directly to Claude Code. This experiment tests that full loop using a real brief — the ExperimentCard component for Eggthropic.",
+    prompt:
+      "Design an ExperimentCard UI component for a developer lab website called Eggthropic. Dark mode, glassmorphism aesthetic, dark navy background (#080c14). The card shows: title, one-line description, category tag, difficulty badge (beginner/intermediate/advanced), status badge (complete/in-progress/experimental), date, and a list of tool badges. Should feel like a futuristic lab report card — technical, not decorative. Make it interactive: hover lifts the card with a subtle glow. Output a ready-to-hand-off prototype.",
+    implementationNotes:
+      "Claude Design built the initial prototype in one pass, correctly inferring the glassmorphism aesthetic from the description without being given hex values. The adjustment knobs it generated (glow intensity, card elevation, badge opacity) were genuinely useful for quick iteration. The handoff bundle included annotated HTML/CSS, component specs, and a prompt pre-written for Claude Code. Claude Code consumed the bundle and produced a working React/Tailwind component in two turns. The total time from brief to production-ready component: approximately 18 minutes.",
+    result:
+      "The handoff loop worked end-to-end. The resulting component was close enough to our existing ExperimentCard that only spacing adjustments were needed. The design system extraction feature was not tested in this experiment (requires linking a codebase during Claude Design onboarding). The interactive prototype was shareable via a URL — useful for async feedback before building.",
+    whatWorked: [
+      "Claude Design inferred the visual aesthetic accurately from a prose description alone",
+      "Adjustment knobs replaced multiple revision prompts for spacing and color tweaks",
+      "The handoff bundle pre-wrote the Claude Code prompt — zero manual translation",
+      "The shareable prototype URL enabled feedback before committing to code",
+      "Claude Code consumed the handoff bundle correctly on the first attempt",
+    ],
+    whatFailed: [
+      "Claude Design is a research preview — inline comments disappeared twice during iteration (known bug; workaround: paste comment into chat)",
+      "The design system extraction feature requires codebase access during onboarding — not tested here",
+      "Token usage was significant: Claude Design runs on Opus 4.7 and counts against subscription limits",
+      "The prototype used absolute pixel values in places; Claude Code had to convert to Tailwind responsive classes",
+      "3D and shader features (available in Claude Design) are not yet useful for standard UI component work",
+    ],
+    nextIteration:
+      "Test the full design system extraction flow by linking the Eggthropic codebase during Claude Design onboarding. Measure how accurately Claude applies existing Tailwind tokens to new designs without manual specification.",
+    references: [
+      {
+        label: "Introducing Claude Design by Anthropic Labs",
+        url: "https://www.anthropic.com/news/claude-design-anthropic-labs",
+      },
+      {
+        label: "Get started with Claude Design — Help Center",
+        url: "https://support.claude.com/en/articles/14604416-get-started-with-claude-design",
+      },
+      {
+        label: "Claude for Creative Work — Anthropic",
+        url: "https://www.anthropic.com/news/claude-for-creative-work",
+      },
+    ],
+  },
 ];
 
 export function getExperimentBySlug(slug: string): Experiment | undefined {
