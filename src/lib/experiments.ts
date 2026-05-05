@@ -1,0 +1,190 @@
+import type { Experiment } from "@/types";
+
+export const experiments: Experiment[] = [
+  {
+    slug: "claude-code-landing-page-builder",
+    title: "Claude Code Landing Page Builder",
+    description:
+      "Using Claude Code to scaffold, design, and iterate on a complete marketing landing page from a single prompt — including Tailwind layout, copy, and responsive design.",
+    category: "claude-code",
+    difficulty: "beginner",
+    status: "complete",
+    date: "2026-04-10",
+    tools: ["Claude Code", "Next.js", "Tailwind CSS", "Framer Motion"],
+    goal: "Determine how far a single Claude Code session can take you from blank canvas to a deployable landing page without switching tools or leaving the terminal.",
+    context:
+      "Claude Code is Anthropic's agentic coding CLI that reads your codebase, proposes changes across files, runs tests, and commits code. This experiment treats Claude Code as a pair programmer for a full design-to-code workflow — no Figma, no manual scaffolding. The session started with a one-line brief: build a SaaS landing page for a fictional developer tool called 'Stackr'.",
+    prompt:
+      'Build a production-ready Next.js landing page for a developer tool called "Stackr" — a CLI that auto-generates API documentation from TypeScript source. Include a hero, features grid, pricing table (3 tiers), and a footer. Use Tailwind CSS, dark mode by default, and add subtle Framer Motion entrance animations. Keep the copy technical but accessible. No placeholder images.',
+    implementationNotes:
+      "Claude Code created 14 files in a single session: the Next.js app scaffold, Tailwind config, 6 reusable components, and all page sections. It independently installed Framer Motion, wrote a custom hook for scroll-triggered animations, and validated the responsive layout by listing all breakpoints. The entire session took 23 turns and approximately 4 minutes of active generation.",
+    result:
+      "A fully functional, visually complete landing page with all requested sections. The Framer Motion animations were correctly gated behind a prefers-reduced-motion check without being asked. The pricing table included a recommended-tier highlight. Estimated equivalent manual development time: 2-4 hours.",
+    whatWorked: [
+      "Single prompt generated a coherent multi-file structure",
+      "Claude spontaneously added accessibility improvements (aria-label, reduced-motion)",
+      "Component naming was consistent across the session",
+      "The generated copy was on-brand for a developer tool without any examples provided",
+    ],
+    whatFailed: [
+      "The initial mobile nav required two revision prompts to get right",
+      "Framer Motion stagger timing needed manual tweaking for the features grid",
+      "Claude did not add og:image or Twitter card meta tags without being asked",
+    ],
+    nextIteration:
+      "Test the same prompt with Claude Code's --plan flag to compare planned vs. reactive generation. Also explore using a CLAUDE.md project brief to reduce revision cycles.",
+    references: [
+      {
+        label: "Claude Code Overview — Anthropic Docs",
+        url: "https://docs.anthropic.com/en/docs/claude-code/overview",
+      },
+      {
+        label: "Claude Code CLI Reference",
+        url: "https://docs.anthropic.com/en/docs/claude-code/cli-reference",
+      },
+    ],
+  },
+  {
+    slug: "first-custom-agent-skill",
+    title: "First Custom Agent Skill",
+    description:
+      "Building a custom Agent Skill for Claude Code that automates PR description generation from git diff output — packaged as a reusable SKILL.md with YAML frontmatter.",
+    category: "skills",
+    difficulty: "intermediate",
+    status: "complete",
+    date: "2026-04-18",
+    tools: ["Claude Code", "Agent Skills", "Git", "Bash"],
+    goal:
+      "Understand the Agent Skills format by building a practical skill from scratch: auto-generating structured pull request descriptions from staged changes.",
+    context:
+      "Agent Skills are directories containing a SKILL.md file with YAML frontmatter that give agents additional capabilities. Skills are supported across Claude.ai, Claude Code, the Claude Agent SDK, and the Claude Developer Platform. This experiment builds a skill called pr-describe that reads git diff output and produces a standardized PR description following conventional commits.",
+    prompt:
+      "Given the output of `git diff --staged`, generate a structured pull request description with: a one-line title following conventional commits format, a Summary section (3 bullet points max), a Test Plan (numbered checklist), and a Breaking Changes section (or 'None'). Be concise and technical.",
+    implementationNotes:
+      "The SKILL.md file uses required YAML frontmatter (name, description) plus optional fields for tools and examples. The skill directory at .claude/skills/pr-describe/ contains SKILL.md, a helper script get-diff.sh that stages and pipes git diff, and a sample output for Claude to reference. Claude Code automatically loads the skill when the working directory contains a git repo and the skill name is invoked.",
+    result:
+      "The skill reliably generates PR descriptions matching the conventional commits specification. After 10 test runs on different repositories, the title format was correct 9/10 times. The summary quality varied based on diff verbosity — very large diffs (500+ lines) produced less precise summaries.",
+    whatWorked: [
+      "YAML frontmatter is minimal and the skill loaded without issues",
+      "Claude correctly invoked the get-diff.sh helper without being told to",
+      "Output format was consistent across runs",
+      "Skill is portable — copying the directory to a new project just works",
+    ],
+    whatFailed: [
+      "Very large diffs (500+ lines) overwhelm the skill — summary quality degrades",
+      "No built-in truncation logic; needs a MAX_DIFF_LINES guard in the helper script",
+      "The skill does not yet handle merge commits differently from feature commits",
+    ],
+    nextIteration:
+      "Add a diff-chunking mechanism to the helper script. Publish the skill to a public GitHub repo following the anthropics/skills marketplace format.",
+    references: [
+      {
+        label: "Equipping Agents with Agent Skills — Anthropic Engineering",
+        url: "https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills",
+      },
+      {
+        label: "Introducing Agent Skills — Anthropic",
+        url: "https://www.anthropic.com/news/skills",
+      },
+    ],
+  },
+  {
+    slug: "mcp-visual-explainer",
+    title: "MCP Visual Explainer",
+    description:
+      "An interactive diagram tool built with React and MCP that visually maps how an MCP server, client, and host communicate — rendered live from a running local MCP server.",
+    category: "mcp",
+    difficulty: "intermediate",
+    status: "experimental",
+    date: "2026-04-26",
+    tools: ["MCP", "TypeScript", "React", "Next.js", "Zod"],
+    goal:
+      "Build a developer-facing explainer tool that connects to a real MCP server and visualizes the Tools/Resources/Prompts primitives in a live, interactive diagram.",
+    context:
+      "The Model Context Protocol (MCP) is an open standard introduced by Anthropic in November 2024 for connecting AI applications to external data sources and tools. MCP has three core primitives: Tools (executable functions), Resources (structured data), and Prompts (templates). This experiment builds a local MCP server that exposes metadata about itself, then renders that metadata in a React diagram. The goal is to make MCP's architecture tangible for developers encountering it for the first time.",
+    implementationNotes:
+      "Built a Node.js MCP server using the official TypeScript SDK that exposes three tools: list-tools, list-resources, and list-prompts — each returning JSON describing the server's own capabilities. The Next.js frontend connects via the MCP connector (SSE transport) and renders a live node graph using a lightweight custom SVG renderer. Zod validates all incoming MCP responses before rendering.",
+    result:
+      "The visual explainer successfully renders a live diagram of an MCP server's capabilities tree. The SSE connection is stable for local development. The diagram updates in real time when the server's tools list changes — useful for demonstrating MCP server development workflows.",
+    whatWorked: [
+      "The official MCP TypeScript SDK made server setup straightforward",
+      "SSE transport worked reliably for local connections",
+      "Zod validation caught two malformed tool definitions during testing",
+      "The SVG node graph rendered correctly on all tested screen sizes",
+    ],
+    whatFailed: [
+      "CORS configuration required manual header setup for the SSE endpoint",
+      "No official MCP server discovery protocol yet — server URL must be hardcoded",
+      "The diagram becomes cluttered with more than 15 tools — needs pagination or grouping",
+    ],
+    nextIteration:
+      "Add WebSocket transport support. Explore connecting to a public MCP server registry when one becomes available. Add a 'request trace' mode that shows the raw JSON-RPC 2.0 message flow.",
+    references: [
+      {
+        label: "Model Context Protocol — Official Docs",
+        url: "https://modelcontextprotocol.io",
+      },
+      {
+        label: "MCP Specification (2025-11-25)",
+        url: "https://modelcontextprotocol.io/specification/2025-11-25",
+      },
+      {
+        label: "Code Execution with MCP — Anthropic Engineering",
+        url: "https://www.anthropic.com/engineering/code-execution-with-mcp",
+      },
+    ],
+  },
+  {
+    slug: "ai-ux-interface-playground",
+    title: "AI UX Interface Playground",
+    description:
+      "Exploring AI-native interface patterns: streaming text, confidence indicators, tool-call visualizations, and reasoning traces — rendered in a custom React playground.",
+    category: "ux-ui",
+    difficulty: "advanced",
+    status: "in-progress",
+    date: "2026-05-01",
+    tools: ["Claude API", "React", "TypeScript", "Framer Motion", "SSE"],
+    goal:
+      "Identify and prototype the UI patterns that make AI-powered interfaces feel fast, transparent, and trustworthy — going beyond the standard chat bubble.",
+    context:
+      "Most AI interfaces default to a chat metaphor: user sends message, model streams text back. This experiment asks: what other interaction patterns emerge when you expose more of what the model is doing? Inspired by extended thinking traces, tool-call visibility, and token-probability displays seen in research interfaces, this playground implements four experimental UI patterns using the Anthropic API's streaming capabilities.",
+    implementationNotes:
+      "Built against the Anthropic Messages API with streaming enabled. Four UI patterns implemented: (1) Streaming typewriter with adjustable speed — simulates different token rates. (2) Confidence heatmap — colors tokens by estimated certainty (currently simulated, not from real logprobs). (3) Tool-call trace — renders each tool invocation as an expandable card showing input/output JSON. (4) Thinking stage indicator — shows 'reading', 'reasoning', 'writing' phases based on SSE event timing. All patterns are composable via a playground config panel.",
+    result:
+      "The tool-call trace pattern proved most valuable for debugging agentic workflows. The streaming typewriter revealed that perceived latency drops significantly when even a single token appears within 300ms of submission. The confidence heatmap is experimental and not based on real model data — labeled clearly as a prototype.",
+    whatWorked: [
+      "SSE streaming from the Anthropic API is reliable and well-documented",
+      "The tool-call trace component reduced debugging time noticeably in multi-step agent tests",
+      "Framer Motion AnimatePresence handled streaming token appends without layout jank",
+      "The config panel made it easy to compare patterns side-by-side",
+    ],
+    whatFailed: [
+      "The confidence heatmap is not based on real logprob data — Anthropic API does not expose per-token probabilities publicly",
+      "Thinking stage detection based on SSE timing is a heuristic, not a protocol feature",
+      "Rendering 1000+ streaming tokens caused noticeable React re-render overhead without virtualization",
+    ],
+    nextIteration:
+      "Implement proper token virtualization for long streams. Investigate whether extended thinking traces (available on Claude models with thinking mode) can power the stage indicator more reliably.",
+    references: [
+      {
+        label: "Anthropic Messages API — Streaming",
+        url: "https://docs.anthropic.com/en/api/messages-streaming",
+      },
+      {
+        label: "Claude Extended Thinking",
+        url: "https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking",
+      },
+    ],
+  },
+];
+
+export function getExperimentBySlug(slug: string): Experiment | undefined {
+  return experiments.find((e) => e.slug === slug);
+}
+
+export function getExperimentsByCategory(
+  category: string
+): Experiment[] {
+  if (category === "all") return experiments;
+  return experiments.filter((e) => e.category === category);
+}
