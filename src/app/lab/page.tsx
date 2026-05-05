@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FlaskConical, GitPullRequest, Shield, Cpu, ArrowRight } from "lucide-react";
 import { GithubIcon } from "@/components/GithubIcon";
 import LabStatusBoard from "@/components/LabStatusBoard";
+import MCPExplainer from "@/components/MCPExplainer";
 import { experiments } from "@/lib/experiments";
 import type { BoardExperiment, BoardCategory, BoardDifficulty, BoardStatus } from "@/components/LabStatusBoard";
 
@@ -173,7 +174,53 @@ export default function LabPage() {
         </div>
       </section>
 
-      {/* ── Section 2: Community Lab ────────────────────────────────────────── */}
+      {/* ── Section 2: MCP Visual Explainer ────────────────────────────────── */}
+      <section className="border-t border-white/5 pt-16 mb-20">
+        <div className="flex items-start justify-between gap-4 mb-6">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="font-mono text-[10px] tracking-widest text-cyan-400 uppercase">
+                Experiment · MCP
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-400 text-[10px] font-mono">
+                interactive
+              </span>
+            </div>
+            <h2 className="text-xl font-semibold text-white mb-1">MCP Visual Explainer</h2>
+            <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
+              An interactive diagram that maps how an MCP server, client, and host communicate.
+              Explore the architecture, the three core primitives, and a JSON-RPC 2.0 message
+              trace — all without leaving the browser.
+            </p>
+          </div>
+          <Link
+            href="/lab/mcp"
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors whitespace-nowrap"
+          >
+            Open full page
+            <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+
+        <MCPExplainer />
+
+        <div className="mt-3 flex items-center gap-4">
+          <Link
+            href="/lab/mcp"
+            className="sm:hidden inline-flex items-center gap-1.5 text-xs font-mono text-cyan-400"
+          >
+            Open full page <ArrowRight className="w-3 h-3" />
+          </Link>
+          <Link
+            href="/experiments/mcp-visual-explainer"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-500 hover:text-slate-300 transition-colors"
+          >
+            Read the experiment write-up <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+      </section>
+
+      {/* ── Section 3: Community Lab ────────────────────────────────────────── */}
       <section className="border-t border-white/5 pt-16">
         <div className="mb-10">
           <div className="flex items-center gap-3 mb-2">
