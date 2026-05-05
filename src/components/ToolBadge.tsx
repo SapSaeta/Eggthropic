@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils";
 
 const toolColors: Record<string, string> = {
+  "Claude Design": "bg-rose-500/10 text-rose-300 border-rose-500/20",
+  "Claude Opus 4.7": "bg-orange-500/10 text-orange-300 border-orange-500/20",
   "Claude Code": "bg-violet-500/10 text-violet-300 border-violet-500/20",
   "Agent Skills": "bg-fuchsia-500/10 text-fuchsia-300 border-fuchsia-500/20",
   MCP: "bg-cyan-500/10 text-cyan-300 border-cyan-500/20",

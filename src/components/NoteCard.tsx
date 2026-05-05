@@ -16,6 +16,7 @@ const categoryColors: Record<string, string> = {
   "Agent Skills": "text-fuchsia-400",
   MCP: "text-cyan-400",
   Workflows: "text-amber-400",
+  "Claude Design": "text-rose-400",
 };
 
 export function NoteCard({ note, index = 0 }: NoteCardProps) {
