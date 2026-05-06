@@ -293,8 +293,8 @@ function ArchitectureScene() {
   useEffect(() => {
     if (!running) return;
     if (activeStep >= TRACE_STEPS.length - 1) {
-      setRunning(false);
-      return;
+      const t = setTimeout(() => setRunning(false), 0);
+      return () => clearTimeout(t);
     }
     timerRef.current = setTimeout(() => {
       setActiveStep((s) => s + 1);
@@ -619,7 +619,7 @@ function TraceScene() {
 
   useEffect(() => {
     if (!running) return;
-    if (visibleSteps >= TRACE_STEPS.length) { setRunning(false); return; }
+    if (visibleSteps >= TRACE_STEPS.length) { const t = setTimeout(() => setRunning(false), 0); return () => clearTimeout(t); }
     const t = setTimeout(() => setVisibleSteps((v) => v + 1), 900);
     return () => clearTimeout(t);
   }, [running, visibleSteps]);

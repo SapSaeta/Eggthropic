@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, AlertTriangle, Lightbulb, Wrench } from "lucide-react";
+import { BreadcrumbListJsonLd, ArticleJsonLd } from "@/components/JsonLd";
 import { notes, getNoteBySlug } from "@/lib/notes";
+import { getExperimentBySlug } from "@/lib/experiments";
 import { formatDate } from "@/lib/utils";
 
 interface Props {
@@ -17,9 +19,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const note = getNoteBySlug(slug);
   if (!note) return {};
+  const url = `https://www.eggthropic.com/notes/${slug}`;
   return {
     title: note.title,
     description: note.summary,
+    alternates: { canonical: url },
+    openGraph: {
+      title: note.title,
+      description: note.summary,
+      url,
+      siteName: "Eggthropic",
+      type: "article",
+      publishedTime: note.date,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: note.title,
+      description: note.summary,
+    },
   };
 }
 
@@ -37,9 +54,23 @@ export default async function NotePage({ params }: Props) {
   if (!note) notFound();
 
   const catColor = categoryColors[note.category] ?? "text-slate-400";
+  const pageUrl = `https://www.eggthropic.com/notes/${slug}`;
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <BreadcrumbListJsonLd
+        items={[
+          { name: "Eggthropic", url: "https://www.eggthropic.com" },
+          { name: "Notes", url: "https://www.eggthropic.com/notes" },
+          { name: note.title, url: pageUrl },
+        ]}
+      />
+      <ArticleJsonLd
+        title={note.title}
+        description={note.summary}
+        url={pageUrl}
+        datePublished={note.date}
+      />
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-slate-500 mb-8">
         <Link
@@ -126,6 +157,33 @@ export default async function NotePage({ params }: Props) {
         )}
       </div>
 
+      {/* Related experiments */}
+      {note.relatedExperiments && note.relatedExperiments.length > 0 && (
+        <div className="mt-10 glass rounded-xl p-5 border border-egg-400/10">
+          <h2 className="text-xs font-mono tracking-widest text-egg-400/70 uppercase mb-3 flex items-center gap-2">
+            <span className="w-4 h-px bg-egg-400/30" />
+            Related experiments
+          </h2>
+          <ul className="space-y-2">
+            {note.relatedExperiments.map((expSlug) => {
+              const exp = getExperimentBySlug(expSlug);
+              if (!exp) return null;
+              return (
+                <li key={expSlug}>
+                  <Link
+                    href={`/experiments/${expSlug}`}
+                    className="flex items-center gap-1.5 text-sm text-lab-100 hover:text-egg-300 transition-colors"
+                  >
+                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
+                    {exp.title}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+
       {/* Back */}
       <div className="mt-12 pt-8 border-t border-white/5">
         <Link
@@ -143,7 +201,6 @@ export default async function NotePage({ params }: Props) {
 function NoteSection({
   title,
   children,
-  icon,
 }: {
   title: string;
   children: React.ReactNode;

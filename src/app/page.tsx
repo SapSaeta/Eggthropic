@@ -13,6 +13,21 @@ export const metadata: Metadata = {
   title: "Eggthropic — Claude Lab",
   description:
     "A practical lab for learning Claude by building real experiments with Claude Code, Agent Skills, MCP, and the Anthropic API.",
+  alternates: { canonical: "https://www.eggthropic.com" },
+  openGraph: {
+    title: "Eggthropic — Claude Lab",
+    description:
+      "A practical lab for learning Claude by building real experiments with Claude Code, Agent Skills, MCP, and the Anthropic API.",
+    url: "https://www.eggthropic.com",
+    siteName: "Eggthropic",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Eggthropic — Claude Lab",
+    description:
+      "A practical lab for learning Claude by building real experiments with Claude Code, Agent Skills, MCP, and the Anthropic API.",
+  },
 };
 
 const labSections = [
@@ -68,7 +83,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <Hero />
+      <Hero experimentCount={experiments.length} noteCount={notes.length} />
 
       {/* Lab sections */}
       <section className="py-20 border-t border-white/5">

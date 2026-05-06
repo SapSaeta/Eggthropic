@@ -1,21 +1,37 @@
+const BASE = "https://www.eggthropic.com";
+
 export function WebsiteJsonLd() {
   const data = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Eggthropic",
-    url: "https://eggthropic.com",
+    url: BASE,
     description:
       "An independent experimental lab for learning Claude by building real experiments with Claude Code, Agent Skills, MCP, and the Anthropic API.",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: "https://eggthropic.com/experiments?search={search_term_string}",
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
 
+export function BreadcrumbListJsonLd({
+  items,
+}: {
+  items: { name: string; url: string }[];
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
   return (
     <script
       type="application/ld+json"
@@ -42,13 +58,41 @@ export function ArticleJsonLd({
     description,
     url,
     datePublished,
-    publisher: {
-      "@type": "Organization",
-      name: "Eggthropic",
-      url: "https://eggthropic.com",
-    },
+    author: { "@type": "Organization", name: "Eggthropic", url: BASE },
+    publisher: { "@type": "Organization", name: "Eggthropic", url: BASE },
   };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
 
+export function ExperimentJsonLd({
+  title,
+  description,
+  url,
+  datePublished,
+  tools,
+}: {
+  title: string;
+  description: string;
+  url: string;
+  datePublished: string;
+  tools: string[];
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: title,
+    description,
+    url,
+    datePublished,
+    keywords: tools.join(", "),
+    author: { "@type": "Organization", name: "Eggthropic", url: BASE },
+    publisher: { "@type": "Organization", name: "Eggthropic", url: BASE },
+  };
   return (
     <script
       type="application/ld+json"

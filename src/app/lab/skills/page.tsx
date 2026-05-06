@@ -2,16 +2,39 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import SkillsExplainer from "@/components/SkillsExplainer";
+import { BreadcrumbListJsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: "Agent Skills Visual Explainer — Lab",
   description:
     "An interactive explainer for Claude Agent Skills — file structure, SKILL.md anatomy, and a live invocation trace showing how skills work end to end.",
+  alternates: { canonical: "https://www.eggthropic.com/lab/skills" },
+  openGraph: {
+    title: "Agent Skills Visual Explainer — Eggthropic Lab",
+    description:
+      "An interactive explainer for Claude Agent Skills — file structure, SKILL.md anatomy, and a live invocation trace showing how skills work end to end.",
+    url: "https://www.eggthropic.com/lab/skills",
+    siteName: "Eggthropic",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Agent Skills Visual Explainer — Eggthropic Lab",
+    description:
+      "An interactive explainer for Claude Agent Skills — file structure, SKILL.md anatomy, and a live invocation trace showing how skills work end to end.",
+  },
 };
 
 export default function SkillsLabPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <BreadcrumbListJsonLd
+        items={[
+          { name: "Eggthropic", url: "https://www.eggthropic.com" },
+          { name: "Lab", url: "https://www.eggthropic.com/lab" },
+          { name: "Agent Skills Explainer", url: "https://www.eggthropic.com/lab/skills" },
+        ]}
+      />
 
       {/* Breadcrumb */}
       <div className="mb-8">

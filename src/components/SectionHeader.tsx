@@ -9,6 +9,7 @@ interface SectionHeaderProps {
   description?: string;
   centered?: boolean;
   className?: string;
+  as?: "h1" | "h2";
 }
 
 export function SectionHeader({
@@ -17,6 +18,7 @@ export function SectionHeader({
   description,
   centered = false,
   className,
+  as: Heading = "h2",
 }: SectionHeaderProps) {
   return (
     <motion.div
@@ -37,9 +39,9 @@ export function SectionHeader({
           <span className="w-6 h-px bg-egg-400/50" />
         </span>
       )}
-      <h2 className="text-2xl sm:text-3xl font-semibold text-white leading-tight">
+      <Heading className="text-2xl sm:text-3xl font-semibold text-white leading-tight">
         {title}
-      </h2>
+      </Heading>
       {description && (
         <p className="mt-3 text-slate-400 max-w-2xl leading-relaxed">
           {description}

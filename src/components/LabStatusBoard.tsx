@@ -254,7 +254,7 @@ function Sidebar({ experiments }: { experiments: BoardExperiment[] }) {
   return (
     <aside className="flex w-44 shrink-0 flex-col gap-4">
       <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
-        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-slate-600">// CATEGORIES</p>
+        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-slate-600">{"// CATEGORIES"}</p>
         <ul className="space-y-2.5">
           {CATEGORIES.map((cat) => {
             const meta = CATEGORY_META[cat];
@@ -329,7 +329,7 @@ function TopBar({
         </div>
         <div className="font-mono">
           <span className="text-sm font-bold tracking-widest text-white">EGGTHROPIC</span>
-          <span className="mx-2 text-sm text-slate-600">//</span>
+          <span className="mx-2 text-sm text-slate-600">{"//"}</span>
           <span className="text-sm font-semibold tracking-widest text-[#ffd21a]">LAB STATUS</span>
         </div>
       </div>

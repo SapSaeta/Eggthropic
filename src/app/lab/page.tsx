@@ -13,6 +13,21 @@ export const metadata: Metadata = {
   title: "Lab",
   description:
     "Eggthropic Lab — live experiment status board and upcoming community lab for Claude-powered experiments.",
+  alternates: { canonical: "https://www.eggthropic.com/lab" },
+  openGraph: {
+    title: "Lab — Eggthropic",
+    description:
+      "Eggthropic Lab — live experiment status board and upcoming community lab for Claude-powered experiments.",
+    url: "https://www.eggthropic.com/lab",
+    siteName: "Eggthropic",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lab — Eggthropic",
+    description:
+      "Eggthropic Lab — live experiment status board and upcoming community lab for Claude-powered experiments.",
+  },
 };
 
 // ─── Map our data model → board model ────────────────────────────────────────
@@ -91,7 +106,7 @@ const planned = [
     icon: Cpu,
     title: "Claude-powered",
     description:
-      "All lab experiments use the Anthropic API with a shared API key — contributors don't need their own key to submit an experiment.",
+      "Accepted experiments run through controlled, rate-limited review infrastructure. Contributors never receive access to production credentials.",
     color: "text-cyan-400",
     bg: "bg-cyan-500/10",
     border: "border-cyan-500/20",
@@ -120,7 +135,7 @@ export default function LabPage() {
           Lab
           <span className="w-6 h-px bg-egg-400/50" />
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">What's being built here</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">What&apos;s being built here</h1>
         <p className="text-slate-400 max-w-2xl leading-relaxed">
           The lab is where Eggthropic experiments with tools before writing about them.
           Each section below corresponds to a different experiment or area under active development.
@@ -152,7 +167,7 @@ export default function LabPage() {
               </a>{" "}
               (Anthropic Labs) and implemented in React + Tailwind. It maps all
               Eggthropic experiments to a mission-control style board — category
-              color-coded, filterable, and linked to each experiment's full page.
+              color-coded, filterable, and linked to each experiment&apos;s full page.
             </p>
           </div>
           <Link
@@ -336,7 +351,7 @@ export default function LabPage() {
         <div className="glass rounded-2xl p-6 mb-8 border border-egg-400/10 max-w-2xl mx-auto">
           <h3 className="text-sm font-semibold text-white mb-2">Current status</h3>
           <p className="text-sm text-slate-400 leading-relaxed">
-            The Community Lab is in early design. If you're interested in
+            The Community Lab is in early design. If you&apos;re interested in
             contributing to the lab infrastructure itself, open an issue on GitHub.
           </p>
           <div className="mt-4">

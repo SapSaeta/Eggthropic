@@ -6,7 +6,12 @@ import { AnimatedEgg } from "./AnimatedEgg";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { GithubIcon } from "./GithubIcon";
 
-export function Hero() {
+interface HeroProps {
+  experimentCount: number;
+  noteCount: number;
+}
+
+export function Hero({ experimentCount, noteCount }: HeroProps) {
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       {/* Background effects */}
@@ -94,8 +99,8 @@ export function Hero() {
               transition={{ duration: 0.5, delay: 0.3 }}
             >
               {[
-                { value: "4", label: "Experiments" },
-                { value: "4", label: "Notes" },
+                { value: String(experimentCount), label: "Experiments" },
+                { value: String(noteCount), label: "Notes" },
                 { value: "100%", label: "Documented" },
               ].map((stat) => (
                 <div key={stat.label}>

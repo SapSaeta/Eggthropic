@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://eggthropic.com"),
+  metadataBase: new URL("https://www.eggthropic.com"),
   title: {
     default: "Eggthropic — Claude Lab",
     template: "%s | Eggthropic",
@@ -36,20 +36,32 @@ export const metadata: Metadata = {
     "developer tools",
   ],
   authors: [{ name: "Eggthropic" }],
+  alternates: {
+    canonical: "https://www.eggthropic.com",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://eggthropic.com",
+    url: "https://www.eggthropic.com",
     siteName: "Eggthropic",
     title: "Eggthropic — Claude Lab",
     description:
       "An independent experimental lab for learning Claude by building real experiments.",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Eggthropic — Independent Claude Lab",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Eggthropic — Claude Lab",
     description:
       "An independent experimental lab for learning Claude by building real experiments.",
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,

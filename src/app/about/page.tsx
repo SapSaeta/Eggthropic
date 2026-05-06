@@ -7,6 +7,21 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "What Eggthropic is, why it exists, and who it's for. An independent experimental project documenting real Claude and Anthropic developer workflows.",
+  alternates: { canonical: "https://www.eggthropic.com/about" },
+  openGraph: {
+    title: "About — Eggthropic",
+    description:
+      "What Eggthropic is, why it exists, and who it's for. An independent experimental project documenting real Claude and Anthropic developer workflows.",
+    url: "https://www.eggthropic.com/about",
+    siteName: "Eggthropic",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About — Eggthropic",
+    description:
+      "What Eggthropic is, why it exists, and who it's for. An independent experimental project documenting real Claude and Anthropic developer workflows.",
+  },
 };
 
 const forList = [
@@ -49,7 +64,7 @@ export default function AboutPage() {
             the Anthropic API, and developer UX patterns. Every experiment is
             fully documented: goal, context, tools used, exact prompts,
             implementation notes, results, and an honest analysis of what worked
-            and what didn't.
+            and what didn&apos;t.
           </p>
           <p className="text-slate-300 leading-relaxed">
             We also publish short notes on Anthropic and Claude updates —
@@ -71,7 +86,7 @@ export default function AboutPage() {
           </p>
           <p className="text-slate-300 leading-relaxed">
             The egg motif is a nod to experimentation: an egg is a beginning,
-            not a finished product. That's the right frame for working with
+            not a finished product. That&apos;s the right frame for working with
             fast-moving AI developer tools.
           </p>
         </Section>

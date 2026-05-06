@@ -46,6 +46,7 @@ export const experiments: Experiment[] = [
   },
   {
     slug: "first-custom-agent-skill",
+    labPage: "/lab/skills",
     title: "First Custom Agent Skill",
     description:
       "Building a custom Agent Skill for Claude Code that automates PR description generation from git diff output — packaged as a reusable SKILL.md with YAML frontmatter.",
@@ -90,6 +91,7 @@ export const experiments: Experiment[] = [
   },
   {
     slug: "mcp-visual-explainer",
+    labPage: "/lab/mcp",
     title: "MCP Visual Explainer",
     description:
       "An interactive diagram tool built with React and MCP that visually maps how an MCP server, client, and host communicate — rendered live from a running local MCP server.",
@@ -178,6 +180,7 @@ export const experiments: Experiment[] = [
   },
   {
     slug: "claude-design-prototype-to-code",
+    labPage: "/lab",
     title: "Claude Design: Prototype to Code in One Loop",
     description:
       "Using Claude Design (Anthropic Labs research preview) to turn a written brief into an interactive prototype, then handing it off to Claude Code for production implementation — closing the design-to-dev loop.",
