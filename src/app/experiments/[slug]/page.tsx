@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, XCircle, ArrowRight } from "lucide-react";
+import { ArrowLeft, CheckCircle2, XCircle, ArrowRight, FlaskConical } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
 import { ToolBadge } from "@/components/ToolBadge";
+import { BreadcrumbListJsonLd, ExperimentJsonLd } from "@/components/JsonLd";
 import { experiments, getExperimentBySlug } from "@/lib/experiments";
 import { formatDate } from "@/lib/utils";
 
@@ -19,9 +20,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const exp = getExperimentBySlug(slug);
   if (!exp) return {};
+  const url = `https://www.eggthropic.com/experiments/${slug}`;
   return {
     title: exp.title,
     description: exp.description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: exp.title,
+      description: exp.description,
+      url,
+      siteName: "Eggthropic",
+      type: "article",
+      publishedTime: exp.date,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: exp.title,
+      description: exp.description,
+    },
   };
 }
 
@@ -39,8 +55,24 @@ export default async function ExperimentPage({ params }: Props) {
   const exp = getExperimentBySlug(slug);
   if (!exp) notFound();
 
+  const pageUrl = `https://www.eggthropic.com/experiments/${slug}`;
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <BreadcrumbListJsonLd
+        items={[
+          { name: "Eggthropic", url: "https://www.eggthropic.com" },
+          { name: "Experiments", url: "https://www.eggthropic.com/experiments" },
+          { name: exp.title, url: pageUrl },
+        ]}
+      />
+      <ExperimentJsonLd
+        title={exp.title}
+        description={exp.description}
+        url={pageUrl}
+        datePublished={exp.date}
+        tools={exp.tools}
+      />
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-slate-500 mb-8">
         <Link
@@ -170,6 +202,27 @@ export default async function ExperimentPage({ params }: Props) {
           </Section>
         )}
       </div>
+
+      {/* Lab page link */}
+      {exp.labPage && (
+        <div className="mt-10 glass rounded-xl p-5 border border-egg-400/10">
+          <div className="flex items-start gap-3">
+            <FlaskConical className="w-5 h-5 text-egg-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm text-slate-300 mb-2">
+                This experiment has an interactive version in the Lab.
+              </p>
+              <Link
+                href={exp.labPage}
+                className="inline-flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-300 transition-colors font-mono"
+              >
+                Open interactive lab
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Back */}
       <div className="mt-12 pt-8 border-t border-white/5">

@@ -2,16 +2,39 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import MCPExplainer from "@/components/MCPExplainer";
+import { BreadcrumbListJsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: "MCP Visual Explainer — Lab",
   description:
     "An interactive visual explainer for the Model Context Protocol — architecture diagram, primitives reference, and live JSON-RPC message trace, all in your browser.",
+  alternates: { canonical: "https://www.eggthropic.com/lab/mcp" },
+  openGraph: {
+    title: "MCP Visual Explainer — Eggthropic Lab",
+    description:
+      "An interactive visual explainer for the Model Context Protocol — architecture diagram, primitives reference, and live JSON-RPC message trace, all in your browser.",
+    url: "https://www.eggthropic.com/lab/mcp",
+    siteName: "Eggthropic",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MCP Visual Explainer — Eggthropic Lab",
+    description:
+      "An interactive visual explainer for the Model Context Protocol — architecture diagram, primitives reference, and live JSON-RPC message trace, all in your browser.",
+  },
 };
 
 export default function MCPLabPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <BreadcrumbListJsonLd
+        items={[
+          { name: "Eggthropic", url: "https://www.eggthropic.com" },
+          { name: "Lab", url: "https://www.eggthropic.com/lab" },
+          { name: "MCP Visual Explainer", url: "https://www.eggthropic.com/lab/mcp" },
+        ]}
+      />
 
       {/* Breadcrumb */}
       <div className="mb-8">

@@ -13,6 +13,21 @@ export const metadata: Metadata = {
   title: "Lab",
   description:
     "Eggthropic Lab — live experiment status board and upcoming community lab for Claude-powered experiments.",
+  alternates: { canonical: "https://www.eggthropic.com/lab" },
+  openGraph: {
+    title: "Lab — Eggthropic",
+    description:
+      "Eggthropic Lab — live experiment status board and upcoming community lab for Claude-powered experiments.",
+    url: "https://www.eggthropic.com/lab",
+    siteName: "Eggthropic",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lab — Eggthropic",
+    description:
+      "Eggthropic Lab — live experiment status board and upcoming community lab for Claude-powered experiments.",
+  },
 };
 
 // ─── Map our data model → board model ────────────────────────────────────────

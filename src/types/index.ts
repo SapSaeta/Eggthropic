@@ -26,6 +26,7 @@ export interface Experiment {
   whatFailed: string[];
   nextIteration: string;
   references: { label: string; url: string }[];
+  labPage?: string;
 }
 
 export interface Note {
@@ -39,4 +40,5 @@ export interface Note {
   whatCanBeBuilt: string[];
   limitationsOrRisks: string[];
   references: { label: string; url: string }[];
+  relatedExperiments?: string[];
 }

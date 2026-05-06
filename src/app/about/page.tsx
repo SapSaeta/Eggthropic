@@ -7,6 +7,21 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "What Eggthropic is, why it exists, and who it's for. An independent experimental project documenting real Claude and Anthropic developer workflows.",
+  alternates: { canonical: "https://www.eggthropic.com/about" },
+  openGraph: {
+    title: "About — Eggthropic",
+    description:
+      "What Eggthropic is, why it exists, and who it's for. An independent experimental project documenting real Claude and Anthropic developer workflows.",
+    url: "https://www.eggthropic.com/about",
+    siteName: "Eggthropic",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About — Eggthropic",
+    description:
+      "What Eggthropic is, why it exists, and who it's for. An independent experimental project documenting real Claude and Anthropic developer workflows.",
+  },
 };
 
 const forList = [

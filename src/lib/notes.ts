@@ -40,6 +40,7 @@ export const notes: Note[] = [
         url: "https://resources.anthropic.com/hubfs/2026%20Agentic%20Coding%20Trends%20Report.pdf",
       },
     ],
+    relatedExperiments: ["claude-code-landing-page-builder"],
   },
   {
     slug: "agent-skills-portable-capabilities",
@@ -81,6 +82,7 @@ export const notes: Note[] = [
         url: "https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf",
       },
     ],
+    relatedExperiments: ["first-custom-agent-skill"],
   },
   {
     slug: "mcp-the-usb-c-for-ai-tools",
@@ -127,6 +129,7 @@ export const notes: Note[] = [
         url: "https://www.anthropic.com/engineering/code-execution-with-mcp",
       },
     ],
+    relatedExperiments: ["mcp-visual-explainer"],
   },
   {
     slug: "claude-for-creative-technical-workflows",
@@ -206,6 +209,7 @@ export const notes: Note[] = [
         url: "https://www.anthropic.com/news/claude-for-creative-work",
       },
     ],
+    relatedExperiments: ["claude-design-prototype-to-code"],
   },
 ];
 

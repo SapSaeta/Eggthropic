@@ -9,6 +9,20 @@ export const metadata: Metadata = {
   description:
     "All Eggthropic experiments — Claude Code, Agent Skills, MCP, and UX/UI. Every experiment documents the goal, prompt, what worked, and what failed.",
   alternates: { canonical: "https://www.eggthropic.com/experiments" },
+  openGraph: {
+    title: "Experiments — Eggthropic",
+    description:
+      "All Eggthropic experiments — Claude Code, Agent Skills, MCP, and UX/UI. Every experiment documents the goal, prompt, what worked, and what failed.",
+    url: "https://www.eggthropic.com/experiments",
+    siteName: "Eggthropic",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Experiments — Eggthropic",
+    description:
+      "All Eggthropic experiments — Claude Code, Agent Skills, MCP, and UX/UI. Every experiment documents the goal, prompt, what worked, and what failed.",
+  },
 };
 
 interface Props {
@@ -27,6 +41,7 @@ export default async function ExperimentsPage({ searchParams }: Props) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <SectionHeader
+        as="h1"
         label="Experiments"
         title="What we've built and documented"
         description="Every experiment includes the goal, context, tools used, prompts, implementation notes, results, and honest failure analysis."
