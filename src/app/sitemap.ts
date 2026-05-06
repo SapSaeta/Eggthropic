@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { experiments } from "@/lib/experiments";
 import { notes } from "@/lib/notes";
 
-const BASE_URL = "https://eggthropic.com";
+const BASE_URL = "https://www.eggthropic.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [

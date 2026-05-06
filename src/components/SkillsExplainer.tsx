@@ -199,8 +199,8 @@ function StructureScene() {
   useEffect(() => {
     if (!running) return;
     if (step >= DISCOVERY_STEPS.length - 1) {
-      setRunning(false);
-      return;
+      const t = setTimeout(() => setRunning(false), 0);
+      return () => clearTimeout(t);
     }
     timerRef.current = setTimeout(() => setStep((s) => s + 1), 2000);
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
@@ -550,7 +550,7 @@ function InvocationScene() {
           className="flex-1 p-4 font-mono text-xs leading-5 overflow-auto max-h-80 space-y-0.5"
         >
           {visible.length === 0 && !running && (
-            <p className="text-slate-600">Press "Run /pr-describe" to start the trace.</p>
+            <p className="text-slate-600">Press &ldquo;Run /pr-describe&rdquo; to start the trace.</p>
           )}
           {INVOCATION_TRACE.map((entry, i) =>
             visible.includes(i) ? (

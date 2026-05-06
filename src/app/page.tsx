@@ -68,7 +68,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <Hero />
+      <Hero experimentCount={experiments.length} noteCount={notes.length} />
 
       {/* Lab sections */}
       <section className="py-20 border-t border-white/5">

@@ -39,7 +39,7 @@ export default function InterfacesLabPage() {
         </h1>
         <p className="text-slate-400 max-w-2xl leading-relaxed">
           A complete interactive directory of every official Claude surface — from claude.ai and mobile apps to Claude Code CLI, IDE extensions, the Anthropic API, enterprise tiers, and Anthropic Labs products.
-          Filter by category, copy setup commands directly, or use the "Find Your Fit" guide to find the right tool for your workflow.
+          Filter by category, copy setup commands directly, or use the &ldquo;Find Your Fit&rdquo; guide to find the right tool for your workflow.
         </p>
       </div>
 

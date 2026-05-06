@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://eggthropic.com/sitemap.xml",
+    sitemap: "https://www.eggthropic.com/sitemap.xml",
   };
 }
