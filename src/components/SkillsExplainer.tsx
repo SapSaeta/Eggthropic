@@ -40,9 +40,9 @@ type DiscoveryStep = {
 const DISCOVERY_STEPS: DiscoveryStep[] = [
   {
     id: 1,
-    label: "Scan skills directory",
+    label: "Discover skills directory",
     description:
-      "At startup, Claude scans .claude/skills/ and finds every subdirectory. Each one is a candidate skill.",
+      "Claude Code looks for .claude/skills/ in the project workspace. Each subdirectory is a candidate skill — Claude reads its SKILL.md to learn what it does.",
     highlightFile: "skills/",
   },
   {
@@ -54,9 +54,9 @@ const DISCOVERY_STEPS: DiscoveryStep[] = [
   },
   {
     id: 3,
-    label: "Register slash command",
+    label: "Available as slash command",
     description:
-      "The skill name becomes a slash command automatically. /pr-describe is now available in Claude Code with zero extra configuration.",
+      "In Claude Code, the skill name becomes a slash command. /pr-describe is now invocable — no extra configuration needed beyond the directory.",
     badge: "/pr-describe",
   },
   {
@@ -95,7 +95,7 @@ const ANATOMY_FIELDS: Record<AnatomyField, FieldConfig> = {
     label: "description",
     required: true,
     description:
-      "Plain-language description of what the skill does. Claude uses this to decide when to surface the skill proactively in autocomplete and to understand when it is relevant.",
+      "Plain-language description of what the skill does. Claude uses this to understand when the skill is relevant; it may also surface the skill in autocomplete suggestions.",
     example: "description: Generate a structured PR description\n  from staged git changes following\n  conventional commits.",
     color: "text-emerald-400",
     bgClass: "bg-emerald-500/10",

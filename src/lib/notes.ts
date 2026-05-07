@@ -94,7 +94,7 @@ export const notes: Note[] = [
     slug: "mcp-the-usb-c-for-ai-tools",
     title: "MCP: The USB-C for AI Tools",
     summary:
-      "The Model Context Protocol is an open standard for connecting AI applications to external data and tools — and it has become the de-facto industry protocol since its November 2024 launch.",
+      "The Model Context Protocol is an open standard for connecting AI applications to external data and tools — widely adopted across the AI ecosystem since its November 2024 launch.",
     date: "2026-04-22",
     category: "MCP",
     whatChanged:

@@ -62,7 +62,7 @@ export default function SkillsLabPage() {
         </h1>
         <p className="text-slate-400 max-w-2xl leading-relaxed">
           Agent Skills are directories containing a SKILL.md file that give Claude persistent,
-          reusable capabilities — automatically registered as slash commands. Explore how they
+          reusable capabilities — invocable as slash commands in Claude Code. Explore how they
           are structured, what each frontmatter field does, and trace a full invocation from
           <code className="mx-1 px-1.5 py-0.5 rounded bg-white/5 text-slate-300 text-sm font-mono">/pr-describe</code>
           to a generated PR description.

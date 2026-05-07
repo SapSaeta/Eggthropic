@@ -252,7 +252,7 @@ export default function LabPage() {
             <h2 className="text-xl font-semibold text-white mb-1">Agent Skills Explainer</h2>
             <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
               Skills are directories with a SKILL.md file that give Claude persistent, portable
-              capabilities — auto-registered as slash commands. Explore their file structure,
+              capabilities — invocable as slash commands in Claude Code. Explore their file structure,
               frontmatter anatomy, and a live invocation trace from{" "}
               <code className="px-1 py-0.5 rounded bg-white/5 text-slate-300 font-mono text-xs">/pr-describe</code>
               {" "}to a structured PR description.
@@ -299,9 +299,9 @@ export default function LabPage() {
             </div>
             <h2 className="text-xl font-semibold text-white mb-1">All Ways to Use Claude</h2>
             <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
-              A complete directory of every official Claude surface — web, mobile, terminal,
-              IDE extensions, API, enterprise, and Labs. Filter by category, copy setup
-              commands, or find the right tool for your workflow.
+              A curated directory of known official Claude surfaces — web, mobile, terminal,
+              IDE extensions, API, enterprise, and Labs. Verified May 2026; filter by category,
+              copy setup commands, or find the right tool for your workflow.
             </p>
           </div>
           <Link
