@@ -1,5 +1,7 @@
 import type { NodeId, LogKind, ScenarioId, SimEvent } from "@/components/ExecutionLab/types";
 
+// ─── Interfaces ───────────────────────────────────────────────────────────────
+
 export interface ScenarioNodeConfig {
   id: NodeId;
   label: string;
@@ -37,17 +39,48 @@ export interface ScenarioResult {
   links: { label: string; href: string }[];
 }
 
+export interface StepInspector {
+  nodeId: NodeId;
+  what: string;
+  why: string;
+  risk: string;
+  humanReview: string;
+}
+
+export type RiskLevel = "Low" | "Medium" | "High";
+
+export interface TrustSafetyItem {
+  control: string;
+  level: RiskLevel;
+  detail: string;
+}
+
+export interface ScenarioStory {
+  watching: string;
+  notThis: string;
+}
+
+export interface CompareRow {
+  label: string;
+  values: Record<ScenarioId, string>;
+}
+
 export interface ExecutionScenario {
   id: ScenarioId;
   label: string;
   description: string;
   prompt: string;
   disclaimer: string;
+  story: ScenarioStory;
   nodeConfigs: ScenarioNodeConfig[];
   phaseConfigs: ScenarioPhaseConfig[];
   events: SimEvent[];
   result: ScenarioResult;
+  inspector: StepInspector[];
+  trustSafety: TrustSafetyItem[];
 }
+
+// ─── Event helpers ────────────────────────────────────────────────────────────
 
 function e(ms: number, id: NodeId, status: "running" | "success" | "error"): SimEvent {
   return { ms, action: { type: "NODE", id, status } };
@@ -57,7 +90,7 @@ function l(ms: number, text: string, kind: LogKind): SimEvent {
 }
 const complete = (ms: number): SimEvent => ({ ms, action: { type: "COMPLETE" } });
 
-// ─── Claude Code ─────────────────────────────────────────────────────────────
+// ─── Claude Code ──────────────────────────────────────────────────────────────
 
 const claudeCodeEvents: SimEvent[] = [
   l(0, "▸ Initializing Claude Code agent...", "system"),
@@ -141,7 +174,60 @@ export function Hero() {
   ],
 };
 
-// ─── MCP ─────────────────────────────────────────────────────────────────────
+const claudeCodeInspector: StepInspector[] = [
+  {
+    nodeId: "analyze",
+    what: "The agent reads the project structure and inspects the target component to understand its current responsibilities.",
+    why: "Understanding context before making changes reduces the risk of breaking dependencies or missing edge cases.",
+    risk: "Reading a stale or partial view of the codebase can lead to incorrect assumptions about component usage.",
+    humanReview: "Verify the agent read the files you expect — not outdated cached versions.",
+  },
+  {
+    nodeId: "plan",
+    what: "The agent formulates a plan: which subcomponents to extract, how to divide responsibilities, and which imports to add.",
+    why: "An explicit plan step separates reasoning from execution, making it easier to catch mistakes early.",
+    risk: "Plans derived from incomplete context may split components along incorrect boundaries.",
+    humanReview: "Review the planned decomposition before the agent starts editing.",
+  },
+  {
+    nodeId: "tools",
+    what: "The agent loads file editing and bash execution tools available in the Claude Code environment.",
+    why: "Tools give the agent concrete abilities to take action — without them it can only suggest changes.",
+    risk: "Overly broad tool access (e.g. unrestricted bash) increases blast radius if something goes wrong.",
+    humanReview: "Confirm the agent only has the tool permissions this task actually requires.",
+  },
+  {
+    nodeId: "generate",
+    what: "The agent writes the new component files and updates the original file with the refactored imports and JSX.",
+    why: "Code generation is the primary value-add step — the agent produces the artifact.",
+    risk: "Generated code may compile but contain subtle logic errors, missing edge cases, or incorrect type signatures.",
+    humanReview: "Read every changed file. Diff before/after. Test edge cases — not just compilation.",
+  },
+  {
+    nodeId: "review",
+    what: "The agent runs the project's lint and build commands to check for syntax errors and type issues.",
+    why: "Automated checks catch obvious regressions quickly, before human review.",
+    risk: "Passing lint and build does not mean the code is correct — only that it compiles and passes static checks.",
+    humanReview: "Run your own test suite. Check product behavior, not just whether it compiles.",
+  },
+  {
+    nodeId: "deliver",
+    what: "The agent produces a summary of what changed: files affected, line counts, and a brief rationale.",
+    why: "A clear summary makes human review faster and provides a starting point for the PR description.",
+    risk: "AI-generated summaries may omit important context or frame changes in an overly positive light.",
+    humanReview: "Do not rely on the summary alone. Read the actual diff before merging.",
+  },
+];
+
+const claudeCodeTrust: TrustSafetyItem[] = [
+  { control: "File permissions", level: "Medium", detail: "Claude Code requires explicit permission grants for file writes. Defaults are conservative — review before expanding." },
+  { control: "Bash execution", level: "High", detail: "Shell commands have broad blast radius. Confirm before granting unrestricted bash access to any agent task." },
+  { control: "Diff review gate", level: "Medium", detail: "Always review the full diff before committing. Generated code can be plausible but logically incorrect." },
+  { control: "Data exposure", level: "Low", detail: "Local refactors operate on local files only. No external network calls required in this scenario." },
+  { control: "Reversibility", level: "Medium", detail: "File edits are reversible with git. Commit or stash before starting agent tasks so you can roll back." },
+];
+
+// ─── MCP ──────────────────────────────────────────────────────────────────────
 
 const mcpEvents: SimEvent[] = [
   l(0, "▸ Initializing MCP client...", "system"),
@@ -222,6 +308,59 @@ const mcpResult: ScenarioResult = {
     { label: "MCP Note →", href: "/notes/mcp-the-usb-c-for-ai-tools" },
   ],
 };
+
+const mcpInspector: StepInspector[] = [
+  {
+    nodeId: "analyze",
+    what: "The agent parses the user's natural language request into a structured intent: what type of data is needed and with which identifier.",
+    why: "Structuring the request allows routing to the appropriate tool rather than answering from training data.",
+    risk: "Misparse of intent could route to the wrong tool or extract the wrong entity identifier.",
+    humanReview: "Confirm the parsed intent matches what you actually asked for before the tool call executes.",
+  },
+  {
+    nodeId: "plan",
+    what: "The agent identifies which MCP server can fulfill the request, based on available server descriptions and tool listings.",
+    why: "Server selection determines the trust boundary — choosing the wrong server risks sending data to an unintended endpoint.",
+    risk: "If multiple servers claim to handle the same resource type, the agent may select an unintended one.",
+    humanReview: "Verify the selected server is the one you trust for this data type.",
+  },
+  {
+    nodeId: "tools",
+    what: "The agent requests the tool schema from the selected MCP server using the tools/list method over Streamable HTTP.",
+    why: "Fetching the schema dynamically lets the agent understand exactly what parameters the tool expects.",
+    risk: "A malicious server can return a crafted schema designed to influence subsequent tool calls or inject instructions.",
+    humanReview: "Only connect to MCP servers you control or have audited. Treat server schemas as untrusted.",
+  },
+  {
+    nodeId: "generate",
+    what: "The agent sends a tools/call request to the MCP server with the extracted parameters.",
+    why: "Tool calls extend the model's capabilities beyond what it can generate from training data alone.",
+    risk: "Malicious servers can return prompt-injection payloads or exfiltrate sensitive context via side channels.",
+    humanReview: "Review tool call parameters before sending. Check what data the tool has access to.",
+  },
+  {
+    nodeId: "review",
+    what: "The agent checks the tool response against expected schema and flags any unexpected fields or values.",
+    why: "Validation reduces the risk of using malformed or adversarially crafted data in downstream reasoning.",
+    risk: "Schema validation cannot detect semantically incorrect but structurally valid responses.",
+    humanReview: "Treat MCP responses as untrusted input. Validate business logic, not just schema compliance.",
+  },
+  {
+    nodeId: "deliver",
+    what: "The agent formats the validated tool response into a natural language answer for the user.",
+    why: "Formatting bridges raw tool output and user-readable content.",
+    risk: "The answer may present tool data as authoritative without surfacing the external source.",
+    humanReview: "Make the data source visible to users. Do not present external tool data as the model's own knowledge.",
+  },
+];
+
+const mcpTrust: TrustSafetyItem[] = [
+  { control: "Server trust", level: "High", detail: "Treat MCP servers as untrusted unless you wrote the code or audited it. Malicious servers can inject instructions into model context." },
+  { control: "Tool permissions", level: "High", detail: "Grant only the tools a server actually needs. Overly broad permissions increase the blast radius of a compromised server." },
+  { control: "Response validation", level: "Medium", detail: "Always validate MCP responses before using them in further reasoning or displaying to users." },
+  { control: "Data exposure", level: "High", detail: "A compromised MCP server with broad read access can exfiltrate context, env vars, or API keys via network calls." },
+  { control: "OAuth scope", level: "Medium", detail: "The MCP OAuth spec is still evolving. Request minimal scopes and review before implementing auth flows." },
+];
 
 // ─── Agent Skills ─────────────────────────────────────────────────────────────
 
@@ -311,7 +450,60 @@ for the Eggthropic Execution Lab. Scenario data extracted to
   ],
 };
 
-// ─── Shared helpers ────────────────────────────────────────────────────────────
+const skillsInspector: StepInspector[] = [
+  {
+    nodeId: "analyze",
+    what: "Claude Code scans the project's .claude/skills/ directory and matches the /pr-describe invocation to a skill by directory name.",
+    why: "Skills are matched by name. Predictable matching makes invocations reliable across projects.",
+    risk: "If multiple skills have similar names or overlapping descriptions, the wrong skill may be selected.",
+    humanReview: "Verify the matched skill is the one you intended to invoke.",
+  },
+  {
+    nodeId: "plan",
+    what: "The agent reads the matched skill's SKILL.md file, including its frontmatter and task description.",
+    why: "The SKILL.md is the instruction set for the skill. Its content directly shapes how the agent will behave.",
+    risk: "Outdated or poorly written SKILL.md files may produce incorrect or unexpected outputs.",
+    humanReview: "Review the skill's SKILL.md content before trusting its outputs, especially for new or third-party skills.",
+  },
+  {
+    nodeId: "tools",
+    what: "The agent identifies helper scripts listed as allowed in the skill's configuration and reads them into context.",
+    why: "Helper scripts let skills perform tasks that require local system operations, like reading a git diff.",
+    risk: "Scripts with broad permissions (unrestricted bash, network access) increase risk. Allow only what the skill needs.",
+    humanReview: "Inspect every helper script the skill uses. Treat third-party skill scripts as third-party code.",
+  },
+  {
+    nodeId: "generate",
+    what: "The agent runs the diff helper script and uses its output, combined with SKILL.md instructions, to draft the PR description.",
+    why: "Grounding the output in real diff data rather than model knowledge alone improves accuracy.",
+    risk: "Unexpected script output feeds into model context and can mislead the generated description.",
+    humanReview: "Read the script output independently before relying on the skill's generated content.",
+  },
+  {
+    nodeId: "review",
+    what: "The agent checks that the generated output contains all required sections (title, summary, test plan).",
+    why: "Structural validation ensures the skill produced a complete, usable output.",
+    risk: "Structural completeness does not guarantee accuracy. A valid structure can contain incorrect content.",
+    humanReview: "Read the generated PR description carefully. Correct or expand it before submitting.",
+  },
+  {
+    nodeId: "deliver",
+    what: "The skill returns its structured output — the PR description — for the user to review and use.",
+    why: "Skills return output to the user or calling context, not directly to external systems.",
+    risk: "Treating output as final without review risks submitting incorrect information in PRs or other artifacts.",
+    humanReview: "Never submit AI-generated PR descriptions without reading them. They may miss context only you have.",
+  },
+];
+
+const skillsTrust: TrustSafetyItem[] = [
+  { control: "Skill source", level: "High", detail: "Only use skills you wrote or from the official anthropics/skills repo. Third-party skills execute code on your machine." },
+  { control: "Script permissions", level: "High", detail: "Helper scripts run with your local permissions. Scope tool access in SKILL.md to only what the task actually requires." },
+  { control: "Output review", level: "Medium", detail: "Generated outputs should always be reviewed before use in PRs, documentation, or other artifacts." },
+  { control: "Context exposure", level: "Medium", detail: "Skills see your project context. Avoid invoking skills in sensitive codebases without reviewing what context they access." },
+  { control: "Surface compatibility", level: "Low", detail: "Skill behavior can vary by Claude surface. Test skills in your target environment before relying on them in automated workflows." },
+];
+
+// ─── Shared config helpers ────────────────────────────────────────────────────
 
 function nodeConfigs(
   overrides: { label: string; sublabel: string; icon: string }[]
@@ -328,10 +520,7 @@ function nodeConfigs(
   return ids.map((id, i) => ({ id, ...overrides[i], ...colors[i] }));
 }
 
-function phaseConfigs(
-  labels: string[],
-  badges: string[]
-): ScenarioPhaseConfig[] {
+function phaseConfigs(labels: string[], badges: string[]): ScenarioPhaseConfig[] {
   const ids: NodeId[] = ["analyze", "plan", "tools", "generate", "review", "deliver"];
   const styles = [
     { color: "text-sky-400", bg: "bg-sky-400/10", border: "border-sky-400/20", pulse: "bg-sky-400" },
@@ -353,6 +542,10 @@ export const SCENARIOS: ExecutionScenario[] = [
     description: "Refactor a landing page component",
     prompt: "Refactor Hero.tsx into HeroHeadline and HeroCTA components",
     disclaimer: "Simulates a Claude Code agentic coding workflow. Not a real execution trace.",
+    story: {
+      watching: "A simulation of how Claude Code might decompose a refactoring task — reading files, planning a split, editing code, and running checks.",
+      notThis: "Not Claude's chain of thought, an internal debug trace, or a guarantee that real executions follow these exact steps.",
+    },
     nodeConfigs: nodeConfigs([
       { label: "Read Files", sublabel: "phase 1", icon: "📂" },
       { label: "Plan Refactor", sublabel: "phase 2", icon: "📋" },
@@ -367,6 +560,8 @@ export const SCENARIOS: ExecutionScenario[] = [
     ),
     events: claudeCodeEvents,
     result: claudeCodeResult,
+    inspector: claudeCodeInspector,
+    trustSafety: claudeCodeTrust,
   },
   {
     id: "mcp",
@@ -374,6 +569,10 @@ export const SCENARIOS: ExecutionScenario[] = [
     description: "Fetch product data from an external tool",
     prompt: "Fetch product details for PRD-4821 from the products MCP server",
     disclaimer: "Simulates a Model Context Protocol (MCP) tool call workflow. MCP is an open protocol.",
+    story: {
+      watching: "A simulation of how a Claude-based agent might use MCP to call an external tool — parse a request, connect to a server, call a tool, and validate the response.",
+      notThis: "Not a live MCP connection, a real API call, or a demonstration of specific server behavior. MCP is an open protocol — not Anthropic-exclusive.",
+    },
     nodeConfigs: nodeConfigs([
       { label: "Parse Request", sublabel: "phase 1", icon: "🔍" },
       { label: "Select Server", sublabel: "phase 2", icon: "🔌" },
@@ -388,6 +587,8 @@ export const SCENARIOS: ExecutionScenario[] = [
     ),
     events: mcpEvents,
     result: mcpResult,
+    inspector: mcpInspector,
+    trustSafety: mcpTrust,
   },
   {
     id: "skills",
@@ -395,6 +596,10 @@ export const SCENARIOS: ExecutionScenario[] = [
     description: "Generate a pull request description",
     prompt: "/pr-describe — generate PR description for HEAD~1..HEAD",
     disclaimer: "Simulates an Agent Skills invocation. Behavior varies by Claude surface and configuration.",
+    story: {
+      watching: "A simulation of how Claude Code might load and invoke an Agent Skill — scanning the skills directory, reading SKILL.md instructions, running an allowed helper script, and generating structured output.",
+      notThis: "Not a live skill execution or a guarantee of how real skills behave. Skill behavior can vary by Claude surface and configuration.",
+    },
     nodeConfigs: nodeConfigs([
       { label: "Detect Skill", sublabel: "phase 1", icon: "🎯" },
       { label: "Load Skill", sublabel: "phase 2", icon: "📄" },
@@ -409,9 +614,64 @@ export const SCENARIOS: ExecutionScenario[] = [
     ),
     events: skillsEvents,
     result: skillsResult,
+    inspector: skillsInspector,
+    trustSafety: skillsTrust,
   },
 ];
 
 export function getScenario(id: ScenarioId): ExecutionScenario {
   return SCENARIOS.find((s) => s.id === id) ?? SCENARIOS[0];
 }
+
+// ─── Compare data ─────────────────────────────────────────────────────────────
+
+export const COMPARE_ROWS: CompareRow[] = [
+  {
+    label: "Best for",
+    values: {
+      "claude-code": "Multi-file code changes with automated feedback loops",
+      "mcp": "Fetching live data or calling external APIs at inference time",
+      "skills": "Repeating a defined, structured workflow across projects",
+    },
+  },
+  {
+    label: "Main input",
+    values: {
+      "claude-code": "Natural language task + local codebase context",
+      "mcp": "User request + MCP server connection + tool schema",
+      "skills": "Slash command invocation + SKILL.md instructions",
+    },
+  },
+  {
+    label: "Main risk",
+    values: {
+      "claude-code": "Plausible but logically incorrect generated code",
+      "mcp": "Untrusted server responses · data exfiltration · prompt injection",
+      "skills": "Overpermissioned scripts · outdated SKILL.md instructions",
+    },
+  },
+  {
+    label: "Human review needed",
+    values: {
+      "claude-code": "Full diff review + test run before merging",
+      "mcp": "Server trust audit + response validation before use",
+      "skills": "Skill content + script inspection + generated output review",
+    },
+  },
+  {
+    label: "Typical output",
+    values: {
+      "claude-code": "Edited source files + lint/build report + diff summary",
+      "mcp": "Formatted data answer sourced from external tool response",
+      "skills": "Structured document: PR description, report, test stubs",
+    },
+  },
+  {
+    label: "When not to use",
+    values: {
+      "claude-code": "Security-critical code changes without expert human review",
+      "mcp": "Unaudited servers with access to sensitive or personal data",
+      "skills": "Untrusted third-party skills with broad file or shell permissions",
+    },
+  },
+];
