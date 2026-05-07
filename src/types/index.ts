@@ -27,6 +27,7 @@ export interface Experiment {
   nextIteration: string;
   references: { label: string; url: string }[];
   labPage?: string;
+  lastVerified?: string;
 }
 
 export interface Note {
@@ -41,4 +42,5 @@ export interface Note {
   limitationsOrRisks: string[];
   references: { label: string; url: string }[];
   relatedExperiments?: string[];
+  lastVerified?: string;
 }

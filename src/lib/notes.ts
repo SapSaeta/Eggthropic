@@ -9,22 +9,22 @@ export const notes: Note[] = [
     date: "2026-04-05",
     category: "Claude Code",
     whatChanged:
-      "Claude Code has evolved from a simple CLI wrapper into a fully agentic coding system. Key capabilities include reading entire codebases, creating and editing files across directories, running tests and terminal commands, and committing code — all within a permission-aware model that asks before taking irreversible actions. The 2026 updates added scheduled tasks (Routines) that run on Anthropic-managed infrastructure and persist even when your machine is off, plus Remote Control for continuing sessions from mobile or browser.",
+      "Claude Code has evolved from a simple CLI wrapper into a fully agentic coding system. Key capabilities include reading entire codebases, creating and editing files across directories, running tests and terminal commands, and committing code — all within a permission-aware model that asks before taking irreversible actions. The 2026 updates added scheduled tasks (Routines, currently in research preview) that run on Anthropic-managed infrastructure and persist when your machine is off, plus Remote Control for running Claude Code on servers or CI environments and interacting with it via API or thin client.",
     whyItMatters:
-      "The gap between 'AI writes code snippets' and 'AI ships features' has meaningfully narrowed. Claude Code can now handle multi-day refactors, complete features from a brief, and iterate based on test output — compressing work that would previously require hours of developer context-switching. The permission model and explicit human checkpoints keep the developer in control of what ships.",
+      "The gap between 'AI writes code snippets' and 'AI ships features' has meaningfully narrowed. Claude Code can handle multi-step refactors, complete features from a brief, and iterate based on test output — compressing work that previously required significant developer context-switching. The permission model and explicit human checkpoints keep the developer in control of what ships. Always review generated changes before merging.",
     whatCanBeBuilt: [
       "Automated PR description generation from git diff (see our Agent Skills experiment)",
       "Multi-step refactors driven by a CLAUDE.md project spec",
       "Test-driven development loops where Claude writes the test, implements the feature, and iterates until passing",
-      "Scheduled code hygiene routines (dependency updates, lint fixes) that run without manual trigger",
-      "Agent teams (v2.1.32+) with Opus coordinating multiple parallel sub-agents on different subtasks",
+      "Scheduled code hygiene routines (dependency updates, lint fixes) that run without manual trigger via Routines",
+      "Multi-agent pipelines using the Claude Agent SDK, with one Claude instance orchestrating parallel sub-agents",
     ],
     limitationsOrRisks: [
-      "Claude Code requires explicit permission grants — defaults are conservative and correct, but power users may find the prompts frequent",
+      "Claude Code requires explicit permission grants — defaults are conservative, but always review changes before committing or merging",
       "Scheduled Routines run on Anthropic infrastructure — data sent to those routines should be treated as API data per Anthropic's privacy policy",
-      "Remote Control exposes session state via network — use only on trusted networks for sensitive codebases",
-      "Agentic coding amplifies bad prompts: a vague task brief can produce a large, incorrect multi-file change",
-      "Not yet suitable for security-critical code review without additional validation steps",
+      "Remote Control runs over network — use only on trusted infrastructure for sensitive codebases",
+      "Agentic coding amplifies vague prompts: an unclear task brief can produce a large, incorrect multi-file change across your repo",
+      "Not a replacement for security-critical code review — always validate generated code with tests and human review before shipping",
     ],
     references: [
       {
@@ -36,11 +36,12 @@ export const notes: Note[] = [
         url: "https://www.anthropic.com/claude-code",
       },
       {
-        label: "2026 Agentic Coding Trends Report — Anthropic",
-        url: "https://resources.anthropic.com/hubfs/2026%20Agentic%20Coding%20Trends%20Report.pdf",
+        label: "Automate work with routines — Claude Code Docs",
+        url: "https://code.claude.com/docs/en/routines",
       },
     ],
     relatedExperiments: ["claude-code-landing-page-builder"],
+    lastVerified: "2026-05-07",
   },
   {
     slug: "agent-skills-portable-capabilities",
@@ -50,7 +51,7 @@ export const notes: Note[] = [
     date: "2026-04-14",
     category: "Agent Skills",
     whatChanged:
-      "Anthropic introduced Agent Skills as a way to extend agent behavior beyond what fits in a system prompt. A skill is a directory containing a SKILL.md file with YAML frontmatter (at minimum: name and description), plus any supporting files, scripts, or templates. Skills are supported across Claude.ai, Claude Code, the Claude Agent SDK, and the Claude Developer Platform. Skills can be installed via plugins from the anthropics/skills marketplace or built locally in .claude/skills/. As of 2026, skills and slash commands are unified — every skill automatically gets a /skill-name interface.",
+      "Anthropic introduced Agent Skills as a way to extend agent behavior beyond what fits in a system prompt. A skill is a directory containing a SKILL.md file with YAML frontmatter (at minimum: name and description), plus any supporting files, scripts, or templates. Skills are supported in Claude Code and the Claude Agent SDK; availability across Claude.ai and the Developer Platform may vary by plan — check official docs for current surface support. Skills can be installed from the anthropics/skills GitHub repository (official Anthropic-maintained, 17+ published skills) or built locally in .claude/skills/. In Claude Code, every skill automatically registers as a /skill-name slash command.",
     whyItMatters:
       "Skills solve the 'context stuffing' problem. Instead of pasting long instructions into every conversation, you package them once and Claude loads them when relevant. This enables a library of reusable agent behaviors that can be shared across projects and teams. The slash command integration makes skills feel native to the Claude Code workflow, not bolted on.",
     whatCanBeBuilt: [
@@ -63,9 +64,9 @@ export const notes: Note[] = [
     ],
     limitationsOrRisks: [
       "Skills are loaded by file path — no versioning or dependency resolution built in yet",
-      "SKILL.md context contributes to token usage; very long skills can impact cost",
-      "The anthropics/skills marketplace is community-maintained — review skills before installing",
-      "Skills that invoke shell scripts require careful permission configuration in Claude Code",
+      "SKILL.md context contributes to token usage; very long skills can increase cost and compress available context",
+      "Anthropic recommends using skills only from trusted sources — those you created yourself or from the official anthropics/skills repository",
+      "Skills that invoke shell scripts require careful permission configuration in Claude Code; only grant the tools a skill actually needs",
       "Cross-platform compatibility of helper scripts in skills is the author's responsibility",
     ],
     references: [
@@ -78,11 +79,16 @@ export const notes: Note[] = [
         url: "https://www.anthropic.com/news/skills",
       },
       {
-        label: "The Complete Guide to Building Skills for Claude (PDF)",
-        url: "https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf",
+        label: "Agent Skills — Claude Code Docs",
+        url: "https://code.claude.com/docs/en/skills",
+      },
+      {
+        label: "anthropics/skills — Official Skills Repository (GitHub)",
+        url: "https://github.com/anthropics/skills",
       },
     ],
     relatedExperiments: ["first-custom-agent-skill"],
+    lastVerified: "2026-05-07",
   },
   {
     slug: "mcp-the-usb-c-for-ai-tools",
@@ -92,7 +98,7 @@ export const notes: Note[] = [
     date: "2026-04-22",
     category: "MCP",
     whatChanged:
-      "Anthropic launched MCP in November 2024 as an open-source protocol based on JSON-RPC 2.0, taking design inspiration from the Language Server Protocol. MCP defines three primitives: Tools (executable functions the model can call), Resources (structured data included in context), and Prompts (reusable templates). The community has built thousands of MCP servers since launch, SDKs exist for all major languages, and the industry has broadly adopted MCP as the standard for connecting agents to tools. Anthropic also launched an MCP Connector on the API that lets you connect to remote MCP servers directly from the Messages API without a separate client. MCP Apps (SEP-1865) was formalized in early 2026, extending the protocol to support interactive React-based UIs from MCP servers.",
+      "Anthropic launched MCP in November 2024 as an open-source protocol based on JSON-RPC 2.0, taking design inspiration from the Language Server Protocol. MCP defines three primitives: Tools (executable functions the model can call), Resources (structured data included in context), and Prompts (reusable templates). MCP is an open standard — not Anthropic-exclusive — with SDKs for all major languages and broad industry adoption. The official MCP Registry launched in September 2025 at registry.modelcontextprotocol.io as a centralized server discovery catalog. Anthropic also launched an MCP Connector on the API that lets you connect to remote MCP servers directly from the Messages API without a separate client. MCP Apps (SEP-1865), formalized in early 2026, extends the protocol to support interactive HTML-based UIs delivered from MCP servers via sandboxed iframes. Note: SSE (Server-Sent Events) transport was deprecated in the 2025-03-26 spec revision; the current remote transport is Streamable HTTP.",
     whyItMatters:
       "MCP eliminates the bespoke integration tax. Before MCP, every AI tool needed its own custom connector to every data source. With MCP, build one server per data source and any MCP-compatible host can connect. This compounds: as more hosts adopt MCP (Claude, IDEs, custom agents), your MCP server works everywhere automatically. The API connector removes the need to run a local MCP client, making server-side agent architectures much simpler.",
     whatCanBeBuilt: [
@@ -104,12 +110,14 @@ export const notes: Note[] = [
       "Local MCP development servers for testing agent capabilities before deploying",
     ],
     limitationsOrRisks: [
-      "MCP does not yet have a server discovery protocol — server URLs must be known in advance",
-      "The OAuth authorization spec for MCP (June 2025 update) is still evolving — review before implementing auth",
-      "MCP Apps (SEP-1865) is an early 2026 formalization — expect iteration on the spec",
-      "Running untrusted MCP servers can expose your agent to prompt injection via malicious tool responses",
-      "MCP server performance directly impacts agent latency — slow resource reads block the agent",
-      "No built-in rate limiting in the MCP spec — implement at the server layer",
+      "Treat MCP servers as untrusted integrations unless you control or have audited the server code — malicious servers can send crafted responses",
+      "Prompt injection: MCP tool responses are included in Claude's context; a malicious server can embed instructions designed to hijack Claude's behavior",
+      "Data exfiltration risk: a compromised MCP server with broad tool permissions can read files, environment variables, or API keys and exfiltrate them via network calls",
+      "Excessive permissions: grant only the tools and resources a server actually needs — treat MCP permission scoping like UNIX file permissions",
+      "RCE risk in STDIO transport: security researchers discovered that the default STDIO execution model in MCP can be exploited for remote code execution if the server binary is untrusted; only run MCP server binaries from verified sources",
+      "The OAuth authorization spec for MCP (June 2025 update) is still evolving — review before implementing auth flows",
+      "MCP server performance directly impacts agent latency — slow resource reads block the agent synchronously",
+      "No built-in rate limiting in the MCP spec — implement rate limits at the server layer",
     ],
     references: [
       {
@@ -121,6 +129,14 @@ export const notes: Note[] = [
         url: "https://modelcontextprotocol.io/specification/2025-11-25",
       },
       {
+        label: "Official MCP Registry",
+        url: "https://registry.modelcontextprotocol.io",
+      },
+      {
+        label: "MCP Security Best Practices — Official Docs",
+        url: "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+      },
+      {
         label: "What is MCP? — Anthropic Docs",
         url: "https://docs.anthropic.com/en/docs/agents-and-tools/mcp",
       },
@@ -130,6 +146,7 @@ export const notes: Note[] = [
       },
     ],
     relatedExperiments: ["mcp-visual-explainer"],
+    lastVerified: "2026-05-07",
   },
   {
     slug: "claude-for-creative-technical-workflows",
@@ -166,6 +183,7 @@ export const notes: Note[] = [
         url: "https://docs.anthropic.com",
       },
     ],
+    lastVerified: "2026-05-07",
   },
   {
     slug: "claude-design-prototypes-from-conversation",
@@ -210,6 +228,7 @@ export const notes: Note[] = [
       },
     ],
     relatedExperiments: ["claude-design-prototype-to-code"],
+    lastVerified: "2026-05-07",
   },
 ];
 

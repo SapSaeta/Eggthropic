@@ -94,6 +94,11 @@ export default async function NotePage({ params }: Props) {
             {formatDate(note.date)}
           </time>
         </div>
+        {note.lastVerified && (
+          <p className="text-[10px] font-mono text-slate-600 mb-4">
+            Content verified {note.lastVerified} · Eggthropic independent research
+          </p>
+        )}
         <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-4">
           {note.title}
         </h1>
