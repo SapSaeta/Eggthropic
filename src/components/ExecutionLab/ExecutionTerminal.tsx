@@ -14,6 +14,7 @@ const kindColor: Record<string, string> = {
   success: "text-emerald-400",
   warning: "text-amber-400",
   input: "text-egg-300",
+  code: "text-violet-300",
 };
 
 export default function ExecutionTerminal({ logs, status }: Props) {
@@ -40,12 +41,16 @@ export default function ExecutionTerminal({ logs, status }: Props) {
         <div className="w-16 flex justify-end">
           {status === "running" && (
             <motion.span
-              className="font-mono text-[10px] text-emerald-400 animate-pulse"
+              className="font-mono text-[10px] text-emerald-400"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={{ opacity: [1, 0.4, 1] }}
+              transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
             >
               ● LIVE
             </motion.span>
+          )}
+          {status === "paused" && (
+            <span className="font-mono text-[10px] text-amber-400">‖ PAUSED</span>
           )}
         </div>
       </div>
@@ -57,9 +62,7 @@ export default function ExecutionTerminal({ logs, status }: Props) {
         style={{ background: "#060a11", maxHeight: "420px" }}
       >
         {logs.length === 0 ? (
-          <p className="text-slate-600 text-[11px]">
-            Press Run Simulation to start the trace.
-          </p>
+          <p className="text-slate-600 text-[11px]">Press Run Simulation to start the trace.</p>
         ) : (
           <AnimatePresence initial={false}>
             {logs.map((log, i) => (
@@ -73,9 +76,7 @@ export default function ExecutionTerminal({ logs, status }: Props) {
                 <span className="text-slate-600 select-none shrink-0">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className={kindColor[log.kind] ?? "text-slate-400"}>
-                  {log.text}
-                </span>
+                <span className={kindColor[log.kind] ?? "text-slate-400"}>{log.text}</span>
               </motion.div>
             ))}
           </AnimatePresence>
