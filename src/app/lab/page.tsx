@@ -252,7 +252,7 @@ export default function LabPage() {
             <h2 className="text-xl font-semibold text-white mb-1">Agent Skills Explainer</h2>
             <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
               Skills are directories with a SKILL.md file that give Claude persistent, portable
-              capabilities — auto-registered as slash commands. Explore their file structure,
+              capabilities — invocable as slash commands in Claude Code. Explore their file structure,
               frontmatter anatomy, and a live invocation trace from{" "}
               <code className="px-1 py-0.5 rounded bg-white/5 text-slate-300 font-mono text-xs">/pr-describe</code>
               {" "}to a structured PR description.
@@ -299,9 +299,9 @@ export default function LabPage() {
             </div>
             <h2 className="text-xl font-semibold text-white mb-1">All Ways to Use Claude</h2>
             <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
-              A complete directory of every official Claude surface — web, mobile, terminal,
-              IDE extensions, API, enterprise, and Labs. Filter by category, copy setup
-              commands, or find the right tool for your workflow.
+              A curated directory of known official Claude surfaces — web, mobile, terminal,
+              IDE extensions, API, enterprise, and Labs. Verified May 2026; filter by category,
+              copy setup commands, or find the right tool for your workflow.
             </p>
           </div>
           <Link
@@ -325,7 +325,41 @@ export default function LabPage() {
         </div>
       </section>
 
-      {/* ── Section 5: Community Lab ────────────────────────────────────────── */}
+      {/* ── Section 5: Claude Execution Lab ─────────────────────────────── */}
+      <section className="border-t border-white/5 pt-16 mb-20">
+        <div className="flex items-start justify-between gap-4 mb-6">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="font-mono text-[10px] tracking-widest text-egg-400 uppercase">
+                Experiment · Execution Visualization
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-rose-400/10 border border-rose-400/20 text-rose-400 text-[10px] font-mono">
+                new
+              </span>
+            </div>
+            <h2 className="text-xl font-semibold text-white mb-1">Claude Execution Lab</h2>
+            <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
+              An interactive mission-control visualization of a Claude-based agent executing a multi-step task —
+              analyze, plan, generate, review, deliver. Watch the agent graph animate, logs stream, and output render in real time.
+              Educational experiment — not an official Anthropic interface.
+            </p>
+          </div>
+          <Link
+            href="/lab/execution"
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-egg-400 hover:text-egg-300 transition-colors whitespace-nowrap"
+          >
+            Open full page
+            <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+        <div className="mt-3">
+          <Link href="/lab/execution" className="sm:hidden inline-flex items-center gap-1.5 text-xs font-mono text-egg-400">
+            Open full page <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+      </section>
+
+      {/* ── Section 6: Community Lab ────────────────────────────────────────── */}
       <section className="border-t border-white/5 pt-16">
         <div className="mb-10">
           <div className="flex items-center gap-3 mb-2">

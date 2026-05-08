@@ -101,6 +101,11 @@ export default async function ExperimentPage({ params }: Props) {
             {formatDate(exp.date)}
           </time>
         </div>
+        {exp.lastVerified && (
+          <p className="text-[10px] font-mono text-slate-600 mb-4">
+            Content verified {exp.lastVerified} · Eggthropic experiment
+          </p>
+        )}
 
         <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-4">
           {exp.title}

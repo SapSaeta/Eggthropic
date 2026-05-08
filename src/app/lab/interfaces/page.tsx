@@ -7,12 +7,12 @@ import { BreadcrumbListJsonLd } from "@/components/JsonLd";
 export const metadata: Metadata = {
   title: "All Ways to Use Claude — Lab",
   description:
-    "An interactive directory of every official way to access Claude — web, mobile, terminal, IDE extensions, browser, API, enterprise, and Anthropic Labs. Filter by category, copy setup commands, or find the right surface for your workflow.",
+    "An Eggthropic-curated directory of known official Claude surfaces — web, mobile, terminal, IDE extensions, browser, API, enterprise, and Anthropic Labs. Filter by category, copy setup commands, or find the right surface for your workflow.",
   alternates: { canonical: "https://www.eggthropic.com/lab/interfaces" },
   openGraph: {
     title: "All Ways to Use Claude — Eggthropic Lab",
     description:
-      "An interactive directory of every official way to access Claude — web, mobile, terminal, IDE extensions, browser, API, enterprise, and Anthropic Labs.",
+      "An Eggthropic-curated directory of known official Claude surfaces — web, mobile, terminal, IDE extensions, browser, API, enterprise, and Anthropic Labs.",
     url: "https://www.eggthropic.com/lab/interfaces",
     siteName: "Eggthropic",
     type: "website",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "All Ways to Use Claude — Eggthropic Lab",
     description:
-      "An interactive directory of every official way to access Claude — web, mobile, terminal, IDE extensions, browser, API, enterprise, and Anthropic Labs.",
+      "An Eggthropic-curated directory of known official Claude surfaces — web, mobile, terminal, IDE extensions, browser, API, enterprise, and Anthropic Labs.",
   },
 };
 
@@ -61,8 +61,10 @@ export default function InterfacesLabPage() {
           All Ways to Use Claude
         </h1>
         <p className="text-slate-400 max-w-2xl leading-relaxed">
-          A complete interactive directory of every official Claude surface — from claude.ai and mobile apps to Claude Code CLI, IDE extensions, the Anthropic API, enterprise tiers, and Anthropic Labs products.
-          Filter by category, copy setup commands directly, or use the &ldquo;Find Your Fit&rdquo; guide to find the right tool for your workflow.
+          An Eggthropic-curated directory of known official Claude surfaces — claude.ai, mobile apps, Claude Code CLI, IDE extensions, the Anthropic API, enterprise tiers, and Anthropic Labs products.
+          Verified against official Anthropic sources as of May 2026; check{" "}
+          <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener noreferrer" className="text-egg-400 hover:text-egg-300 transition-colors">anthropic.com/claude</a>
+          {" "}for the authoritative list.
         </p>
       </div>
 

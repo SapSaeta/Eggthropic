@@ -91,12 +91,12 @@ const SURFACES: Surface[] = [
   {
     id: "claude-code-desktop",
     name: "Claude Code Desktop",
-    tagline: "Native Mac & Windows app — persistent sessions, Remote Control via mobile",
+    tagline: "Native Mac & Windows app — persistent sessions with GUI and Remote Control",
     category: "Code & IDE",
     icon: "🖥",
     availability: "Pro · Max",
     availKind: "paid",
-    bestFor: ["Persistent Claude Code sessions without a terminal", "GUI for non-terminal users", "Remote Control: continue sessions from your phone"],
+    bestFor: ["Persistent Claude Code sessions without a terminal window", "GUI for non-terminal users", "Remote Control: run Claude Code on servers or CI and interact via API"],
     access: { label: "Download", value: "claude.ai/download", type: "url" },
     quickStart: [
       { step: "Download from claude.ai/download", detail: "Mac (Apple Silicon + Intel) · Windows" },
@@ -138,19 +138,20 @@ const SURFACES: Surface[] = [
   // ── Browser ─────────────────────────────────────────────────────────────────
   {
     id: "claude-chrome",
-    name: "Claude for Chrome",
-    tagline: "Bring Claude to any webpage — summarize, research, draft replies",
+    name: "Claude in Chrome",
+    tagline: "Browser automation agent — navigate pages, fill forms, and run web workflows",
     category: "Browser",
     icon: "🔵",
-    availability: "Free · Pro",
-    availKind: "free",
-    bestFor: ["Summarizing articles and documentation", "Research in context while browsing", "Drafting replies inside web apps", "Quick page-level questions"],
-    access: { label: "Chrome Web Store", value: "Search 'Claude for Chrome' in Chrome Web Store", type: "store" },
+    availability: "Pro · Max · Team · Enterprise",
+    availKind: "paid",
+    bestFor: ["Automating multi-step web workflows", "Navigating sites and extracting data", "Filling forms and interacting with web apps", "Claude Code integration for in-browser context"],
+    access: { label: "Chrome Web Store", value: "Search 'Claude in Chrome' by Anthropic", type: "store" },
     quickStart: [
-      { step: "Open Chrome Web Store", detail: "Search 'Claude for Chrome' by Anthropic" },
+      { step: "Open Chrome Web Store", detail: "Search 'Claude in Chrome' by Anthropic" },
       { step: "Install and pin the extension" },
-      { step: "Sign in with your Claude.ai account" },
+      { step: "Sign in with your paid Claude.ai account" },
     ],
+    notes: "Requires a paid Claude plan (Pro or higher). Pro uses Claude Haiku 4.5; Max and above get more capable models.",
   },
   // ── API & Dev ───────────────────────────────────────────────────────────────
   {
@@ -725,7 +726,7 @@ export default function ClaudeInterfacesExplainer() {
       {/* Footer */}
       <div className="border-t border-white/5 px-5 py-3 flex items-center justify-between gap-2">
         <p className="text-[10px] font-mono text-slate-700">
-          Official Anthropic surfaces · May 2026
+          Eggthropic-curated directory · verified May 2026
         </p>
         <a
           href="https://www.anthropic.com/claude"

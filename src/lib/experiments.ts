@@ -43,6 +43,7 @@ export const experiments: Experiment[] = [
         url: "https://docs.anthropic.com/en/docs/claude-code/cli-reference",
       },
     ],
+    lastVerified: "2026-05-07",
   },
   {
     slug: "first-custom-agent-skill",
@@ -77,7 +78,7 @@ export const experiments: Experiment[] = [
       "The skill does not yet handle merge commits differently from feature commits",
     ],
     nextIteration:
-      "Add a diff-chunking mechanism to the helper script. Publish the skill to a public GitHub repo following the anthropics/skills marketplace format.",
+      "Add a diff-chunking mechanism to the helper script. Publish the skill to a public GitHub repo — the official anthropics/skills repository on GitHub is the canonical reference for community-contributed skills.",
     references: [
       {
         label: "Equipping Agents with Agent Skills — Anthropic Engineering",
@@ -87,7 +88,16 @@ export const experiments: Experiment[] = [
         label: "Introducing Agent Skills — Anthropic",
         url: "https://www.anthropic.com/news/skills",
       },
+      {
+        label: "Agent Skills Overview — Official Docs",
+        url: "https://code.claude.com/docs/en/skills",
+      },
+      {
+        label: "anthropics/skills — Official Skills Repository",
+        url: "https://github.com/anthropics/skills",
+      },
     ],
+    lastVerified: "2026-05-07",
   },
   {
     slug: "mcp-visual-explainer",
@@ -120,7 +130,7 @@ export const experiments: Experiment[] = [
       "The diagram becomes cluttered with more than 15 tools — needs pagination or grouping",
     ],
     nextIteration:
-      "Add WebSocket transport support. Explore connecting to a public MCP server registry when one becomes available. Add a 'request trace' mode that shows the raw JSON-RPC 2.0 message flow.",
+      "Upgrade from SSE to Streamable HTTP transport (SSE was deprecated in the 2025-03-26 spec revision). Connect to the official MCP Registry (registry.modelcontextprotocol.io) for server discovery instead of hardcoded URLs. Add a 'request trace' mode that shows the raw JSON-RPC 2.0 message flow.",
     references: [
       {
         label: "Model Context Protocol — Official Docs",
@@ -131,10 +141,19 @@ export const experiments: Experiment[] = [
         url: "https://modelcontextprotocol.io/specification/2025-11-25",
       },
       {
+        label: "Official MCP Registry",
+        url: "https://registry.modelcontextprotocol.io",
+      },
+      {
+        label: "MCP Security Best Practices — Official Docs",
+        url: "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+      },
+      {
         label: "Code Execution with MCP — Anthropic Engineering",
         url: "https://www.anthropic.com/engineering/code-execution-with-mcp",
       },
     ],
+    lastVerified: "2026-05-07",
   },
   {
     slug: "ai-ux-interface-playground",
@@ -177,6 +196,7 @@ export const experiments: Experiment[] = [
         url: "https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking",
       },
     ],
+    lastVerified: "2026-05-07",
   },
   {
     slug: "claude-design-prototype-to-code",
@@ -229,6 +249,7 @@ export const experiments: Experiment[] = [
         url: "https://www.anthropic.com/news/claude-for-creative-work",
       },
     ],
+    lastVerified: "2026-05-07",
   },
   {
     slug: "sap-hr-functional-ai-assistant",

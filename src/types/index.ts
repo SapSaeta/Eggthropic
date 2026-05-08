@@ -43,4 +43,5 @@ export interface Note {
   limitationsOrRisks: string[];
   references: { label: string; url: string }[];
   relatedExperiments?: string[];
+  lastVerified?: string;
 }

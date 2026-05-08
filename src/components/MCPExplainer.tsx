@@ -39,7 +39,7 @@ const TRACE_STEPS: TraceStep[] = [
     to: "SERVER",
     method: "tools/list",
     label: "Forward to server",
-    description: "The client forwards the request to the MCP server over stdio/SSE.",
+    description: "The client forwards the request to the MCP server over stdio (local) or Streamable HTTP (remote). SSE transport is deprecated as of spec revision 2025-03-26.",
     payload: { jsonrpc: "2.0", id: 1, method: "tools/list", params: {} },
   },
   {
@@ -98,7 +98,7 @@ const TRACE_STEPS: TraceStep[] = [
         content: [
           {
             type: "text",
-            text: "MCP supports two transports: stdio (local) and SSE (remote). Stdio uses standard input/output for local processes. SSE uses HTTP Server-Sent Events for remote servers.",
+            text: "MCP supports two standard transports: stdio (local processes) and Streamable HTTP (remote servers). SSE transport was deprecated in spec revision 2025-03-26 in favour of Streamable HTTP.",
           },
         ],
         isError: false,
@@ -785,7 +785,7 @@ export default function MCPExplainer() {
       {/* Footer */}
       <div className="border-t border-white/[0.04] px-6 py-3 flex items-center justify-between">
         <span className="font-mono text-[10px] text-slate-600">
-          MCP Spec 2025-11-25 · JSON-RPC 2.0 · stdio / SSE transport
+          MCP Spec 2025-11-25 · JSON-RPC 2.0 · stdio / Streamable HTTP
         </span>
         <a
           href="https://modelcontextprotocol.io/specification/2025-11-25"
