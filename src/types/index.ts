@@ -28,6 +28,7 @@ export interface Experiment {
   nextIteration: string;
   references: { label: string; url: string }[];
   labPage?: string;
+  lastVerified?: string;
 }
 
 export interface Note {
