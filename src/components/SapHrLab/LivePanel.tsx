@@ -1,91 +1,187 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Loader2, ChevronDown, ChevronUp, AlertTriangle } from "lucide-react";
+import {
+  Sparkles,
+  Loader2,
+  ChevronDown,
+  ChevronUp,
+  Eye,
+  EyeOff,
+  Key,
+  X,
+} from "lucide-react";
+import Anthropic from "@anthropic-ai/sdk";
 import { LIVE_CASES, type SapHrCase } from "@/lib/sap-hr-knowledge";
 
-type LiveStatus = "idle" | "loading" | "streaming" | "done" | "error";
+const LS_KEY = "eggthropic_anthropic_key";
+
+const SYSTEM_PROMPT = `You are a functional assistant for SAP HR On-Premise (HCM). You answer questions about infotypes, transactions, configuration, and process flows based only on the knowledge base context provided.
+
+Rules:
+- Answer accurately based on the provided context only
+- Use correct SAP terminology (PERNR, BEGDA, ENDDA, infotype, wage type, etc.)
+- If the answer requires knowledge not in the context, say so explicitly — do not invent field names or configuration values
+- Structure your answer clearly: short paragraphs, bullet points for lists, bold for key terms
+- Be practical and direct — your audience is functional SAP HR consultants
+- Do not claim to have access to a live SAP system`;
+
+type LiveStatus = "idle" | "streaming" | "done" | "error";
 
 export function LivePanel() {
+  const [apiKey, setApiKey] = useState("");
+  const [showKey, setShowKey] = useState(false);
   const [selectedCase, setSelectedCase] = useState<SapHrCase | null>(null);
   const [status, setStatus] = useState<LiveStatus>("idle");
   const [response, setResponse] = useState("");
   const [showContext, setShowContext] = useState(false);
-  const abortRef = useRef<AbortController | null>(null);
+  const cancelledRef = useRef(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(LS_KEY);
+    if (stored) setApiKey(stored);
+  }, []);
+
+  function saveKey(val: string) {
+    setApiKey(val);
+    if (val.trim()) {
+      localStorage.setItem(LS_KEY, val.trim());
+    } else {
+      localStorage.removeItem(LS_KEY);
+    }
+  }
+
+  function clearKey() {
+    saveKey("");
+    reset();
+  }
 
   async function ask() {
-    if (!selectedCase) return;
-    abortRef.current?.abort();
-    const controller = new AbortController();
-    abortRef.current = controller;
+    if (!selectedCase || !apiKey.trim()) return;
 
-    setStatus("loading");
+    cancelledRef.current = false;
+    setStatus("streaming");
     setResponse("");
     setShowContext(false);
 
     try {
-      const res = await fetch("/api/sap-hr", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ caseId: selectedCase.id }),
-        signal: controller.signal,
+      const client = new Anthropic({
+        apiKey: apiKey.trim(),
+        dangerouslyAllowBrowser: true,
       });
 
-      if (!res.ok) {
-        if (res.status === 503) {
-          setResponse(
-            "API key not configured. Set ANTHROPIC_API_KEY in your environment variables to enable live queries."
-          );
-          setStatus("error");
-          return;
-        }
-        throw new Error(`HTTP ${res.status}`);
-      }
+      const stream = client.messages.stream({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 1024,
+        system: `${SYSTEM_PROMPT}\n\n# Knowledge Base\n\n${selectedCase.kbContext}`,
+        messages: [{ role: "user", content: selectedCase.question }],
+      });
 
-      setStatus("streaming");
-      const reader = res.body?.getReader();
-      if (!reader) throw new Error("No response body");
+      await new Promise<void>((resolve, reject) => {
+        stream.on("text", (text: string) => {
+          if (!cancelledRef.current) setResponse((r) => r + text);
+        });
+        stream.on("finalMessage", () => resolve());
+        stream.on("error", (err) => reject(err));
+        stream.on("abort", () => resolve());
+      });
 
-      const decoder = new TextDecoder();
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        setResponse((r) => r + decoder.decode(value, { stream: true }));
-      }
-      setStatus("done");
+      if (!cancelledRef.current) setStatus("done");
     } catch (err) {
-      if ((err as Error).name === "AbortError") return;
+      if (cancelledRef.current) return;
+      const msg = (err as Error).message ?? "";
+      if (msg.includes("401") || msg.toLowerCase().includes("auth")) {
+        setResponse("Invalid API key — check your key and try again.");
+      } else {
+        setResponse(`Error: ${msg || "Something went wrong."}`);
+      }
       setStatus("error");
-      setResponse("Something went wrong. Check that ANTHROPIC_API_KEY is set.");
     }
   }
 
   function reset() {
-    abortRef.current?.abort();
+    cancelledRef.current = true;
     setStatus("idle");
     setResponse("");
     setSelectedCase(null);
     setShowContext(false);
   }
 
-  const isRunning = status === "loading" || status === "streaming";
+  const isRunning = status === "streaming";
+  const hasKey = apiKey.trim().length > 0;
 
   return (
     <div className="space-y-6">
-      {/* API notice */}
-      <div className="flex items-start gap-2.5 p-3 rounded-lg bg-amber-400/5 border border-amber-400/15">
-        <AlertTriangle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0 mt-0.5" />
-        <p className="text-[11px] text-amber-300/70 leading-relaxed">
-          This tab makes real Claude API calls using an embedded SAP HR knowledge base.
-          Requires <code className="font-mono bg-white/5 px-1 rounded">ANTHROPIC_API_KEY</code> in environment variables.
-          No SAP system connection — all knowledge is curated and static.
+      {/* API key input */}
+      <div className="glass rounded-xl p-4 border border-white/8 space-y-3">
+        <div className="flex items-center gap-2">
+          <Key className="w-3.5 h-3.5 text-slate-400" />
+          <span className="text-xs font-mono text-slate-400">
+            Your Anthropic API key
+          </span>
+          {hasKey && (
+            <span className="ml-auto text-[10px] font-mono text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full border border-emerald-400/20">
+              saved
+            </span>
+          )}
+        </div>
+
+        <div className="relative">
+          <input
+            type={showKey ? "text" : "password"}
+            value={apiKey}
+            onChange={(e) => saveKey(e.target.value)}
+            placeholder="sk-ant-..."
+            className="w-full pr-16 pl-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm font-mono text-white placeholder-slate-600 focus:outline-none focus:border-egg-400/50 transition-colors"
+          />
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+            <button
+              onClick={() => setShowKey((v) => !v)}
+              className="p-1 text-slate-500 hover:text-slate-300 transition-colors"
+              aria-label={showKey ? "Hide key" : "Show key"}
+            >
+              {showKey ? (
+                <EyeOff className="w-3.5 h-3.5" />
+              ) : (
+                <Eye className="w-3.5 h-3.5" />
+              )}
+            </button>
+            {hasKey && (
+              <button
+                onClick={clearKey}
+                className="p-1 text-slate-500 hover:text-rose-400 transition-colors"
+                aria-label="Clear key"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        <p className="text-[10px] text-slate-600 leading-relaxed">
+          Your key goes directly from your browser to the Anthropic API — this
+          server never sees it. Stored in{" "}
+          <code className="font-mono">localStorage</code>. Clear it with the ×
+          button.{" "}
+          {!hasKey && (
+            <a
+              href="https://console.anthropic.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-500 hover:text-slate-300 transition-colors"
+            >
+              Get a key →
+            </a>
+          )}
         </p>
       </div>
 
       {/* Case selector */}
       <div>
-        <p className="text-xs font-mono text-slate-500 mb-3">Select a question:</p>
+        <p className="text-xs font-mono text-slate-500 mb-3">
+          Select a question:
+        </p>
         <div className="space-y-2">
           {LIVE_CASES.map((c) => (
             <button
@@ -108,11 +204,11 @@ export function LivePanel() {
         </div>
       </div>
 
-      {/* Action buttons */}
+      {/* Actions */}
       <div className="flex gap-3 flex-wrap">
         <button
           onClick={ask}
-          disabled={!selectedCase || isRunning}
+          disabled={!selectedCase || !hasKey || isRunning}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-egg-400 text-lab-900 text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-egg-300 transition-colors"
         >
           {isRunning ? (
@@ -120,7 +216,7 @@ export function LivePanel() {
           ) : (
             <Sparkles className="w-3.5 h-3.5" />
           )}
-          {status === "loading" ? "Connecting…" : status === "streaming" ? "Streaming…" : "Ask Claude"}
+          {isRunning ? "Streaming…" : "Ask Claude"}
         </button>
         {(status === "done" || status === "error") && (
           <button
@@ -140,7 +236,7 @@ export function LivePanel() {
             animate={{ opacity: 1, y: 0 }}
             className="space-y-3"
           >
-            {/* Context used */}
+            {/* Context panel */}
             {selectedCase && status !== "error" && (
               <div className="glass rounded-xl border border-white/8 overflow-hidden">
                 <button
@@ -163,10 +259,15 @@ export function LivePanel() {
                       className="overflow-hidden"
                     >
                       <div className="px-4 pb-3 border-t border-white/5 pt-2">
-                        <p className="text-[10px] text-slate-500 mb-1.5">KB sources included:</p>
+                        <p className="text-[10px] text-slate-500 mb-1.5">
+                          KB sources included:
+                        </p>
                         <ul className="space-y-1">
                           {selectedCase.kbSources.map((src) => (
-                            <li key={src} className="text-[11px] font-mono text-slate-400">
+                            <li
+                              key={src}
+                              className="text-[11px] font-mono text-slate-400"
+                            >
                               · {src}
                             </li>
                           ))}
@@ -178,15 +279,17 @@ export function LivePanel() {
               </div>
             )}
 
-            {/* Response area */}
+            {/* Response box */}
             <div
               className={`glass rounded-xl p-5 border ${
-                status === "error" ? "border-rose-400/20" : "border-egg-400/15"
+                status === "error"
+                  ? "border-rose-400/20"
+                  : "border-egg-400/15"
               }`}
             >
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-[10px] font-mono text-egg-400/70 uppercase tracking-widest">
-                  {status === "error" ? "error" : "claude · live response"}
+                  {status === "error" ? "error" : "claude · live"}
                 </span>
                 {status === "streaming" && (
                   <span className="w-1.5 h-1.5 rounded-full bg-egg-400 animate-pulse" />

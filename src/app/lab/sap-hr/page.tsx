@@ -136,11 +136,13 @@ export default function SapHrLabPage() {
         <p className="text-sm text-slate-400 leading-relaxed">
           Each predefined case includes a curated subset of the knowledge base (infotype definitions,
           field lists, process flows) assembled as structured text context. When you click{" "}
-          <span className="font-mono text-slate-300">Ask Claude</span>, a POST request goes to{" "}
-          <span className="font-mono text-slate-300">/api/sap-hr</span>, which calls the Anthropic
-          API with that context as the system prompt. Claude reasons over the provided knowledge only —
-          it is explicitly instructed not to invent field names or configuration values.
-          Response streams back token by token.
+          <span className="font-mono text-slate-300">Ask Claude</span>, the Anthropic SDK runs
+          directly in your browser using your API key —{" "}
+          <span className="text-slate-300">this server is never involved</span>. Your key is stored
+          in <span className="font-mono text-slate-300">localStorage</span> and sent only to{" "}
+          <span className="font-mono text-slate-300">api.anthropic.com</span>.
+          Claude reasons over the provided knowledge only — it is explicitly instructed not to invent
+          field names or configuration values. Response streams back token by token.
         </p>
       </div>
 
