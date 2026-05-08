@@ -32,7 +32,7 @@ interface Props {
 export default async function ExperimentsPage({ searchParams }: Props) {
   const { category } = await searchParams;
   const validCategories: Array<"all" | ExperimentCategory> = [
-    "all", "claude-code", "skills", "mcp", "api", "ux-ui", "automation",
+    "all", "claude-code", "skills", "mcp", "api", "ux-ui", "automation", "enterprise-ai",
   ];
   const initialCategory = validCategories.includes(category as ExperimentCategory)
     ? (category as "all" | ExperimentCategory)

@@ -14,6 +14,7 @@ const categories: { value: "all" | ExperimentCategory; label: string }[] = [
   { value: "api", label: "API" },
   { value: "ux-ui", label: "UX/UI" },
   { value: "automation", label: "Automation" },
+  { value: "enterprise-ai", label: "Enterprise AI" },
 ];
 
 interface Props {

@@ -6,7 +6,8 @@ export type ExperimentCategory =
   | "mcp"
   | "api"
   | "ux-ui"
-  | "automation";
+  | "automation"
+  | "enterprise-ai";
 
 export interface Experiment {
   slug: string;

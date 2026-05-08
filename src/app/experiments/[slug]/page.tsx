@@ -48,6 +48,7 @@ const categoryLabel: Record<string, string> = {
   api: "API",
   "ux-ui": "UX/UI",
   automation: "Automation",
+  "enterprise-ai": "Enterprise AI",
 };
 
 export default async function ExperimentPage({ params }: Props) {

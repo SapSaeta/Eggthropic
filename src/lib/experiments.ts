@@ -251,6 +251,57 @@ export const experiments: Experiment[] = [
     ],
     lastVerified: "2026-05-07",
   },
+  {
+    slug: "sap-hr-functional-ai-assistant",
+    title: "Building an AI Functional Assistant for SAP HR Legacy Systems",
+    description:
+      "Using Claude and Notion to build a structured knowledge assistant for SAP HR On-Premise functional teams — turning scattered configuration knowledge into queryable, reasoning-ready context.",
+    category: "enterprise-ai",
+    difficulty: "intermediate",
+    status: "in-progress",
+    date: "2026-05-08",
+    tools: ["Claude", "Notion", "Anthropic API"],
+    goal: "Determine whether a Claude-powered assistant backed by a structured Notion knowledge base can reliably answer SAP HR functional questions — infotype lookups, configuration logic, process flow queries — without requiring direct SAP system access or ABAP expertise.",
+    context:
+      "SAP HR On-Premise (HCM) carries decades of accumulated configuration: infotypes, feature hierarchies, schema logic, customer exits, and undocumented process rules that exist only in spreadsheets, Word documents, and the memory of consultants who have since left. Functional teams spend significant time searching for answers that are technically available in the system but practically inaccessible without deep expertise or expensive support contracts. This experiment explores whether Notion — used as a structured knowledge base — combined with Claude as a reasoning and transformation layer can make that knowledge queryable in plain language, without connecting to a live SAP system.",
+    prompt:
+      "You are a functional assistant for SAP HR On-Premise. You have access to a structured knowledge base containing infotype definitions, configuration notes, process flows, and known system behaviors. Answer the following question accurately and concisely. If the answer requires distinguishing between standard SAP behavior and customer-specific configuration, say so explicitly. If the answer is not in the knowledge base, say you don't know — do not invent configuration values.\n\nQuestion: {user_question}",
+    implementationNotes:
+      "The prototype uses Notion as the knowledge base with a consistent page structure per infotype: definition, key fields, standard transactions, common configuration pitfalls, and known integration dependencies. Notion pages are fetched via the Notion API and assembled into a context block passed to Claude via the Anthropic Messages API. Claude is prompted to reason over the provided context only — it is explicitly instructed not to hallucinate configuration values. The assistant currently covers Infotypes 0001–0008 (org assignment, personal data, payroll), the PA40 action framework, and a subset of OM object types. No SAP system connection exists; all knowledge is manually curated from functional documentation and project notes.",
+    result:
+      "For well-documented infotypes and standard transactions, the assistant answers correctly and cites the relevant Notion page. For configuration-specific questions (e.g., 'what does feature LGMST control in our system?'), it correctly flags that the answer depends on customer configuration and declines to guess. Hallucination rate on infotype field definitions: 0 observed across 40 test queries. The assistant struggles with cross-module dependencies (e.g., payroll schema interactions) where the Notion coverage is thin.",
+    whatWorked: [
+      "Notion as a structured knowledge base is easy to curate and update without engineering involvement",
+      "Claude correctly applies the 'do not invent configuration values' instruction — refusals are accurate and useful",
+      "Plain-language question parsing handles SAP jargon well without special preprocessing",
+      "Context assembly from Notion API responses is fast enough for interactive use (<2s round trip)",
+      "The assistant distinguishes standard SAP behavior from project-specific customization when the Notion page makes that distinction",
+    ],
+    whatFailed: [
+      "Knowledge base coverage is the primary bottleneck — the assistant is only as good as what has been documented in Notion",
+      "Cross-infotype queries (e.g., 'how does IT0001 org assignment affect IT0007 planned working time?') require multi-page context that exceeds current assembly logic",
+      "No chunking or retrieval strategy yet — all relevant Notion pages are passed as full context, which becomes expensive at scale",
+      "Feature and schema questions require a separate structured format that is harder to maintain in Notion",
+      "No feedback loop: when the assistant is wrong, there is no mechanism to flag and correct the source Notion page",
+    ],
+    nextIteration:
+      "Implement a retrieval layer (vector search or keyword index over Notion page titles and tags) to replace full-context assembly. Add coverage for payroll schema basics and the most common personnel actions. Prototype a correction flow: when a user marks an answer as wrong, open the source Notion page for editing. Evaluate whether Claude's extended thinking mode improves accuracy on multi-step configuration reasoning questions.",
+    references: [
+      {
+        label: "Anthropic Messages API — Tool Use",
+        url: "https://docs.anthropic.com/en/docs/build-with-claude/tool-use",
+      },
+      {
+        label: "Notion API — Retrieve a Page",
+        url: "https://developers.notion.com/reference/retrieve-a-page",
+      },
+      {
+        label: "Claude for Enterprise — Anthropic",
+        url: "https://www.anthropic.com/enterprise",
+      },
+    ],
+    lastVerified: "2026-05-08",
+  },
 ];
 
 export function getExperimentBySlug(slug: string): Experiment | undefined {

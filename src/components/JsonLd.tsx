@@ -87,6 +87,7 @@ export function FaqJsonLd({ items }: { items: { q: string; a: string }[] }) {
   );
 }
 
+
 export function ExperimentJsonLd({
   title,
   description,

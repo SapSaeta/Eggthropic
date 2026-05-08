@@ -6,9 +6,9 @@ const BASE_URL = "https://www.eggthropic.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: BASE_URL, lastModified: new Date("2026-05-07"), changeFrequency: "weekly", priority: 1 },
-    { url: `${BASE_URL}/experiments`, lastModified: new Date("2026-05-07"), changeFrequency: "weekly", priority: 0.9 },
-    { url: `${BASE_URL}/notes`, lastModified: new Date("2026-05-07"), changeFrequency: "weekly", priority: 0.9 },
+    { url: BASE_URL, lastModified: new Date("2026-05-08"), changeFrequency: "weekly", priority: 1 },
+    { url: `${BASE_URL}/experiments`, lastModified: new Date("2026-05-08"), changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE_URL}/notes`, lastModified: new Date("2026-05-08"), changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/lab`, lastModified: new Date("2026-05-07"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE_URL}/lab/mcp`, lastModified: new Date("2026-04-26"), changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/lab/skills`, lastModified: new Date("2026-04-18"), changeFrequency: "monthly", priority: 0.7 },
