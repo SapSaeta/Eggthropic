@@ -253,6 +253,7 @@ export const experiments: Experiment[] = [
   },
   {
     slug: "sap-hr-functional-ai-assistant",
+    labPage: "/lab/sap-hr",
     title: "Building an AI Functional Assistant for SAP HR Legacy Systems",
     description:
       "Using Claude and Notion to build a structured knowledge assistant for SAP HR On-Premise functional teams — turning scattered configuration knowledge into queryable, reasoning-ready context.",
