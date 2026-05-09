@@ -319,8 +319,7 @@ function ArchitectureScene() {
   return (
     <div className="space-y-8">
       {/* Diagram */}
-      <div className="overflow-x-auto -mx-2 px-2">
-      <div className="relative flex items-center justify-between gap-2 py-8 min-w-[440px]">
+      <div className="relative flex items-center justify-between gap-2 py-8">
         {/* Background grid */}
         <div
           className="absolute inset-0 rounded-2xl opacity-[0.03]"
@@ -406,7 +405,6 @@ function ArchitectureScene() {
             )}
           </div>
         ))}
-      </div>
       </div>
 
       {/* Data sources below server */}

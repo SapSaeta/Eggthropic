@@ -71,12 +71,24 @@ body {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Accent text — warm amber readable on light backgrounds */
+/* Accent text — warm amber gradient, dark-to-light for readability */
 .gradient-text {
-  background: linear-gradient(135deg, #b38d00 0%, #e6b800 50%, #ffe04d 100%);
+  background: linear-gradient(135deg, #4d3c00 0%, #b38d00 40%, #ffd21a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Yellow text on light backgrounds: dark shadow outline for legibility */
+.text-egg-400,
+.text-egg-300,
+.text-egg-500 {
+  text-shadow:
+    -0.5px -0.5px 0 rgba(0, 0, 0, 0.45),
+     0.5px -0.5px 0 rgba(0, 0, 0, 0.45),
+    -0.5px  0.5px 0 rgba(0, 0, 0, 0.45),
+     0.5px  0.5px 0 rgba(0, 0, 0, 0.45),
+     0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 /* Grid background — very subtle on light */

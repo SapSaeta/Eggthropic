@@ -27,7 +27,7 @@ export default function SapHrShell() {
   return (
     <div className="glass rounded-2xl border border-zinc-200 overflow-hidden">
       {/* Tab bar */}
-      <div className="flex flex-wrap items-center border-b border-zinc-200 px-4 pt-4 gap-1">
+      <div className="flex items-center border-b border-zinc-200 px-4 pt-4 gap-1">
         {TABS.map((t) => (
           <button
             key={t.id}

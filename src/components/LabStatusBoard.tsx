@@ -458,9 +458,7 @@ export default function LabStatusBoard({
       />
 
       <div className="relative flex min-h-0 flex-1 gap-4 overflow-hidden p-4">
-        <div className="hidden sm:contents">
-          <Sidebar experiments={experiments} />
-        </div>
+        <Sidebar experiments={experiments} />
 
         <main className="flex flex-1 flex-col gap-3 overflow-y-auto">
           <div className="flex items-center justify-between px-1">
