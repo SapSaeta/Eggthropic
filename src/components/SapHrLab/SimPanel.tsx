@@ -115,7 +115,7 @@ export function SimPanel() {
             onClick={() => changeScenario(i)}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
               i === scenarioIdx
-                ? "bg-egg-400 text-lab-900 font-semibold"
+                ? "bg-egg-400 text-zinc-900 font-semibold"
                 : "glass text-zinc-600 hover:text-zinc-900"
             }`}
           >
@@ -137,7 +137,7 @@ export function SimPanel() {
         <button
           onClick={runSim}
           disabled={!canRun}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-egg-400 text-lab-900 text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-egg-300 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-egg-400 text-zinc-900 text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-egg-300 transition-colors"
         >
           <Play className="w-3.5 h-3.5" />
           Run simulation

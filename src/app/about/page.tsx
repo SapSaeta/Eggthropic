@@ -161,7 +161,7 @@ export default function AboutPage() {
             </a>
             <Link
               href="/experiments"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-egg-400 text-lab-900 font-semibold text-sm hover:bg-egg-300 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-egg-400 text-zinc-900 font-semibold text-sm hover:bg-egg-300 transition-colors"
             >
               Explore experiments
               <ArrowRight className="w-4 h-4" />

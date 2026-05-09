@@ -51,7 +51,7 @@ export function ExperimentsClient({ experiments, initialCategory = "all" }: Prop
               onClick={() => setActiveCategory(cat.value)}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                 activeCategory === cat.value
-                  ? "bg-egg-400 text-lab-900"
+                  ? "bg-egg-400 text-zinc-900"
                   : "glass text-zinc-600 hover:text-zinc-900"
               }`}
             >

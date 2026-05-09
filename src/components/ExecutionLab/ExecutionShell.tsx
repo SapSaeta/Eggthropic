@@ -246,7 +246,7 @@ export default function ExecutionShell() {
               <ExecutionTimeline nodes={state.nodes} phaseConfigs={scenario.phaseConfigs} />
             </div>
 
-            <div className="flex-1 min-h-[320px] glass rounded-xl p-3">
+            <div className="flex-1 min-h-[180px] sm:min-h-[320px] glass rounded-xl p-3">
               <AgentGraph nodeStatuses={state.nodes} nodeConfigs={scenario.nodeConfigs} />
             </div>
 

@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  /* Indigo accent scale (replaces yellow egg) */
-  --color-egg-50: #eef2ff;
-  --color-egg-100: #e0e7ff;
-  --color-egg-200: #c7d2fe;
-  --color-egg-300: #4338ca;
-  --color-egg-400: #3730a3;
-  --color-egg-500: #312e81;
-  --color-egg-600: #2e2b75;
-  --color-egg-700: #272569;
-  --color-egg-800: #1e1c52;
-  --color-egg-900: #16143d;
+  /* Egg yolk yellow scale */
+  --color-egg-50: #fffdf0;
+  --color-egg-100: #fffbe0;
+  --color-egg-200: #fff5b3;
+  --color-egg-300: #ffed80;
+  --color-egg-400: #ffe04d;
+  --color-egg-500: #ffd21a;
+  --color-egg-600: #e6b800;
+  --color-egg-700: #b38d00;
+  --color-egg-800: #806400;
+  --color-egg-900: #4d3c00;
 
   /* Cream/warm light scale */
   --color-lab-900: #fafaf8;
@@ -52,6 +52,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans, Arial, Helvetica, sans-serif);
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Card utility (Scientific Journal style) */
@@ -70,9 +71,12 @@ body {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Accent text */
+/* Accent text — warm amber readable on light backgrounds */
 .gradient-text {
-  color: #3730a3;
+  background: linear-gradient(135deg, #b38d00 0%, #e6b800 50%, #ffe04d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Grid background — very subtle on light */

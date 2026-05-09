@@ -209,7 +209,7 @@ export function LivePanel() {
         <button
           onClick={ask}
           disabled={!selectedCase || !hasKey || isRunning}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-egg-400 text-lab-900 text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-egg-300 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-egg-400 text-zinc-900 text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-egg-300 transition-colors"
         >
           {isRunning ? (
             <Loader2 className="w-3.5 h-3.5 animate-spin" />

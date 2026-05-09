@@ -319,7 +319,8 @@ function ArchitectureScene() {
   return (
     <div className="space-y-8">
       {/* Diagram */}
-      <div className="relative flex items-center justify-between gap-2 py-8">
+      <div className="overflow-x-auto -mx-2 px-2">
+      <div className="relative flex items-center justify-between gap-2 py-8 min-w-[440px]">
         {/* Background grid */}
         <div
           className="absolute inset-0 rounded-2xl opacity-[0.03]"
@@ -406,6 +407,7 @@ function ArchitectureScene() {
           </div>
         ))}
       </div>
+      </div>
 
       {/* Data sources below server */}
       <div className="flex justify-end gap-3 -mt-4 pr-0">
@@ -469,7 +471,7 @@ function ArchitectureScene() {
         <button
           onClick={runTrace}
           disabled={running}
-          className="px-5 py-2.5 rounded-lg bg-egg-400 text-lab-900 font-semibold text-sm hover:bg-egg-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="px-5 py-2.5 rounded-lg bg-egg-400 text-zinc-900 font-semibold text-sm hover:bg-egg-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {running ? "Running…" : activeStep >= 0 ? "Run again" : "Run Trace"}
         </button>
@@ -695,7 +697,7 @@ function TraceScene() {
         <button
           onClick={start}
           disabled={running}
-          className="px-5 py-2.5 rounded-lg bg-egg-400 text-lab-900 font-semibold text-sm hover:bg-egg-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="px-5 py-2.5 rounded-lg bg-egg-400 text-zinc-900 font-semibold text-sm hover:bg-egg-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {running ? "Tracing…" : visibleSteps > 0 ? "Replay" : "Start Trace"}
         </button>

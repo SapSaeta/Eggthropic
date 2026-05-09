@@ -83,7 +83,7 @@ export default function PromptPanel({
         {isPaused ? (
           <button
             onClick={onResume}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-semibold transition-all bg-egg-400 text-lab-900 hover:bg-egg-300 active:scale-95"
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-semibold transition-all bg-egg-400 text-zinc-900 hover:bg-egg-300 active:scale-95"
           >
             ▶ Resume
           </button>
@@ -95,7 +95,7 @@ export default function PromptPanel({
               "w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-semibold transition-all",
               isRunning
                 ? "bg-egg-400/30 text-egg-400/60 cursor-not-allowed"
-                : "bg-egg-400 text-lab-900 hover:bg-egg-300 active:scale-95",
+                : "bg-egg-400 text-zinc-900 hover:bg-egg-300 active:scale-95",
             ].join(" ")}
           >
             {isRunning ? (
