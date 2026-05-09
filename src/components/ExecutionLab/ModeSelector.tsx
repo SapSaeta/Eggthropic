@@ -15,12 +15,12 @@ const CATEGORY_COLOR: Record<ScenarioId, string> = {
   "skills": "text-egg-400 border-egg-400/40 bg-egg-400/10",
 };
 
-const IDLE_COLOR = "text-slate-500 border-white/8 bg-white/[0.02] hover:border-white/16 hover:text-slate-300";
+const IDLE_COLOR = "text-zinc-500 border-zinc-200 bg-white/[0.02] hover:border-zinc-300 hover:text-zinc-700";
 
 export default function ModeSelector({ active, onChange, disabled }: Props) {
   return (
     <div className="mb-4">
-      <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase block mb-2">
+      <span className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase block mb-2">
         Execution Mode
       </span>
       <div className="flex flex-wrap gap-2">
@@ -38,7 +38,7 @@ export default function ModeSelector({ active, onChange, disabled }: Props) {
               ].join(" ")}
             >
               <span className="font-mono text-[11px] font-semibold">{s.label}</span>
-              <span className="font-mono text-[9px] text-slate-500 leading-tight max-w-[120px] truncate">
+              <span className="font-mono text-[9px] text-zinc-500 leading-tight max-w-[120px] truncate">
                 {s.description}
               </span>
             </button>

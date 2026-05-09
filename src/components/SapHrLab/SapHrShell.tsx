@@ -25,17 +25,17 @@ export default function SapHrShell() {
   const [tab, setTab] = useState<TabId>("sim");
 
   return (
-    <div className="glass rounded-2xl border border-white/8 overflow-hidden">
+    <div className="glass rounded-2xl border border-zinc-200 overflow-hidden">
       {/* Tab bar */}
-      <div className="flex items-center border-b border-white/8 px-4 pt-4 gap-1">
+      <div className="flex items-center border-b border-zinc-200 px-4 pt-4 gap-1">
         {TABS.map((t) => (
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
             className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-t-lg text-xs font-mono transition-colors ${
               tab === t.id
-                ? "bg-white/8 text-white border border-b-0 border-white/10"
-                : "text-slate-500 hover:text-slate-300"
+                ? "bg-zinc-100 text-zinc-900 border border-b-0 border-zinc-200"
+                : "text-zinc-500 hover:text-zinc-700"
             }`}
           >
             {t.icon}

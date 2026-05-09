@@ -185,7 +185,7 @@ None — new props are optional with safe defaults.`,
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 function FileIcon({ ext, type }: { ext?: string; type: "dir" | "file" }) {
-  if (type === "dir") return <span className="text-slate-400">📁</span>;
+  if (type === "dir") return <span className="text-zinc-600">📁</span>;
   if (ext === "md") return <span>📄</span>;
   if (ext === "sh") return <span>⚙️</span>;
   return <span>📝</span>;
@@ -216,8 +216,8 @@ function StructureScene() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
       {/* File tree */}
-      <div className="glass rounded-2xl p-6 border border-white/8">
-        <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">
+      <div className="glass rounded-2xl p-6 border border-zinc-200">
+        <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-4">
           Project workspace
         </p>
         <div className="space-y-1 font-mono text-sm">
@@ -233,10 +233,10 @@ function StructureScene() {
                 transition={{ delay: i * 0.08 }}
                 className={`flex items-center gap-2 px-2 py-1 rounded-lg transition-colors duration-300 ${
                   isHighlighted
-                    ? "bg-egg-400/15 text-egg-300"
+                    ? "bg-egg-400/15 text-egg-400"
                     : node.active
-                    ? "text-slate-300"
-                    : "text-slate-600"
+                    ? "text-zinc-700"
+                    : "text-zinc-400"
                 }`}
                 style={{ paddingLeft: `${node.depth * 16 + 8}px` }}
               >
@@ -257,10 +257,10 @@ function StructureScene() {
         </div>
 
         {/* Marketplace note */}
-        <div className="mt-5 pt-4 border-t border-white/5">
-          <p className="text-[11px] text-slate-600 leading-relaxed">
+        <div className="mt-5 pt-4 border-t border-zinc-200">
+          <p className="text-[11px] text-zinc-400 leading-relaxed">
             Skills are also installable from{" "}
-            <span className="text-slate-500 font-mono">anthropics/skills</span>{" "}
+            <span className="text-zinc-500 font-mono">anthropics/skills</span>{" "}
             — copy the directory and they load automatically.
           </p>
         </div>
@@ -279,11 +279,11 @@ function StructureScene() {
                   ? "w-6 bg-egg-400"
                   : i < step
                   ? "w-3 bg-egg-400/40"
-                  : "w-3 bg-white/10"
+                  : "w-3 bg-zinc-200"
               }`}
             />
           ))}
-          <span className="ml-auto text-[10px] font-mono text-slate-600">
+          <span className="ml-auto text-[10px] font-mono text-zinc-400">
             {step + 1}/{DISCOVERY_STEPS.length}
           </span>
         </div>
@@ -301,15 +301,15 @@ function StructureScene() {
               <span className="w-5 h-5 rounded-full bg-egg-400/20 border border-egg-400/30 flex items-center justify-center text-[10px] font-mono text-egg-400">
                 {step + 1}
               </span>
-              <span className="text-xs font-semibold text-egg-300">
+              <span className="text-xs font-semibold text-egg-400">
                 {currentStep.label}
               </span>
             </div>
-            <p className="text-sm text-slate-400 leading-relaxed mb-4">
+            <p className="text-sm text-zinc-600 leading-relaxed mb-4">
               {currentStep.description}
             </p>
             {currentStep.badge && (
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-egg-400/10 border border-egg-400/20 font-mono text-sm text-egg-300">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-egg-400/10 border border-egg-400/20 font-mono text-sm text-egg-400">
                 {currentStep.badge}
               </div>
             )}
@@ -318,7 +318,7 @@ function StructureScene() {
 
         <button
           onClick={reset}
-          className="self-start text-xs font-mono text-slate-500 hover:text-slate-300 transition-colors flex items-center gap-1.5"
+          className="self-start text-xs font-mono text-zinc-500 hover:text-zinc-700 transition-colors flex items-center gap-1.5"
         >
           <span>↺</span> Replay
         </button>
@@ -362,10 +362,10 @@ function AnatomyScene() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
       {/* SKILL.md viewer */}
-      <div className="glass rounded-2xl border border-white/8 overflow-hidden">
-        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/5 bg-white/[0.02]">
-          <span className="text-[10px] font-mono text-slate-500">📄 SKILL.md</span>
-          <span className="ml-auto text-[10px] text-slate-600 font-mono">
+      <div className="glass rounded-2xl border border-zinc-200 overflow-hidden">
+        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-zinc-200 bg-white/[0.02]">
+          <span className="text-[10px] font-mono text-zinc-500">📄 SKILL.md</span>
+          <span className="ml-auto text-[10px] text-zinc-400 font-mono">
             .claude/skills/pr-describe/
           </span>
         </div>
@@ -393,8 +393,8 @@ function AnatomyScene() {
                     isActive && fieldConf
                       ? fieldConf.color
                       : line.kind === "delimiter"
-                      ? "text-slate-600"
-                      : "text-slate-400"
+                      ? "text-zinc-400"
+                      : "text-zinc-600"
                   }
                 >
                   {line.text || " "}
@@ -403,8 +403,8 @@ function AnatomyScene() {
             );
           })}
         </div>
-        <div className="px-4 py-2 border-t border-white/5 bg-white/[0.02]">
-          <p className="text-[10px] text-slate-600">Click any line to inspect that field →</p>
+        <div className="px-4 py-2 border-t border-zinc-200 bg-white/[0.02]">
+          <p className="text-[10px] text-zinc-400">Click any line to inspect that field →</p>
         </div>
       </div>
 
@@ -421,7 +421,7 @@ function AnatomyScene() {
                 className={`px-3 py-1.5 rounded-lg text-xs font-mono border transition-all duration-150 ${
                   active === f
                     ? `${fc.bgClass} ${fc.borderClass} ${fc.color}`
-                    : "bg-white/[0.02] border-white/8 text-slate-500 hover:text-slate-300"
+                    : "bg-white/[0.02] border-zinc-200 text-zinc-500 hover:text-zinc-700"
                 }`}
               >
                 {fc.label}
@@ -447,13 +447,13 @@ function AnatomyScene() {
                 className={`text-[9px] px-1.5 py-0.5 rounded font-mono uppercase tracking-wide ${
                   field.required
                     ? "bg-rose-500/15 text-rose-400 border border-rose-500/20"
-                    : "bg-slate-500/15 text-slate-500 border border-slate-500/20"
+                    : "bg-slate-500/15 text-zinc-500 border border-slate-500/20"
                 }`}
               >
                 {field.required ? "required" : "optional"}
               </span>
             </div>
-            <p className="text-sm text-slate-400 leading-relaxed mb-4">
+            <p className="text-sm text-zinc-600 leading-relaxed mb-4">
               {field.description}
             </p>
             <div className={`rounded-xl p-3 ${field.bgClass} border ${field.borderClass}`}>
@@ -504,11 +504,11 @@ function InvocationScene() {
 
   function lineColor(kind: TraceEntry["kind"]) {
     switch (kind) {
-      case "input": return "text-egg-300";
-      case "system": return "text-slate-500";
+      case "input": return "text-egg-400";
+      case "system": return "text-zinc-500";
       case "diff": return "text-cyan-400/80";
       case "title": return "text-emerald-300 font-semibold";
-      case "body": return "text-slate-300";
+      case "body": return "text-zinc-700";
     }
   }
 
@@ -525,14 +525,14 @@ function InvocationScene() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
       {/* Terminal */}
-      <div className="lg:col-span-3 glass rounded-2xl border border-white/8 overflow-hidden flex flex-col">
-        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/5 bg-white/[0.02]">
+      <div className="lg:col-span-3 glass rounded-2xl border border-zinc-200 overflow-hidden flex flex-col">
+        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-zinc-200 bg-white/[0.02]">
           <div className="flex gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-rose-500/50" />
             <span className="w-2.5 h-2.5 rounded-full bg-amber-500/50" />
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/50" />
           </div>
-          <span className="text-[10px] font-mono text-slate-500 ml-2">
+          <span className="text-[10px] font-mono text-zinc-500 ml-2">
             claude-code — bash
           </span>
           {running && (
@@ -550,7 +550,7 @@ function InvocationScene() {
           className="flex-1 p-4 font-mono text-xs leading-5 overflow-auto max-h-80 space-y-0.5"
         >
           {visible.length === 0 && !running && (
-            <p className="text-slate-600">Press &ldquo;Run /pr-describe&rdquo; to start the trace.</p>
+            <p className="text-zinc-400">Press &ldquo;Run /pr-describe&rdquo; to start the trace.</p>
           )}
           {INVOCATION_TRACE.map((entry, i) =>
             visible.includes(i) ? (
@@ -581,13 +581,13 @@ function InvocationScene() {
         <button
           onClick={start}
           disabled={running}
-          className="w-full py-3 rounded-xl bg-egg-400/15 border border-egg-400/25 text-egg-300 text-sm font-mono hover:bg-egg-400/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full py-3 rounded-xl bg-egg-400/15 border border-egg-400/25 text-egg-400 text-sm font-mono hover:bg-egg-400/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {running ? "Running..." : done ? "↺ Run again" : "▶ Run /pr-describe"}
         </button>
 
-        <div className="glass rounded-2xl p-5 border border-white/8 flex-1 space-y-4">
-          <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">
+        <div className="glass rounded-2xl p-5 border border-zinc-200 flex-1 space-y-4">
+          <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
             What just happened
           </p>
           {[
@@ -598,8 +598,8 @@ function InvocationScene() {
             <div key={item.label} className="flex gap-3">
               <span className={`mt-1.5 w-2 h-2 rounded-full ${item.color} shrink-0`} />
               <div>
-                <p className="text-xs font-semibold text-white mb-0.5">{item.label}</p>
-                <p className="text-xs text-slate-500 leading-relaxed">{item.detail}</p>
+                <p className="text-xs font-semibold text-zinc-900 mb-0.5">{item.label}</p>
+                <p className="text-xs text-zinc-500 leading-relaxed">{item.detail}</p>
               </div>
             </div>
           ))}
@@ -623,29 +623,29 @@ export default function SkillsExplainer() {
   const [scene, setScene] = useState<Scene>("structure");
 
   return (
-    <div className="rounded-2xl border border-white/8 bg-[#080c14] overflow-hidden">
+    <div className="rounded-2xl border border-zinc-200 bg-[#080c14] overflow-hidden">
       {/* Header */}
-      <div className="border-b border-white/5 px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
+      <div className="border-b border-zinc-200 px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-3">
           <div className="w-7 h-7 rounded-lg bg-egg-400/15 border border-egg-400/20 flex items-center justify-center text-sm">
             ⚡
           </div>
           <div>
-            <p className="text-sm font-semibold text-white leading-none">Agent Skills</p>
-            <p className="text-[10px] font-mono text-slate-600 mt-0.5">interactive explainer</p>
+            <p className="text-sm font-semibold text-zinc-900 leading-none">Agent Skills</p>
+            <p className="text-[10px] font-mono text-zinc-400 mt-0.5">interactive explainer</p>
           </div>
         </div>
 
         {/* Scene tabs */}
-        <div className="flex items-center gap-1 p-1 rounded-xl bg-white/[0.03] border border-white/5">
+        <div className="flex items-center gap-1 p-1 rounded-xl bg-white/[0.03] border border-zinc-200">
           {SCENES.map((s) => (
             <button
               key={s.id}
               onClick={() => setScene(s.id)}
               className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-150 whitespace-nowrap ${
                 scene === s.id
-                  ? "bg-egg-400/20 text-egg-300 border border-egg-400/25"
-                  : "text-slate-500 hover:text-slate-300"
+                  ? "bg-egg-400/20 text-egg-400 border border-egg-400/25"
+                  : "text-zinc-500 hover:text-zinc-700"
               }`}
             >
               <span className="mr-1">{s.icon}</span>
@@ -673,15 +673,15 @@ export default function SkillsExplainer() {
       </div>
 
       {/* Footer */}
-      <div className="border-t border-white/5 px-5 py-3 flex items-center justify-between gap-2">
-        <p className="text-[10px] font-mono text-slate-700">
+      <div className="border-t border-zinc-200 px-5 py-3 flex items-center justify-between gap-2">
+        <p className="text-[10px] font-mono text-zinc-700">
           Skills format · SKILL.md + YAML frontmatter
         </p>
         <a
           href="https://www.anthropic.com/news/skills"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[10px] font-mono text-slate-600 hover:text-slate-400 transition-colors"
+          className="text-[10px] font-mono text-zinc-400 hover:text-zinc-600 transition-colors"
         >
           anthropic.com/news/skills ↗
         </a>

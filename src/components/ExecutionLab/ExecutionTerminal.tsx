@@ -10,10 +10,10 @@ interface Props {
 }
 
 const kindColor: Record<string, string> = {
-  system: "text-slate-400",
+  system: "text-zinc-600",
   success: "text-emerald-400",
   warning: "text-amber-400",
-  input: "text-egg-300",
+  input: "text-egg-400",
   code: "text-violet-300",
 };
 
@@ -29,13 +29,13 @@ export default function ExecutionTerminal({ logs, status }: Props) {
   return (
     <div className="glass rounded-xl overflow-hidden flex flex-col h-full min-h-[320px]">
       {/* Header */}
-      <div className="flex items-center justify-between px-3 py-2 border-b border-white/8 bg-white/[0.02] shrink-0">
+      <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-200 bg-white/[0.02] shrink-0">
         <div className="flex items-center gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full bg-rose-500/50" />
           <span className="w-2.5 h-2.5 rounded-full bg-amber-500/50" />
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/50" />
         </div>
-        <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase">
+        <span className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase">
           Exec Log
         </span>
         <div className="w-16 flex justify-end">
@@ -62,7 +62,7 @@ export default function ExecutionTerminal({ logs, status }: Props) {
         style={{ background: "#060a11", maxHeight: "420px" }}
       >
         {logs.length === 0 ? (
-          <p className="text-slate-600 text-[11px]">Press Run Simulation to start the trace.</p>
+          <p className="text-zinc-400 text-[11px]">Press Run Simulation to start the trace.</p>
         ) : (
           <AnimatePresence initial={false}>
             {logs.map((log, i) => (
@@ -73,10 +73,10 @@ export default function ExecutionTerminal({ logs, status }: Props) {
                 transition={{ duration: 0.2 }}
                 className="flex gap-2 mb-0.5"
               >
-                <span className="text-slate-600 select-none shrink-0">
+                <span className="text-zinc-400 select-none shrink-0">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className={kindColor[log.kind] ?? "text-slate-400"}>{log.text}</span>
+                <span className={kindColor[log.kind] ?? "text-zinc-600"}>{log.text}</span>
               </motion.div>
             ))}
           </AnimatePresence>

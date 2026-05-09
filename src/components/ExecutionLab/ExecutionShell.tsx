@@ -200,8 +200,8 @@ export default function ExecutionShell() {
               className={[
                 "px-3 py-1.5 rounded-lg text-[11px] font-mono transition-all",
                 viewMode === v
-                  ? "bg-white/10 text-white border border-white/16"
-                  : "text-slate-500 hover:text-slate-300 border border-transparent",
+                  ? "bg-zinc-100 text-zinc-900 border border-zinc-300"
+                  : "text-zinc-500 hover:text-zinc-700 border border-transparent",
               ].join(" ")}
             >
               {v === "run" ? "▶ Run" : "⊞ Compare"}
@@ -217,16 +217,16 @@ export default function ExecutionShell() {
           {/* Story banner */}
           <div className="mb-4 glass rounded-xl px-4 py-3 flex flex-col sm:flex-row gap-3 sm:gap-6">
             <div className="flex-1">
-              <span className="font-mono text-[9px] tracking-widest text-slate-600 uppercase block mb-1">
+              <span className="font-mono text-[9px] tracking-widest text-zinc-400 uppercase block mb-1">
                 What you are watching
               </span>
-              <p className="text-[11px] text-slate-400 leading-relaxed">{scenario.story.watching}</p>
+              <p className="text-[11px] text-zinc-600 leading-relaxed">{scenario.story.watching}</p>
             </div>
             <div className="flex-1">
-              <span className="font-mono text-[9px] tracking-widest text-slate-600 uppercase block mb-1">
+              <span className="font-mono text-[9px] tracking-widest text-zinc-400 uppercase block mb-1">
                 What this is not
               </span>
-              <p className="text-[11px] text-slate-500 leading-relaxed">{scenario.story.notThis}</p>
+              <p className="text-[11px] text-zinc-500 leading-relaxed">{scenario.story.notThis}</p>
             </div>
           </div>
 

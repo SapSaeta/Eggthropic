@@ -41,7 +41,7 @@ export default function NotesPage() {
       </div>
 
       <div className="mt-12 glass rounded-xl p-6 text-center">
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-zinc-600">
           Notes are published as meaningful Anthropic and Claude updates happen.
           <br />
           Content is based on official sources — no speculation, no invented features.

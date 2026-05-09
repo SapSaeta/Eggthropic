@@ -38,15 +38,15 @@ export default function PromptPanel({
   return (
     <div className="glass rounded-xl p-4 flex flex-col gap-4">
       <div>
-        <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase block mb-2">
+        <span className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase block mb-2">
           Prompt
         </span>
-        <div className="rounded-lg border border-white/8 bg-white/[0.02] px-3 py-2.5">
-          <p className="font-mono text-xs text-slate-300 leading-relaxed">{scenario.prompt}</p>
+        <div className="rounded-lg border border-zinc-200 bg-white/[0.02] px-3 py-2.5">
+          <p className="font-mono text-xs text-zinc-700 leading-relaxed">{scenario.prompt}</p>
         </div>
       </div>
 
-      <p className="text-[11px] text-slate-500 leading-relaxed">{scenario.description}</p>
+      <p className="text-[11px] text-zinc-500 leading-relaxed">{scenario.description}</p>
 
       {/* Phase indicator */}
       {!isIdle && (
@@ -67,12 +67,12 @@ export default function PromptPanel({
                     ? "bg-egg-400"
                     : phaseDisplay !== null && i === phaseDisplay - 1 && isRunning
                     ? "bg-egg-400 animate-pulse"
-                    : "bg-white/10",
+                    : "bg-zinc-200",
                 ].join(" ")}
               />
             ))}
           </div>
-          <span className="font-mono text-[9px] text-slate-600 shrink-0">
+          <span className="font-mono text-[9px] text-zinc-400 shrink-0">
             {isComplete ? "done" : phaseDisplay ? `${phaseDisplay}/${TOTAL_PHASES}` : "—"}
           </span>
         </motion.div>
@@ -123,7 +123,7 @@ export default function PromptPanel({
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             onClick={onStepForward}
-            className="w-full px-4 py-2 rounded-lg text-xs font-mono text-slate-300 glass border border-white/12 hover:border-white/20 hover:text-white transition-all active:scale-95"
+            className="w-full px-4 py-2 rounded-lg text-xs font-mono text-zinc-700 glass border border-zinc-200 hover:border-zinc-300 hover:text-zinc-900 transition-all active:scale-95"
           >
             ⏭ Step Forward
           </motion.button>
@@ -135,7 +135,7 @@ export default function PromptPanel({
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             onClick={onPause}
-            className="w-full px-4 py-2 rounded-lg text-xs font-mono text-slate-400 hover:text-slate-300 glass border border-white/8 hover:border-white/14 transition-all active:scale-95"
+            className="w-full px-4 py-2 rounded-lg text-xs font-mono text-zinc-600 hover:text-zinc-700 glass border border-zinc-200 hover:border-zinc-300 transition-all active:scale-95"
           >
             ‖ Pause
           </motion.button>
@@ -147,7 +147,7 @@ export default function PromptPanel({
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             onClick={onReset}
-            className="w-full px-4 py-2 rounded-lg text-xs font-mono text-slate-600 hover:text-slate-400 glass border border-white/5 hover:border-white/10 transition-all active:scale-95"
+            className="w-full px-4 py-2 rounded-lg text-xs font-mono text-zinc-400 hover:text-zinc-600 glass border border-zinc-200 hover:border-zinc-200 transition-all active:scale-95"
           >
             ↺ Reset
           </motion.button>

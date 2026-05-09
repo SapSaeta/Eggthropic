@@ -14,44 +14,28 @@ export function AnimatedEgg({
   variant = "hero",
 }: AnimatedEggProps) {
   const isHero = variant === "hero";
-  const isGlow = variant === "glow";
 
   return (
     <div
       className={`relative flex items-center justify-center ${className}`}
       style={{ width: size, height: size }}
     >
-      {/* Outer glow ring */}
-      {(isHero || isGlow) && (
-        <motion.div
-          className="absolute rounded-full"
-          style={{
-            width: size * 1.4,
-            height: size * 1.4,
-            background:
-              "radial-gradient(circle, rgba(255,210,26,0.08) 0%, transparent 70%)",
-          }}
-          animate={{ scale: [1, 1.08, 1], opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        />
-      )}
-
-      {/* Mid ring */}
+      {/* Subtle outer ring */}
       {isHero && (
         <motion.div
-          className="absolute rounded-full border border-egg-400/20"
+          className="absolute rounded-full border border-egg-400/15"
           style={{ width: size * 1.1, height: size * 1.1 }}
           animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
         >
           {/* Orbit dot */}
           <div
             className="absolute bg-egg-400 rounded-full"
             style={{
-              width: 6,
-              height: 6,
+              width: 5,
+              height: 5,
               top: "50%",
-              left: -3,
+              left: -2.5,
               transform: "translateY(-50%)",
             }}
           />
@@ -72,13 +56,13 @@ export function AnimatedEgg({
       >
         <defs>
           <radialGradient id="eggGrad" cx="40%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#fff5b3" />
-            <stop offset="40%" stopColor="#ffd21a" />
-            <stop offset="80%" stopColor="#b38d00" />
-            <stop offset="100%" stopColor="#4d3c00" />
+            <stop offset="0%" stopColor="#c7d2fe" />
+            <stop offset="40%" stopColor="#4338ca" />
+            <stop offset="80%" stopColor="#312e81" />
+            <stop offset="100%" stopColor="#1e1c52" />
           </radialGradient>
           <radialGradient id="eggGloss" cx="35%" cy="30%" r="30%">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.5)" />
+            <stop offset="0%" stopColor="rgba(255,255,255,0.55)" />
             <stop offset="100%" stopColor="rgba(255,255,255,0)" />
           </radialGradient>
           <filter id="eggShadow">
@@ -86,7 +70,7 @@ export function AnimatedEgg({
               dx="0"
               dy="4"
               stdDeviation="6"
-              floodColor="rgba(0,0,0,0.4)"
+              floodColor="rgba(55,48,163,0.2)"
             />
           </filter>
         </defs>
@@ -107,7 +91,7 @@ export function AnimatedEgg({
         {/* Circuit line decoration */}
         {isHero && (
           <motion.g
-            stroke="rgba(255,210,26,0.3)"
+            stroke="rgba(167,139,250,0.4)"
             strokeWidth="0.8"
             fill="none"
             initial={{ opacity: 0 }}
@@ -116,10 +100,10 @@ export function AnimatedEgg({
           >
             <line x1="20" y1="70" x2="36" y2="70" />
             <line x1="36" y1="70" x2="36" y2="78" />
-            <circle cx="20" cy="70" r="1.5" fill="rgba(255,210,26,0.5)" />
+            <circle cx="20" cy="70" r="1.5" fill="rgba(167,139,250,0.6)" />
             <line x1="64" y1="58" x2="80" y2="58" />
             <line x1="64" y1="58" x2="64" y2="66" />
-            <circle cx="80" cy="58" r="1.5" fill="rgba(255,210,26,0.5)" />
+            <circle cx="80" cy="58" r="1.5" fill="rgba(167,139,250,0.6)" />
           </motion.g>
         )}
       </motion.svg>
@@ -134,7 +118,7 @@ export function AnimatedEgg({
             className="absolute left-0 right-0 h-px"
             style={{
               background:
-                "linear-gradient(90deg, transparent, rgba(255,210,26,0.4), transparent)",
+                "linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent)",
             }}
             animate={{ top: ["0%", "100%", "0%"] }}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}

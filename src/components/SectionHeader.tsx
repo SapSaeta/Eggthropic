@@ -34,16 +34,19 @@ export function SectionHeader({
     >
       {label && (
         <span className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-egg-400 uppercase mb-3">
-          <span className="w-6 h-px bg-egg-400/50" />
+          <span className="w-6 h-px bg-egg-400/40" />
           {label}
-          <span className="w-6 h-px bg-egg-400/50" />
+          <span className="w-6 h-px bg-egg-400/40" />
         </span>
       )}
-      <Heading className="text-2xl sm:text-3xl font-semibold text-white leading-tight">
+      <Heading
+        className="text-2xl sm:text-3xl font-semibold text-zinc-900 leading-tight"
+        style={{ fontFamily: "var(--font-playfair, serif)" }}
+      >
         {title}
       </Heading>
       {description && (
-        <p className="mt-3 text-slate-400 max-w-2xl leading-relaxed">
+        <p className="mt-3 text-zinc-600 max-w-2xl leading-relaxed">
           {description}
         </p>
       )}

@@ -28,15 +28,15 @@ function colorize(raw: string, language: "tsx" | "json" | "md"): string {
         if (/^#\s/.test(line)) return `<span class="text-egg-400">${line}</span>`;
         if (/^- \[x\]/.test(line)) return `<span class="text-emerald-400">${line}</span>`;
         if (/^- \[ \]/.test(line)) return `<span class="text-amber-400">${line}</span>`;
-        if (/^\*\*/.test(line)) return `<span class="text-white">${line}</span>`;
-        if (/^-\s/.test(line)) return `<span class="text-slate-300">${line}</span>`;
-        return `<span class="text-slate-400">${line}</span>`;
+        if (/^\*\*/.test(line)) return `<span class="text-zinc-900">${line}</span>`;
+        if (/^-\s/.test(line)) return `<span class="text-zinc-700">${line}</span>`;
+        return `<span class="text-zinc-600">${line}</span>`;
       })
       .join("\n");
   }
 
   // TSX
-  s = s.replace(/(\/\/.+)/g, '<span class="text-slate-500">$1</span>');
+  s = s.replace(/(\/\/.+)/g, '<span class="text-zinc-500">$1</span>');
   s = s.replace(
     /\b(export|function|return|const|let|var|import|from|default)\b/g,
     '<span class="text-violet-400">$1</span>'
@@ -59,8 +59,8 @@ export default function ResultPreview({ visible, result }: Props) {
           className="glass rounded-2xl overflow-hidden mt-4"
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-5 py-3 border-b border-white/8 bg-white/[0.02]">
-            <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase">
+          <div className="flex items-center justify-between px-5 py-3 border-b border-zinc-200 bg-white/[0.02]">
+            <span className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase">
               Simulation Output
             </span>
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 text-[10px] font-mono">
@@ -75,26 +75,26 @@ export default function ResultPreview({ visible, result }: Props) {
               <div className="flex flex-wrap gap-2">
                 {result.metrics.map((m) => (
                   <div key={m.label} className="glass rounded-lg px-2.5 py-1.5 flex items-baseline gap-1.5">
-                    <span className="font-mono text-[10px] text-slate-500 uppercase tracking-wide">
+                    <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-wide">
                       {m.label}:
                     </span>
-                    <span className="font-mono text-xs text-white">{m.value}</span>
+                    <span className="font-mono text-xs text-zinc-900">{m.value}</span>
                   </div>
                 ))}
               </div>
 
               {/* List */}
               <div className="glass rounded-xl overflow-hidden">
-                <div className="px-3 py-2 border-b border-white/8">
-                  <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase">
+                <div className="px-3 py-2 border-b border-zinc-200">
+                  <span className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase">
                     {result.listTitle}
                   </span>
                 </div>
                 <div className="divide-y divide-white/5">
                   {result.listItems.map((item) => (
                     <div key={item.label} className="flex items-center justify-between px-3 py-2">
-                      <span className="font-mono text-[11px] text-slate-300 truncate">{item.label}</span>
-                      <span className="font-mono text-[9px] text-slate-500 ml-2 shrink-0">{item.badge}</span>
+                      <span className="font-mono text-[11px] text-zinc-700 truncate">{item.label}</span>
+                      <span className="font-mono text-[9px] text-zinc-500 ml-2 shrink-0">{item.badge}</span>
                     </div>
                   ))}
                 </div>
@@ -108,7 +108,7 @@ export default function ResultPreview({ visible, result }: Props) {
                   </span>
                   <ul className="space-y-1.5">
                     {result.safetyNotes.map((note, i) => (
-                      <li key={i} className="text-[10px] text-slate-400 leading-snug flex gap-1.5">
+                      <li key={i} className="text-[10px] text-zinc-600 leading-snug flex gap-1.5">
                         <span className="text-amber-400 shrink-0 mt-px">·</span>
                         {note}
                       </li>
@@ -120,7 +120,7 @@ export default function ResultPreview({ visible, result }: Props) {
               {/* Related links */}
               {result.links.length > 0 && (
                 <div className="flex flex-col gap-1.5">
-                  <span className="font-mono text-[9px] tracking-widest text-slate-600 uppercase">
+                  <span className="font-mono text-[9px] tracking-widest text-zinc-400 uppercase">
                     Related
                   </span>
                   {result.links.map((link) => (
@@ -138,10 +138,10 @@ export default function ResultPreview({ visible, result }: Props) {
 
             {/* Right: code preview */}
             <div className="flex-1 min-w-0">
-              <div className="rounded-xl overflow-hidden border border-white/8">
-                <div className="flex items-center justify-between px-3 py-2 bg-white/[0.03] border-b border-white/8">
-                  <span className="font-mono text-[10px] text-slate-500">{result.codeFile}</span>
-                  <span className="font-mono text-[9px] text-slate-600 uppercase tracking-wide">
+              <div className="rounded-xl overflow-hidden border border-zinc-200">
+                <div className="flex items-center justify-between px-3 py-2 bg-white/[0.03] border-b border-zinc-200">
+                  <span className="font-mono text-[10px] text-zinc-500">{result.codeFile}</span>
+                  <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-wide">
                     {result.codeLanguage}
                   </span>
                 </div>
@@ -155,7 +155,7 @@ export default function ResultPreview({ visible, result }: Props) {
           </div>
 
           <div className="px-5 pb-4">
-            <p className="text-[10px] text-slate-600">
+            <p className="text-[10px] text-zinc-400">
               Illustrative output only. Generated by Eggthropic Execution Lab — not an official Anthropic interface. This lab visualizes common agentic workflow patterns and does not reflect Claude&apos;s private reasoning or internal execution.
             </p>
           </div>

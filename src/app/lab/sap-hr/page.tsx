@@ -40,7 +40,7 @@ export default function SapHrLabPage() {
       <div className="mb-8">
         <Link
           href="/lab"
-          className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-500 hover:text-slate-300 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-500 hover:text-zinc-700 transition-colors"
         >
           <ArrowLeft className="w-3 h-3" />
           Back to Lab
@@ -58,14 +58,14 @@ export default function SapHrLabPage() {
           </span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+        <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 mb-3">
           SAP HR Functional AI Assistant
         </h1>
-        <p className="text-slate-400 max-w-2xl leading-relaxed">
+        <p className="text-zinc-600 max-w-2xl leading-relaxed">
           An AI assistant for SAP HR On-Premise functional teams — answering infotype questions,
           process flow queries, and payroll readiness checks using a structured Notion knowledge base
           as context.{" "}
-          <span className="text-slate-500">
+          <span className="text-zinc-500">
             No SAP system connection. No ABAP generation. Just functional knowledge, made queryable.
           </span>
         </p>
@@ -74,7 +74,7 @@ export default function SapHrLabPage() {
           {["Claude API", "Notion KB", "SAP HCM", "Streaming"].map((tag) => (
             <span
               key={tag}
-              className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[11px] font-mono text-slate-400"
+              className="px-2 py-0.5 rounded-md bg-zinc-50 border border-zinc-200 text-[11px] font-mono text-zinc-600"
             >
               {tag}
             </span>
@@ -91,7 +91,7 @@ export default function SapHrLabPage() {
           <p className="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-3">
             What this is
           </p>
-          <ul className="space-y-2 text-sm text-slate-400">
+          <ul className="space-y-2 text-sm text-zinc-600">
             {[
               "A Claude-powered functional knowledge assistant",
               "Backed by a curated Notion knowledge base (infotypes, processes, terms)",
@@ -111,7 +111,7 @@ export default function SapHrLabPage() {
           <p className="text-xs font-mono text-rose-400 uppercase tracking-widest mb-3">
             What this is not
           </p>
-          <ul className="space-y-2 text-sm text-slate-400">
+          <ul className="space-y-2 text-sm text-zinc-600">
             {[
               "Not connected to a live SAP system",
               "Not an ABAP code generator",
@@ -129,28 +129,28 @@ export default function SapHrLabPage() {
       </div>
 
       {/* Technical note */}
-      <div className="mt-8 glass rounded-xl p-5 border border-white/8">
-        <p className="text-xs font-mono text-slate-500 uppercase tracking-widest mb-2">
+      <div className="mt-8 glass rounded-xl p-5 border border-zinc-200">
+        <p className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-2">
           How the live tab works
         </p>
-        <p className="text-sm text-slate-400 leading-relaxed">
+        <p className="text-sm text-zinc-600 leading-relaxed">
           Each predefined case includes a curated subset of the knowledge base (infotype definitions,
           field lists, process flows) assembled as structured text context. When you click{" "}
-          <span className="font-mono text-slate-300">Ask Claude</span>, the Anthropic SDK runs
+          <span className="font-mono text-zinc-700">Ask Claude</span>, the Anthropic SDK runs
           directly in your browser using your API key —{" "}
-          <span className="text-slate-300">this server is never involved</span>. Your key is stored
-          in <span className="font-mono text-slate-300">localStorage</span> and sent only to{" "}
-          <span className="font-mono text-slate-300">api.anthropic.com</span>.
+          <span className="text-zinc-700">this server is never involved</span>. Your key is stored
+          in <span className="font-mono text-zinc-700">localStorage</span> and sent only to{" "}
+          <span className="font-mono text-zinc-700">api.anthropic.com</span>.
           Claude reasons over the provided knowledge only — it is explicitly instructed not to invent
           field names or configuration values. Response streams back token by token.
         </p>
       </div>
 
       {/* Footer nav */}
-      <div className="mt-14 pt-8 border-t border-white/5 flex flex-wrap gap-3">
+      <div className="mt-14 pt-8 border-t border-zinc-200 flex flex-wrap gap-3">
         <Link
           href="/lab"
-          className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-700 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           All lab experiments
@@ -164,7 +164,7 @@ export default function SapHrLabPage() {
             <Link
               key={link.href}
               href={link.href}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg glass border border-white/8 text-xs font-mono text-slate-400 hover:text-slate-200 hover:border-white/16 transition-all"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg glass border border-zinc-200 text-xs font-mono text-zinc-600 hover:text-zinc-900 hover:border-zinc-300 transition-all"
             >
               {link.label}
               <ArrowRight className="w-3 h-3" />

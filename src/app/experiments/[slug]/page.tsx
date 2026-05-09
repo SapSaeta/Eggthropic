@@ -75,42 +75,42 @@ export default async function ExperimentPage({ params }: Props) {
         tools={exp.tools}
       />
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-slate-500 mb-8">
+      <div className="flex items-center gap-2 text-sm text-zinc-500 mb-8">
         <Link
           href="/experiments"
-          className="hover:text-white transition-colors flex items-center gap-1"
+          className="hover:text-zinc-900 transition-colors flex items-center gap-1"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           Experiments
         </Link>
         <span>/</span>
-        <span className="text-slate-400 truncate">{exp.title}</span>
+        <span className="text-zinc-600 truncate">{exp.title}</span>
       </div>
 
       {/* Header */}
       <div className="mb-10">
         <div className="flex flex-wrap items-center gap-3 mb-4">
-          <span className="text-xs font-mono text-slate-500">
+          <span className="text-xs font-mono text-zinc-500">
             {categoryLabel[exp.category]}
           </span>
           <StatusBadge status={exp.status} />
-          <span className="text-xs font-mono text-slate-500 capitalize">
+          <span className="text-xs font-mono text-zinc-500 capitalize">
             {exp.difficulty}
           </span>
-          <time className="text-xs font-mono text-slate-500 ml-auto">
+          <time className="text-xs font-mono text-zinc-500 ml-auto">
             {formatDate(exp.date)}
           </time>
         </div>
         {exp.lastVerified && (
-          <p className="text-[10px] font-mono text-slate-600 mb-4">
+          <p className="text-[10px] font-mono text-zinc-400 mb-4">
             Content verified {exp.lastVerified} · Eggthropic experiment
           </p>
         )}
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-4">
+        <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 leading-tight mb-4">
           {exp.title}
         </h1>
-        <p className="text-lg text-slate-400 leading-relaxed">{exp.description}</p>
+        <p className="text-lg text-zinc-600 leading-relaxed">{exp.description}</p>
 
         <div className="flex flex-wrap gap-2 mt-5">
           {exp.tools.map((tool) => (
@@ -122,11 +122,11 @@ export default async function ExperimentPage({ params }: Props) {
       {/* Content sections */}
       <div className="space-y-10">
         <Section title="Goal">
-          <p className="text-slate-300 leading-relaxed">{exp.goal}</p>
+          <p className="text-zinc-700 leading-relaxed">{exp.goal}</p>
         </Section>
 
         <Section title="Context">
-          <p className="text-slate-300 leading-relaxed">{exp.context}</p>
+          <p className="text-zinc-700 leading-relaxed">{exp.context}</p>
         </Section>
 
         {exp.prompt && (
@@ -137,7 +137,7 @@ export default async function ExperimentPage({ params }: Props) {
                   prompt
                 </span>
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed font-mono whitespace-pre-wrap">
+              <p className="text-sm text-zinc-700 leading-relaxed font-mono whitespace-pre-wrap">
                 {exp.prompt}
               </p>
             </div>
@@ -145,13 +145,13 @@ export default async function ExperimentPage({ params }: Props) {
         )}
 
         <Section title="Implementation notes">
-          <p className="text-slate-300 leading-relaxed">
+          <p className="text-zinc-700 leading-relaxed">
             {exp.implementationNotes}
           </p>
         </Section>
 
         <Section title="Result">
-          <p className="text-slate-300 leading-relaxed">{exp.result}</p>
+          <p className="text-zinc-700 leading-relaxed">{exp.result}</p>
         </Section>
 
         {/* What worked / failed */}
@@ -161,7 +161,7 @@ export default async function ExperimentPage({ params }: Props) {
               {exp.whatWorked.map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-slate-300 leading-relaxed">
+                  <span className="text-sm text-zinc-700 leading-relaxed">
                     {item}
                   </span>
                 </li>
@@ -174,7 +174,7 @@ export default async function ExperimentPage({ params }: Props) {
               {exp.whatFailed.map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5">
                   <XCircle className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-slate-300 leading-relaxed">
+                  <span className="text-sm text-zinc-700 leading-relaxed">
                     {item}
                   </span>
                 </li>
@@ -184,7 +184,7 @@ export default async function ExperimentPage({ params }: Props) {
         </div>
 
         <Section title="Next iteration">
-          <p className="text-slate-300 leading-relaxed">{exp.nextIteration}</p>
+          <p className="text-zinc-700 leading-relaxed">{exp.nextIteration}</p>
         </Section>
 
         {/* References */}
@@ -197,7 +197,7 @@ export default async function ExperimentPage({ params }: Props) {
                     href={ref.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-sm text-lab-100 hover:text-egg-300 transition-colors"
+                    className="flex items-center gap-1.5 text-sm text-zinc-700 hover:text-egg-400 transition-colors"
                   >
                     <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
                     {ref.label}
@@ -215,12 +215,12 @@ export default async function ExperimentPage({ params }: Props) {
           <div className="flex items-start gap-3">
             <FlaskConical className="w-5 h-5 text-egg-400 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm text-slate-300 mb-2">
+              <p className="text-sm text-zinc-700 mb-2">
                 This experiment has an interactive version in the Lab.
               </p>
               <Link
                 href={exp.labPage}
-                className="inline-flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-300 transition-colors font-mono"
+                className="inline-flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-400 transition-colors font-mono"
               >
                 Open interactive lab
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -231,10 +231,10 @@ export default async function ExperimentPage({ params }: Props) {
       )}
 
       {/* Back */}
-      <div className="mt-12 pt-8 border-t border-white/5">
+      <div className="mt-12 pt-8 border-t border-zinc-200">
         <Link
           href="/experiments"
-          className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to all experiments

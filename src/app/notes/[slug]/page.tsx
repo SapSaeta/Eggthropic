@@ -53,7 +53,7 @@ export default async function NotePage({ params }: Props) {
   const note = getNoteBySlug(slug);
   if (!note) notFound();
 
-  const catColor = categoryColors[note.category] ?? "text-slate-400";
+  const catColor = categoryColors[note.category] ?? "text-zinc-600";
   const pageUrl = `https://www.eggthropic.com/notes/${slug}`;
 
   return (
@@ -72,16 +72,16 @@ export default async function NotePage({ params }: Props) {
         datePublished={note.date}
       />
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-slate-500 mb-8">
+      <div className="flex items-center gap-2 text-sm text-zinc-500 mb-8">
         <Link
           href="/notes"
-          className="hover:text-white transition-colors flex items-center gap-1"
+          className="hover:text-zinc-900 transition-colors flex items-center gap-1"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           Notes
         </Link>
         <span>/</span>
-        <span className="text-slate-400 truncate">{note.title}</span>
+        <span className="text-zinc-600 truncate">{note.title}</span>
       </div>
 
       {/* Header */}
@@ -90,29 +90,29 @@ export default async function NotePage({ params }: Props) {
           <span className={`text-xs font-mono font-medium ${catColor}`}>
             {note.category}
           </span>
-          <time className="text-xs font-mono text-slate-500">
+          <time className="text-xs font-mono text-zinc-500">
             {formatDate(note.date)}
           </time>
         </div>
         {note.lastVerified && (
-          <p className="text-[10px] font-mono text-slate-600 mb-4">
+          <p className="text-[10px] font-mono text-zinc-400 mb-4">
             Content verified {note.lastVerified} · Eggthropic independent research
           </p>
         )}
-        <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-4">
+        <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 leading-tight mb-4">
           {note.title}
         </h1>
-        <p className="text-lg text-slate-400 leading-relaxed">{note.summary}</p>
+        <p className="text-lg text-zinc-600 leading-relaxed">{note.summary}</p>
       </div>
 
       {/* Content */}
       <div className="space-y-10">
         <NoteSection title="What changed">
-          <p className="text-slate-300 leading-relaxed">{note.whatChanged}</p>
+          <p className="text-zinc-700 leading-relaxed">{note.whatChanged}</p>
         </NoteSection>
 
         <NoteSection title="Why it matters">
-          <p className="text-slate-300 leading-relaxed">{note.whyItMatters}</p>
+          <p className="text-zinc-700 leading-relaxed">{note.whyItMatters}</p>
         </NoteSection>
 
         <NoteSection title="What can be built" icon={<Wrench className="w-4 h-4 text-egg-400/70" />}>
@@ -120,7 +120,7 @@ export default async function NotePage({ params }: Props) {
             {note.whatCanBeBuilt.map((item, i) => (
               <li key={i} className="flex items-start gap-2.5">
                 <Lightbulb className="w-4 h-4 text-egg-400/70 flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-slate-300 leading-relaxed">
+                <span className="text-sm text-zinc-700 leading-relaxed">
                   {item}
                 </span>
               </li>
@@ -133,7 +133,7 @@ export default async function NotePage({ params }: Props) {
             {note.limitationsOrRisks.map((item, i) => (
               <li key={i} className="flex items-start gap-2.5">
                 <AlertTriangle className="w-4 h-4 text-amber-400/70 flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-slate-300 leading-relaxed">
+                <span className="text-sm text-zinc-700 leading-relaxed">
                   {item}
                 </span>
               </li>
@@ -150,7 +150,7 @@ export default async function NotePage({ params }: Props) {
                     href={ref.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-sm text-lab-100 hover:text-egg-300 transition-colors"
+                    className="flex items-center gap-1.5 text-sm text-zinc-700 hover:text-egg-400 transition-colors"
                   >
                     <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
                     {ref.label}
@@ -177,7 +177,7 @@ export default async function NotePage({ params }: Props) {
                 <li key={expSlug}>
                   <Link
                     href={`/experiments/${expSlug}`}
-                    className="flex items-center gap-1.5 text-sm text-lab-100 hover:text-egg-300 transition-colors"
+                    className="flex items-center gap-1.5 text-sm text-zinc-700 hover:text-egg-400 transition-colors"
                   >
                     <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
                     {exp.title}
@@ -190,10 +190,10 @@ export default async function NotePage({ params }: Props) {
       )}
 
       {/* Back */}
-      <div className="mt-12 pt-8 border-t border-white/5">
+      <div className="mt-12 pt-8 border-t border-zinc-200">
         <Link
           href="/notes"
-          className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to all notes

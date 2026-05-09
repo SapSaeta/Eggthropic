@@ -13,7 +13,7 @@ interface Props {
 export default function ExecutionTimeline({ nodes, phaseConfigs }: Props) {
   return (
     <div className="glass rounded-xl p-4">
-      <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase block mb-4">
+      <span className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase block mb-4">
         Timeline
       </span>
       <div className="flex flex-col">
@@ -29,7 +29,7 @@ export default function ExecutionTimeline({ nodes, phaseConfigs }: Props) {
               <div className="flex flex-col items-center">
                 <StatusPulse active={isActive} color={phase.pulse} size="sm" />
                 {!isLast && (
-                  <div className="relative w-px flex-1 mt-1 mb-1 bg-white/8 overflow-hidden" style={{ minHeight: 20 }}>
+                  <div className="relative w-px flex-1 mt-1 mb-1 bg-zinc-100 overflow-hidden" style={{ minHeight: 20 }}>
                     {(isDone || isNextDone) && (
                       <motion.div
                         className="absolute inset-x-0 top-0"
@@ -49,7 +49,7 @@ export default function ExecutionTimeline({ nodes, phaseConfigs }: Props) {
                     "inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-mono border shrink-0",
                     isDone || isActive
                       ? `${phase.bg} ${phase.border} ${phase.color}`
-                      : "bg-white/5 border-white/10 text-slate-600",
+                      : "bg-zinc-50 border-zinc-200 text-zinc-400",
                   ].join(" ")}
                 >
                   {phase.badge}
@@ -57,9 +57,9 @@ export default function ExecutionTimeline({ nodes, phaseConfigs }: Props) {
                 <span
                   className={[
                     "text-[11px] font-mono truncate",
-                    status === "idle" && "text-slate-600",
+                    status === "idle" && "text-zinc-400",
                     isActive && phase.color,
-                    isDone && "text-slate-400",
+                    isDone && "text-zinc-600",
                     status === "error" && "text-rose-400",
                   ]
                     .filter(Boolean)

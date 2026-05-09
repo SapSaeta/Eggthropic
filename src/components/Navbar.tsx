@@ -18,7 +18,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-white/5 bg-lab-900/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-lab-900/90 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {/* Logo */}
@@ -29,7 +29,7 @@ export function Navbar() {
           >
             <span className="text-lg font-semibold tracking-tight">
               <span className="text-egg-400">Egg</span>
-              <span className="text-white">thropic</span>
+              <span className="text-zinc-900">thropic</span>
             </span>
             <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono bg-egg-400/10 text-egg-400 border border-egg-400/20">
               lab
@@ -45,8 +45,8 @@ export function Navbar() {
                 className={cn(
                   "px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
                   pathname.startsWith(link.href)
-                    ? "text-white bg-white/5"
-                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                    ? "text-zinc-900 bg-zinc-100"
+                    : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
                 )}
               >
                 {link.label}
@@ -56,7 +56,7 @@ export function Navbar() {
               href="https://github.com/sapsaeta/eggthropic"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-2 px-3 py-1.5 rounded-md text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-colors flex items-center gap-1.5"
+              className="ml-2 px-3 py-1.5 rounded-md text-sm font-medium text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition-colors flex items-center gap-1.5"
             >
               <svg
                 className="w-4 h-4"
@@ -72,7 +72,7 @@ export function Navbar() {
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden p-2 text-slate-400 hover:text-white"
+            className="md:hidden p-2 text-zinc-500 hover:text-zinc-900"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Toggle menu"
           >
@@ -83,7 +83,7 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-white/5 bg-lab-900/95 backdrop-blur-md">
+        <div className="md:hidden border-t border-zinc-200 bg-lab-900/95 backdrop-blur-md">
           <div className="px-4 py-3 flex flex-col gap-1">
             {navLinks.map((link) => (
               <Link
@@ -93,8 +93,8 @@ export function Navbar() {
                 className={cn(
                   "px-3 py-2 rounded-md text-sm font-medium transition-colors",
                   pathname.startsWith(link.href)
-                    ? "text-white bg-white/5"
-                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                    ? "text-zinc-900 bg-zinc-100"
+                    : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
                 )}
               >
                 {link.label}
@@ -104,7 +104,7 @@ export function Navbar() {
               href="https://github.com/sapsaeta/eggthropic"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-2 rounded-md text-sm font-medium text-slate-400 hover:text-white"
+              className="px-3 py-2 rounded-md text-sm font-medium text-zinc-500 hover:text-zinc-900"
               onClick={() => setMobileOpen(false)}
             >
               GitHub

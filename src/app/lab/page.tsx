@@ -135,8 +135,8 @@ export default function LabPage() {
           Lab
           <span className="w-6 h-px bg-egg-400/50" />
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">What&apos;s being built here</h1>
-        <p className="text-slate-400 max-w-2xl leading-relaxed">
+        <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 mb-3">What&apos;s being built here</h1>
+        <p className="text-zinc-600 max-w-2xl leading-relaxed">
           The lab is where Eggthropic experiments with tools before writing about them.
           Each section below corresponds to a different experiment or area under active development.
         </p>
@@ -154,8 +154,8 @@ export default function LabPage() {
                 research preview
               </span>
             </div>
-            <h2 className="text-xl font-semibold text-white mb-1">Lab Status Board</h2>
-            <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
+            <h2 className="text-xl font-semibold text-zinc-900 mb-1">Lab Status Board</h2>
+            <p className="text-sm text-zinc-600 max-w-xl leading-relaxed">
               This dashboard was prototyped using{" "}
               <a
                 href="https://www.anthropic.com/news/claude-design-anthropic-labs"
@@ -192,7 +192,7 @@ export default function LabPage() {
       </section>
 
       {/* ── Section 2: MCP Visual Explainer ────────────────────────────────── */}
-      <section className="border-t border-white/5 pt-16 mb-20">
+      <section className="border-t border-zinc-200 pt-16 mb-20">
         <div className="flex items-start justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
@@ -203,8 +203,8 @@ export default function LabPage() {
                 interactive
               </span>
             </div>
-            <h2 className="text-xl font-semibold text-white mb-1">MCP Visual Explainer</h2>
-            <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
+            <h2 className="text-xl font-semibold text-zinc-900 mb-1">MCP Visual Explainer</h2>
+            <p className="text-sm text-zinc-600 max-w-xl leading-relaxed">
               An interactive diagram that maps how an MCP server, client, and host communicate.
               Explore the architecture, the three core primitives, and a JSON-RPC 2.0 message
               trace — all without leaving the browser.
@@ -230,7 +230,7 @@ export default function LabPage() {
           </Link>
           <Link
             href="/experiments/mcp-visual-explainer"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-500 hover:text-slate-300 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-500 hover:text-zinc-700 transition-colors"
           >
             Read the experiment write-up <ArrowRight className="w-3 h-3" />
           </Link>
@@ -238,7 +238,7 @@ export default function LabPage() {
       </section>
 
       {/* ── Section 3: Agent Skills Explainer ──────────────────────────────── */}
-      <section className="border-t border-white/5 pt-16 mb-20">
+      <section className="border-t border-zinc-200 pt-16 mb-20">
         <div className="flex items-start justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
@@ -249,18 +249,18 @@ export default function LabPage() {
                 interactive
               </span>
             </div>
-            <h2 className="text-xl font-semibold text-white mb-1">Agent Skills Explainer</h2>
-            <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
+            <h2 className="text-xl font-semibold text-zinc-900 mb-1">Agent Skills Explainer</h2>
+            <p className="text-sm text-zinc-600 max-w-xl leading-relaxed">
               Skills are directories with a SKILL.md file that give Claude persistent, portable
               capabilities — invocable as slash commands in Claude Code. Explore their file structure,
               frontmatter anatomy, and a live invocation trace from{" "}
-              <code className="px-1 py-0.5 rounded bg-white/5 text-slate-300 font-mono text-xs">/pr-describe</code>
+              <code className="px-1 py-0.5 rounded bg-zinc-50 text-zinc-700 font-mono text-xs">/pr-describe</code>
               {" "}to a structured PR description.
             </p>
           </div>
           <Link
             href="/lab/skills"
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-egg-400 hover:text-egg-300 transition-colors whitespace-nowrap"
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-egg-400 hover:text-egg-400 transition-colors whitespace-nowrap"
           >
             Open full page
             <ArrowRight className="w-3 h-3" />
@@ -278,7 +278,7 @@ export default function LabPage() {
           </Link>
           <Link
             href="/experiments/first-custom-agent-skill"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-500 hover:text-slate-300 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-500 hover:text-zinc-700 transition-colors"
           >
             Read the experiment write-up <ArrowRight className="w-3 h-3" />
           </Link>
@@ -286,7 +286,7 @@ export default function LabPage() {
       </section>
 
       {/* ── Section 4: Claude Surfaces ─────────────────────────────────────── */}
-      <section className="border-t border-white/5 pt-16 mb-20">
+      <section className="border-t border-zinc-200 pt-16 mb-20">
         <div className="flex items-start justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
@@ -297,8 +297,8 @@ export default function LabPage() {
                 interactive
               </span>
             </div>
-            <h2 className="text-xl font-semibold text-white mb-1">All Ways to Use Claude</h2>
-            <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
+            <h2 className="text-xl font-semibold text-zinc-900 mb-1">All Ways to Use Claude</h2>
+            <p className="text-sm text-zinc-600 max-w-xl leading-relaxed">
               A curated directory of known official Claude surfaces — web, mobile, terminal,
               IDE extensions, API, enterprise, and Labs. Verified May 2026; filter by category,
               copy setup commands, or find the right tool for your workflow.
@@ -306,7 +306,7 @@ export default function LabPage() {
           </div>
           <Link
             href="/lab/interfaces"
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-egg-400 hover:text-egg-300 transition-colors whitespace-nowrap"
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-egg-400 hover:text-egg-400 transition-colors whitespace-nowrap"
           >
             Open full page
             <ArrowRight className="w-3 h-3" />
@@ -326,7 +326,7 @@ export default function LabPage() {
       </section>
 
       {/* ── Section 5: Claude Execution Lab ─────────────────────────────── */}
-      <section className="border-t border-white/5 pt-16 mb-20">
+      <section className="border-t border-zinc-200 pt-16 mb-20">
         <div className="flex items-start justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
@@ -337,8 +337,8 @@ export default function LabPage() {
                 new
               </span>
             </div>
-            <h2 className="text-xl font-semibold text-white mb-1">Claude Execution Lab</h2>
-            <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
+            <h2 className="text-xl font-semibold text-zinc-900 mb-1">Claude Execution Lab</h2>
+            <p className="text-sm text-zinc-600 max-w-xl leading-relaxed">
               An interactive mission-control visualization of a Claude-based agent executing a multi-step task —
               analyze, plan, generate, review, deliver. Watch the agent graph animate, logs stream, and output render in real time.
               Educational experiment — not an official Anthropic interface.
@@ -346,7 +346,7 @@ export default function LabPage() {
           </div>
           <Link
             href="/lab/execution"
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-egg-400 hover:text-egg-300 transition-colors whitespace-nowrap"
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-egg-400 hover:text-egg-400 transition-colors whitespace-nowrap"
           >
             Open full page
             <ArrowRight className="w-3 h-3" />
@@ -360,31 +360,31 @@ export default function LabPage() {
       </section>
 
       {/* ── Section 6: Community Lab ────────────────────────────────────────── */}
-      <section className="border-t border-white/5 pt-16">
+      <section className="border-t border-zinc-200 pt-16">
         <div className="mb-10">
           <div className="flex items-center gap-3 mb-2">
-            <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase">
+            <span className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase">
               Next up
             </span>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-500/10 border border-slate-500/20 text-slate-400 text-[10px] font-mono">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-500/10 border border-slate-500/20 text-zinc-600 text-[10px] font-mono">
               coming soon
             </span>
           </div>
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-9 h-9 rounded-xl bg-lab-500/30 border border-lab-300/20 flex items-center justify-center">
-              <FlaskConical className="w-4 h-4 text-lab-100" />
+            <div className="w-9 h-9 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center">
+              <FlaskConical className="w-4 h-4 text-zinc-700" />
             </div>
-            <h2 className="text-xl font-semibold text-white">Community Lab</h2>
+            <h2 className="text-xl font-semibold text-zinc-900">Community Lab</h2>
           </div>
-          <p className="text-slate-400 leading-relaxed max-w-xl">
+          <p className="text-zinc-600 leading-relaxed max-w-xl">
             A controlled public lab where contributors can propose Claude-powered
             experiments through GitHub pull requests — sandboxed, documented, and published.
           </p>
         </div>
 
         <div className="glass rounded-2xl p-6 mb-8 border border-egg-400/10 max-w-2xl mx-auto">
-          <h3 className="text-sm font-semibold text-white mb-2">Current status</h3>
-          <p className="text-sm text-slate-400 leading-relaxed">
+          <h3 className="text-sm font-semibold text-zinc-900 mb-2">Current status</h3>
+          <p className="text-sm text-zinc-600 leading-relaxed">
             The Community Lab is in early design. If you&apos;re interested in
             contributing to the lab infrastructure itself, open an issue on GitHub.
           </p>
@@ -393,7 +393,7 @@ export default function LabPage() {
               href="https://github.com/sapsaeta/eggthropic/issues"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-300 transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-400 transition-colors"
             >
               <GithubIcon className="w-4 h-4" />
               Discuss on GitHub
@@ -410,8 +410,8 @@ export default function LabPage() {
                 <div className={`w-9 h-9 rounded-lg ${item.bg} border ${item.border} flex items-center justify-center mb-3`}>
                   <Icon className={`w-4 h-4 ${item.color}`} />
                 </div>
-                <h3 className="font-semibold text-white mb-1.5 text-sm">{item.title}</h3>
-                <p className="text-xs text-slate-500 leading-relaxed">{item.description}</p>
+                <h3 className="font-semibold text-zinc-900 mb-1.5 text-sm">{item.title}</h3>
+                <p className="text-xs text-zinc-500 leading-relaxed">{item.description}</p>
               </div>
             );
           })}
@@ -420,7 +420,7 @@ export default function LabPage() {
         <div className="mt-8">
           <Link
             href="/experiments"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass border border-white/10 text-white text-sm font-medium hover:border-white/20 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass border border-zinc-200 text-zinc-900 text-sm font-medium hover:border-zinc-300 transition-colors"
           >
             View all experiments
             <ArrowRight className="w-4 h-4" />

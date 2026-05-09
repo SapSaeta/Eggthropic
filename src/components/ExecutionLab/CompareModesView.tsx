@@ -18,8 +18,8 @@ const HEADER_BG: Record<ScenarioId, string> = {
 export default function CompareModesView() {
   return (
     <div className="glass rounded-xl overflow-hidden">
-      <div className="px-4 py-3 border-b border-white/8 bg-white/[0.02]">
-        <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase">
+      <div className="px-4 py-3 border-b border-zinc-200 bg-white/[0.02]">
+        <span className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase">
           Mode Comparison
         </span>
       </div>
@@ -28,7 +28,7 @@ export default function CompareModesView() {
       <div className="sm:hidden p-4 space-y-6">
         {COMPARE_ROWS.map((row) => (
           <div key={row.label}>
-            <span className="font-mono text-[9px] tracking-widest text-slate-600 uppercase block mb-2">
+            <span className="font-mono text-[9px] tracking-widest text-zinc-400 uppercase block mb-2">
               {row.label}
             </span>
             <div className="space-y-2">
@@ -37,7 +37,7 @@ export default function CompareModesView() {
                   <span className={`font-mono text-[9px] uppercase tracking-widest block mb-1 ${HEADER_COLOR[s.id]}`}>
                     {s.label}
                   </span>
-                  <p className="text-[11px] text-slate-300 leading-relaxed">{row.values[s.id]}</p>
+                  <p className="text-[11px] text-zinc-700 leading-relaxed">{row.values[s.id]}</p>
                 </div>
               ))}
             </div>
@@ -49,14 +49,14 @@ export default function CompareModesView() {
       <div className="hidden sm:block overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-white/8">
-              <th className="py-3 px-4 font-mono text-[10px] tracking-widest text-slate-600 uppercase w-40">
+            <tr className="border-b border-zinc-200">
+              <th className="py-3 px-4 font-mono text-[10px] tracking-widest text-zinc-400 uppercase w-40">
                 Criterion
               </th>
               {SCENARIOS.map((s) => (
                 <th
                   key={s.id}
-                  className={`py-3 px-4 font-mono text-[10px] tracking-widest uppercase border-l border-white/5 ${HEADER_COLOR[s.id]}`}
+                  className={`py-3 px-4 font-mono text-[10px] tracking-widest uppercase border-l border-zinc-200 ${HEADER_COLOR[s.id]}`}
                 >
                   {s.label}
                 </th>
@@ -67,15 +67,15 @@ export default function CompareModesView() {
             {COMPARE_ROWS.map((row, i) => (
               <tr
                 key={row.label}
-                className={`border-b border-white/5 ${i % 2 === 0 ? "" : "bg-white/[0.01]"}`}
+                className={`border-b border-zinc-200 ${i % 2 === 0 ? "" : "bg-white/[0.01]"}`}
               >
-                <td className="py-3 px-4 font-mono text-[10px] text-slate-500 uppercase tracking-wide align-top">
+                <td className="py-3 px-4 font-mono text-[10px] text-zinc-500 uppercase tracking-wide align-top">
                   {row.label}
                 </td>
                 {SCENARIOS.map((s) => (
                   <td
                     key={s.id}
-                    className="py-3 px-4 text-[11px] text-slate-300 leading-relaxed border-l border-white/5 align-top"
+                    className="py-3 px-4 text-[11px] text-zinc-700 leading-relaxed border-l border-zinc-200 align-top"
                   >
                     {row.values[s.id]}
                   </td>
@@ -86,8 +86,8 @@ export default function CompareModesView() {
         </table>
       </div>
 
-      <div className="px-4 py-3 border-t border-white/5">
-        <p className="text-[9px] font-mono text-slate-700">
+      <div className="px-4 py-3 border-t border-zinc-200">
+        <p className="text-[9px] font-mono text-zinc-700">
           Illustrative comparison. Real-world behavior depends on environment, permissions, and Claude surface configuration.
         </p>
       </div>

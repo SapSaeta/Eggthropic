@@ -37,29 +37,29 @@ const CATEGORY_META: Record<
   "Claude Code": {
     color: "#00d4ff",
     border: "border-cyan-400/40",
-    text: "text-cyan-400",
-    bg: "bg-cyan-400/10",
+    text: "text-cyan-600",
+    bg: "bg-cyan-50",
     icon: "⬡",
   },
   Skills: {
     color: "#a855f7",
     border: "border-purple-500/40",
-    text: "text-purple-400",
-    bg: "bg-purple-500/10",
+    text: "text-violet-600",
+    bg: "bg-violet-50",
     icon: "◈",
   },
   MCP: {
     color: "#f59e0b",
     border: "border-amber-400/40",
-    text: "text-amber-400",
-    bg: "bg-amber-400/10",
+    text: "text-amber-600",
+    bg: "bg-amber-50",
     icon: "⬢",
   },
   "UX-UI": {
     color: "#ec4899",
     border: "border-pink-500/40",
-    text: "text-pink-400",
-    bg: "bg-pink-500/10",
+    text: "text-pink-600",
+    bg: "bg-pink-50",
     icon: "◉",
   },
 };
@@ -71,19 +71,19 @@ const STATUS_META: Record<
   complete: {
     label: "COMPLETE",
     dot: "bg-emerald-400",
-    text: "text-emerald-400",
+    text: "text-emerald-600",
     glow: "shadow-[0_0_8px_#34d399]",
   },
   "in-progress": {
     label: "IN-PROGRESS",
     dot: "bg-blue-400",
-    text: "text-blue-400",
+    text: "text-blue-600",
     glow: "shadow-[0_0_8px_#60a5fa]",
   },
   experimental: {
     label: "EXPERIMENTAL",
     dot: "bg-amber-400",
-    text: "text-amber-400",
+    text: "text-amber-600",
     glow: "shadow-[0_0_8px_#fbbf24]",
   },
 };
@@ -118,8 +118,8 @@ function CategoryPill({ category }: { category: BoardCategory }) {
 
 function DifficultyBadge({ difficulty }: { difficulty: BoardDifficulty }) {
   const colors: Record<BoardDifficulty, string> = {
-    NOVICE: "border-slate-500/40 text-slate-400 bg-slate-500/10",
-    INTERMEDIATE: "border-sky-500/30 text-sky-300 bg-sky-500/10",
+    NOVICE: "border-slate-500/40 text-zinc-600 bg-slate-500/10",
+    INTERMEDIATE: "border-sky-500/30 text-sky-600 bg-sky-50",
     ADVANCED: "border-rose-500/30 text-rose-300 bg-rose-500/10",
   };
   return (
@@ -142,14 +142,14 @@ function ProgressBar({
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between">
-        <span className="font-mono text-[10px] tracking-widest text-slate-500">
+        <span className="font-mono text-[10px] tracking-widest text-zinc-500">
           PROGRESS
         </span>
         <span className={`font-mono text-xs font-semibold ${meta.text}`}>
           {progress}%
         </span>
       </div>
-      <div className="h-1 w-full overflow-hidden rounded-full bg-white/5">
+      <div className="h-1 w-full overflow-hidden rounded-full bg-zinc-50">
         <div
           className="h-full rounded-full transition-all duration-700"
           style={{
@@ -170,7 +170,7 @@ function ExperimentCard({ exp }: { exp: BoardExperiment }) {
   return (
     <a
       href={`/experiments/${exp.slug}`}
-      className="group relative flex flex-col gap-3 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-white/20 cursor-pointer"
+      className="group relative flex flex-col gap-3 overflow-hidden rounded-xl border border-zinc-200 bg-white/[0.03] p-4 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-zinc-300 cursor-pointer"
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLAnchorElement).style.boxShadow =
           `0 0 20px ${catMeta.color}30, inset 0 0 20px ${catMeta.color}08`;
@@ -190,7 +190,7 @@ function ExperimentCard({ exp }: { exp: BoardExperiment }) {
 
       {/* Header row */}
       <div className="flex items-start justify-between gap-2 pt-1">
-        <span className="font-mono text-[10px] tracking-widest text-slate-600">
+        <span className="font-mono text-[10px] tracking-widest text-zinc-400">
           {exp.id}
         </span>
         <div className={`flex items-center gap-1.5 ${statusMeta.text}`}>
@@ -202,7 +202,7 @@ function ExperimentCard({ exp }: { exp: BoardExperiment }) {
       </div>
 
       {/* Title */}
-      <h3 className="text-sm font-bold leading-snug text-white group-hover:text-[#ffd21a] transition-colors">
+      <h3 className="text-sm font-bold leading-snug text-zinc-900 group-hover:text-egg-400 transition-colors">
         {exp.title}
       </h3>
 
@@ -216,11 +216,11 @@ function ExperimentCard({ exp }: { exp: BoardExperiment }) {
       <ProgressBar progress={exp.progress} category={exp.category} />
 
       {/* Footer */}
-      <div className="flex items-center justify-between border-t border-white/5 pt-2">
-        <span className="font-mono text-[10px] text-slate-600">
+      <div className="flex items-center justify-between border-t border-zinc-200 pt-2">
+        <span className="font-mono text-[10px] text-zinc-400">
           RUN · {exp.runId}
         </span>
-        <span className="flex items-center gap-1 font-mono text-[10px] text-slate-500">
+        <span className="flex items-center gap-1 font-mono text-[10px] text-zinc-500">
           <svg className="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <circle cx="12" cy="12" r="10" />
             <polyline points="12 6 12 12 16 14" />
@@ -253,8 +253,8 @@ function Sidebar({ experiments }: { experiments: BoardExperiment[] }) {
 
   return (
     <aside className="flex w-44 shrink-0 flex-col gap-4">
-      <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
-        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-slate-600">{"// CATEGORIES"}</p>
+      <div className="rounded-xl border border-zinc-200 bg-white/[0.03] p-4">
+        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-zinc-400">{"// CATEGORIES"}</p>
         <ul className="space-y-2.5">
           {CATEGORIES.map((cat) => {
             const meta = CATEGORY_META[cat];
@@ -266,7 +266,7 @@ function Sidebar({ experiments }: { experiments: BoardExperiment[] }) {
                   </span>
                   <span className={`font-mono text-[11px] font-medium ${meta.text}`}>{cat}</span>
                 </div>
-                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-white/5 font-mono text-[9px] text-slate-400">
+                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-zinc-50 font-mono text-[9px] text-zinc-600">
                   {counts[cat]}
                 </span>
               </li>
@@ -275,30 +275,30 @@ function Sidebar({ experiments }: { experiments: BoardExperiment[] }) {
         </ul>
       </div>
 
-      <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
-        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-slate-600">STATUS ROLL-UP</p>
+      <div className="rounded-xl border border-zinc-200 bg-white/[0.03] p-4">
+        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-zinc-400">STATUS ROLL-UP</p>
         <ul className="space-y-1.5">
           {(["complete", "in-progress", "experimental"] as BoardStatus[]).map((s) => (
             <li key={s} className="flex items-center justify-between">
               <span className={`font-mono text-[10px] tracking-wider ${STATUS_META[s].text}`}>
                 {STATUS_META[s].label}
               </span>
-              <span className="font-mono text-xs font-semibold text-white">{statusCounts[s]}</span>
+              <span className="font-mono text-xs font-semibold text-zinc-900">{statusCounts[s]}</span>
             </li>
           ))}
         </ul>
       </div>
 
-      <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
-        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-slate-600">LAB HEALTH</p>
+      <div className="rounded-xl border border-zinc-200 bg-white/[0.03] p-4">
+        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-zinc-400">LAB HEALTH</p>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] tracking-wider text-slate-500">AVG · COMPLETION</span>
-            <span className="font-mono text-xs font-bold text-[#ffd21a]">{avgCompletion}%</span>
+            <span className="font-mono text-[10px] tracking-wider text-zinc-500">AVG · COMPLETION</span>
+            <span className="font-mono text-xs font-bold text-egg-400">{avgCompletion}%</span>
           </div>
-          <div className="h-1 w-full overflow-hidden rounded-full bg-white/5">
+          <div className="h-1 w-full overflow-hidden rounded-full bg-zinc-50">
             <div
-              className="h-full rounded-full bg-[#ffd21a] transition-all duration-700"
+              className="h-full rounded-full bg-egg-400 transition-all duration-700"
               style={{ width: `${avgCompletion}%` }}
             />
           </div>
@@ -322,25 +322,25 @@ function TopBar({
   const filters: (BoardCategory | "ALL")[] = ["ALL", ...CATEGORIES];
 
   return (
-    <header className="flex items-center justify-between gap-4 border-b border-white/[0.06] px-6 py-3">
+    <header className="flex items-center justify-between gap-4 border-b border-zinc-200 px-6 py-3">
       <div className="flex items-center gap-3">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#ffd21a]/30 bg-[#ffd21a]/10">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-egg-400/30 bg-egg-400/10">
           <span className="text-lg">🥚</span>
         </div>
         <div className="font-mono">
-          <span className="text-sm font-bold tracking-widest text-white">EGGTHROPIC</span>
-          <span className="mx-2 text-sm text-slate-600">{"//"}</span>
-          <span className="text-sm font-semibold tracking-widest text-[#ffd21a]">LAB STATUS</span>
+          <span className="text-sm font-bold tracking-widest text-zinc-900">EGGTHROPIC</span>
+          <span className="mx-2 text-sm text-zinc-400">{"//"}</span>
+          <span className="text-sm font-semibold tracking-widest text-egg-400">LAB STATUS</span>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5">
+      <div className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white/[0.03] px-4 py-1.5">
         <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-        <span className="font-mono text-xs tracking-widest text-slate-400">EXPERIMENTS</span>
-        <span className="font-mono text-sm font-bold text-white">
+        <span className="font-mono text-xs tracking-widest text-zinc-600">EXPERIMENTS</span>
+        <span className="font-mono text-sm font-bold text-zinc-900">
           {String(experiments.length).padStart(2, "0")}
         </span>
-        <span className="font-mono text-xs tracking-widest text-slate-600">ACTIVE</span>
+        <span className="font-mono text-xs tracking-widest text-zinc-400">ACTIVE</span>
       </div>
 
       <nav className="flex items-center gap-1">
@@ -353,12 +353,12 @@ function TopBar({
               onClick={() => onFilterChange(f)}
               className={[
                 "relative rounded-md px-3 py-1.5 font-mono text-[11px] font-semibold tracking-widest transition-all duration-200",
-                isActive ? "text-[#ffd21a]" : "text-slate-500 hover:text-slate-300",
+                isActive ? "text-egg-400" : "text-zinc-500 hover:text-zinc-700",
               ].join(" ")}
             >
               {f === "ALL" ? "ALL" : f.toUpperCase().replace("-", "‑")}
               {isActive && (
-                <span className="absolute inset-x-1 bottom-0 h-[2px] rounded-full bg-[#ffd21a]" />
+                <span className="absolute inset-x-1 bottom-0 h-[2px] rounded-full bg-egg-400" />
               )}
               {isActive && catMeta && (
                 <span
@@ -405,24 +405,24 @@ function StatusBar({
   node: string;
 }) {
   return (
-    <footer className="flex items-center justify-between border-t border-white/[0.06] px-6 py-2">
+    <footer className="flex items-center justify-between border-t border-zinc-200 px-6 py-2">
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          <span className="font-mono text-[10px] tracking-widest text-slate-500">TELEMETRY ONLINE</span>
+          <span className="font-mono text-[10px] tracking-widest text-zinc-500">TELEMETRY ONLINE</span>
         </div>
-        <span className="font-mono text-[10px] tracking-widest text-slate-600">
-          SHOWING <span className="text-[#ffd21a]">{showing}/{total}</span>
+        <span className="font-mono text-[10px] tracking-widest text-zinc-400">
+          SHOWING <span className="text-egg-400">{showing}/{total}</span>
         </span>
       </div>
       <div className="flex items-center gap-6">
-        <span className="font-mono text-[10px] tracking-widest text-slate-600">
-          BUILD <span className="text-slate-400">{buildVersion}</span>
+        <span className="font-mono text-[10px] tracking-widest text-zinc-400">
+          BUILD <span className="text-zinc-600">{buildVersion}</span>
         </span>
-        <span className="font-mono text-[10px] tracking-widest text-slate-600">
-          NODE <span className="text-slate-400">{node}</span>
+        <span className="font-mono text-[10px] tracking-widest text-zinc-400">
+          NODE <span className="text-zinc-600">{node}</span>
         </span>
-        <span className="font-mono text-[10px] tracking-widest text-slate-600">
+        <span className="font-mono text-[10px] tracking-widest text-zinc-400">
           EGGTHROPIC LABS · CLEARANCE LV-3
         </span>
       </div>
@@ -446,7 +446,7 @@ export default function LabStatusBoard({
 
   return (
     <div
-      className="relative flex flex-col overflow-hidden font-mono rounded-2xl border border-white/[0.06]"
+      className="relative flex flex-col overflow-hidden font-mono rounded-2xl border border-zinc-200"
       style={{ backgroundColor: "#080c14", minHeight: "600px" }}
     >
       <GridBackground />
@@ -463,12 +463,12 @@ export default function LabStatusBoard({
         <main className="flex flex-1 flex-col gap-3 overflow-y-auto">
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-3">
-              <span className="font-mono text-[10px] tracking-widest text-slate-600">[ ACTIVE ]</span>
-              <h2 className="text-sm font-bold tracking-wide text-white">Experiment Roster</h2>
+              <span className="font-mono text-[10px] tracking-widest text-zinc-400">[ ACTIVE ]</span>
+              <h2 className="text-sm font-bold tracking-wide text-zinc-900">Experiment Roster</h2>
             </div>
-            <span className="font-mono text-[10px] tracking-widest text-slate-600">
-              SHOWING <span className="text-slate-400">{filtered.length} / {experiments.length}</span>
-              {" · "}FILTER: <span className="text-[#ffd21a]">{activeFilter}</span>
+            <span className="font-mono text-[10px] tracking-widest text-zinc-400">
+              SHOWING <span className="text-zinc-600">{filtered.length} / {experiments.length}</span>
+              {" · "}FILTER: <span className="text-egg-400">{activeFilter}</span>
             </span>
           </div>
 
@@ -477,8 +477,8 @@ export default function LabStatusBoard({
               <ExperimentCard key={exp.id} exp={exp} />
             ))}
             {filtered.length === 0 && (
-              <div className="col-span-3 flex h-40 items-center justify-center rounded-xl border border-white/[0.06]">
-                <p className="font-mono text-sm text-slate-600">NO EXPERIMENTS MATCH FILTER</p>
+              <div className="col-span-3 flex h-40 items-center justify-center rounded-xl border border-zinc-200">
+                <p className="font-mono text-sm text-zinc-400">NO EXPERIMENTS MATCH FILTER</p>
               </div>
             )}
           </div>

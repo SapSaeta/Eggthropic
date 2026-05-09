@@ -10,7 +10,7 @@ interface Props {
 }
 
 const FIELD_CONFIG = [
-  { key: "what" as const, label: "What is happening", color: "text-slate-300" },
+  { key: "what" as const, label: "What is happening", color: "text-zinc-700" },
   { key: "why" as const, label: "Why it matters", color: "text-sky-300" },
   { key: "risk" as const, label: "What can go wrong", color: "text-amber-300" },
   { key: "humanReview" as const, label: "Human review", color: "text-emerald-300" },
@@ -27,8 +27,8 @@ export default function ExecutionInspector({ scenario, activeNodeId }: Props) {
 
   return (
     <div className="glass rounded-xl overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/8 bg-white/[0.02]">
-        <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-200 bg-white/[0.02]">
+        <span className="font-mono text-[10px] tracking-widest text-zinc-500 uppercase">
           Step Inspector
         </span>
         {nodeLabel && (
@@ -50,7 +50,7 @@ export default function ExecutionInspector({ scenario, activeNodeId }: Props) {
           >
             {FIELD_CONFIG.map(({ key, label, color }) => (
               <div key={key}>
-                <span className="font-mono text-[9px] tracking-widest text-slate-600 uppercase block mb-1.5">
+                <span className="font-mono text-[9px] tracking-widest text-zinc-400 uppercase block mb-1.5">
                   {label}
                 </span>
                 <p className={`text-[11px] leading-relaxed ${color}`}>{entry[key]}</p>
@@ -66,7 +66,7 @@ export default function ExecutionInspector({ scenario, activeNodeId }: Props) {
             transition={{ duration: 0.2 }}
             className="px-4 py-6 text-center"
           >
-            <p className="text-[11px] text-slate-600 font-mono">
+            <p className="text-[11px] text-zinc-400 font-mono">
               Run the simulation to see step-by-step context here.
             </p>
           </motion.div>

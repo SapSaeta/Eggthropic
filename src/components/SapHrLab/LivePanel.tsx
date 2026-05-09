@@ -114,10 +114,10 @@ export function LivePanel() {
   return (
     <div className="space-y-6">
       {/* API key input */}
-      <div className="glass rounded-xl p-4 border border-white/8 space-y-3">
+      <div className="glass rounded-xl p-4 border border-zinc-200 space-y-3">
         <div className="flex items-center gap-2">
-          <Key className="w-3.5 h-3.5 text-slate-400" />
-          <span className="text-xs font-mono text-slate-400">
+          <Key className="w-3.5 h-3.5 text-zinc-600" />
+          <span className="text-xs font-mono text-zinc-600">
             Your Anthropic API key
           </span>
           {hasKey && (
@@ -133,12 +133,12 @@ export function LivePanel() {
             value={apiKey}
             onChange={(e) => saveKey(e.target.value)}
             placeholder="sk-ant-..."
-            className="w-full pr-16 pl-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm font-mono text-white placeholder-slate-600 focus:outline-none focus:border-egg-400/50 transition-colors"
+            className="w-full pr-16 pl-3 py-2 rounded-lg bg-zinc-50 border border-zinc-200 text-sm font-mono text-zinc-900 placeholder-slate-600 focus:outline-none focus:border-egg-400/50 transition-colors"
           />
           <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
             <button
               onClick={() => setShowKey((v) => !v)}
-              className="p-1 text-slate-500 hover:text-slate-300 transition-colors"
+              className="p-1 text-zinc-500 hover:text-zinc-700 transition-colors"
               aria-label={showKey ? "Hide key" : "Show key"}
             >
               {showKey ? (
@@ -150,7 +150,7 @@ export function LivePanel() {
             {hasKey && (
               <button
                 onClick={clearKey}
-                className="p-1 text-slate-500 hover:text-rose-400 transition-colors"
+                className="p-1 text-zinc-500 hover:text-rose-400 transition-colors"
                 aria-label="Clear key"
               >
                 <X className="w-3.5 h-3.5" />
@@ -159,7 +159,7 @@ export function LivePanel() {
           </div>
         </div>
 
-        <p className="text-[10px] text-slate-600 leading-relaxed">
+        <p className="text-[10px] text-zinc-400 leading-relaxed">
           Your key goes directly from your browser to the Anthropic API — this
           server never sees it. Stored in{" "}
           <code className="font-mono">localStorage</code>. Clear it with the ×
@@ -169,7 +169,7 @@ export function LivePanel() {
               href="https://console.anthropic.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-500 hover:text-slate-300 transition-colors"
+              className="text-zinc-500 hover:text-zinc-700 transition-colors"
             >
               Get a key →
             </a>
@@ -179,7 +179,7 @@ export function LivePanel() {
 
       {/* Case selector */}
       <div>
-        <p className="text-xs font-mono text-slate-500 mb-3">
+        <p className="text-xs font-mono text-zinc-500 mb-3">
           Select a question:
         </p>
         <div className="space-y-2">
@@ -194,8 +194,8 @@ export function LivePanel() {
               disabled={isRunning}
               className={`w-full text-left px-4 py-3 rounded-xl border text-sm transition-all ${
                 selectedCase?.id === c.id
-                  ? "border-egg-400/50 bg-egg-400/5 text-white"
-                  : "border-white/8 glass text-slate-400 hover:text-white hover:border-white/16"
+                  ? "border-egg-400/50 bg-egg-400/5 text-zinc-900"
+                  : "border-zinc-200 glass text-zinc-600 hover:text-zinc-900 hover:border-zinc-300"
               } disabled:cursor-not-allowed disabled:opacity-50`}
             >
               <span className="font-mono">{c.label}</span>
@@ -221,7 +221,7 @@ export function LivePanel() {
         {(status === "done" || status === "error") && (
           <button
             onClick={reset}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass border border-white/10 text-sm text-slate-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass border border-zinc-200 text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
           >
             Reset
           </button>
@@ -238,10 +238,10 @@ export function LivePanel() {
           >
             {/* Context panel */}
             {selectedCase && status !== "error" && (
-              <div className="glass rounded-xl border border-white/8 overflow-hidden">
+              <div className="glass rounded-xl border border-zinc-200 overflow-hidden">
                 <button
                   onClick={() => setShowContext((v) => !v)}
-                  className="w-full flex items-center justify-between px-4 py-2.5 text-xs font-mono text-slate-500 hover:text-slate-300 transition-colors"
+                  className="w-full flex items-center justify-between px-4 py-2.5 text-xs font-mono text-zinc-500 hover:text-zinc-700 transition-colors"
                 >
                   <span>Context sent to Claude</span>
                   {showContext ? (
@@ -258,15 +258,15 @@ export function LivePanel() {
                       exit={{ height: 0 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-4 pb-3 border-t border-white/5 pt-2">
-                        <p className="text-[10px] text-slate-500 mb-1.5">
+                      <div className="px-4 pb-3 border-t border-zinc-200 pt-2">
+                        <p className="text-[10px] text-zinc-500 mb-1.5">
                           KB sources included:
                         </p>
                         <ul className="space-y-1">
                           {selectedCase.kbSources.map((src) => (
                             <li
                               key={src}
-                              className="text-[11px] font-mono text-slate-400"
+                              className="text-[11px] font-mono text-zinc-600"
                             >
                               · {src}
                             </li>
@@ -297,7 +297,7 @@ export function LivePanel() {
               </div>
               <div
                 className={`text-sm leading-relaxed whitespace-pre-line ${
-                  status === "error" ? "text-rose-300" : "text-slate-300"
+                  status === "error" ? "text-rose-300" : "text-zinc-700"
                 }`}
               >
                 {response}

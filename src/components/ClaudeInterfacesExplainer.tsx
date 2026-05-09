@@ -359,7 +359,7 @@ function CopyButton({ value }: { value: string }) {
   return (
     <button
       onClick={copy}
-      className="ml-auto px-2 py-1 rounded text-[10px] font-mono transition-colors text-slate-500 hover:text-slate-300 hover:bg-white/5"
+      className="ml-auto px-2 py-1 rounded text-[10px] font-mono transition-colors text-zinc-500 hover:text-zinc-700 hover:bg-zinc-50"
     >
       {copied ? "✓ copied" : "copy"}
     </button>
@@ -392,8 +392,8 @@ function DirectoryScene() {
                 filter === c
                   ? conf
                     ? `${conf.bg} ${conf.border} ${conf.color}`
-                    : "bg-egg-400/15 border-egg-400/25 text-egg-300"
-                  : "bg-white/[0.02] border-white/8 text-slate-500 hover:text-slate-300"
+                    : "bg-egg-400/15 border-egg-400/25 text-egg-400"
+                  : "bg-white/[0.02] border-zinc-200 text-zinc-500 hover:text-zinc-700"
               }`}
             >
               {c !== "All" && conf && (
@@ -425,7 +425,7 @@ function DirectoryScene() {
                   className={`text-left glass rounded-xl p-4 border transition-all duration-150 ${
                     isSelected
                       ? `${c.border} ${c.bg}`
-                      : "border-white/8 hover:border-white/15"
+                      : "border-zinc-200 hover:border-zinc-300"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2 mb-2">
@@ -434,8 +434,8 @@ function DirectoryScene() {
                       {surface.category}
                     </span>
                   </div>
-                  <p className="text-sm font-semibold text-white mb-1">{surface.name}</p>
-                  <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2">{surface.tagline}</p>
+                  <p className="text-sm font-semibold text-zinc-900 mb-1">{surface.name}</p>
+                  <p className="text-[11px] text-zinc-500 leading-relaxed line-clamp-2">{surface.tagline}</p>
                   <div className="mt-2.5">
                     <span className={`text-[9px] px-1.5 py-0.5 rounded border font-mono ${AVAIL_STYLE[surface.availKind]}`}>
                       {surface.availability}
@@ -462,17 +462,17 @@ function DirectoryScene() {
                 <div className="flex items-start gap-3 mb-4">
                   <span className="text-3xl">{selected.icon}</span>
                   <div>
-                    <p className="font-semibold text-white">{selected.name}</p>
+                    <p className="font-semibold text-zinc-900">{selected.name}</p>
                     <p className={`text-xs font-mono ${cat.color}`}>{selected.category}</p>
                   </div>
                 </div>
-                <p className="text-sm text-slate-400 leading-relaxed mb-4">{selected.tagline}</p>
+                <p className="text-sm text-zinc-600 leading-relaxed mb-4">{selected.tagline}</p>
 
                 <div className="mb-4">
-                  <p className="text-[10px] font-mono text-slate-600 uppercase tracking-widest mb-2">Best for</p>
+                  <p className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-2">Best for</p>
                   <ul className="space-y-1">
                     {selected.bestFor.map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-xs text-slate-400">
+                      <li key={item} className="flex items-start gap-2 text-xs text-zinc-600">
                         <span className={`mt-1 w-1.5 h-1.5 rounded-full ${cat.dot} shrink-0`} />
                         {item}
                       </li>
@@ -481,7 +481,7 @@ function DirectoryScene() {
                 </div>
 
                 <div className={`rounded-xl p-3 ${cat.bg} border ${cat.border}`}>
-                  <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1.5">
+                  <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-1.5">
                     {selected.access.type === "command" ? "Install" : selected.access.type === "store" ? "Get it" : "Access"}
                   </p>
                   <div className="flex items-center gap-2">
@@ -493,7 +493,7 @@ function DirectoryScene() {
                 </div>
 
                 {selected.notes && (
-                  <p className="mt-3 text-[11px] text-slate-600 leading-relaxed">{selected.notes}</p>
+                  <p className="mt-3 text-[11px] text-zinc-400 leading-relaxed">{selected.notes}</p>
                 )}
               </motion.div>
             ) : (
@@ -502,9 +502,9 @@ function DirectoryScene() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="glass rounded-2xl p-6 border border-white/5 h-full flex items-center justify-center"
+                className="glass rounded-2xl p-6 border border-zinc-200 h-full flex items-center justify-center"
               >
-                <p className="text-sm text-slate-600 font-mono">Select a surface to see details</p>
+                <p className="text-sm text-zinc-400 font-mono">Select a surface to see details</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -540,10 +540,10 @@ function QuickStartScene() {
                 return (
                   <div
                     key={s.id}
-                    className={`glass rounded-xl px-4 py-3 border border-white/8 flex items-center gap-3 flex-wrap`}
+                    className={`glass rounded-xl px-4 py-3 border border-zinc-200 flex items-center gap-3 flex-wrap`}
                   >
                     <span className="text-base shrink-0">{s.icon}</span>
-                    <p className="text-sm font-semibold text-white min-w-[120px]">{s.name}</p>
+                    <p className="text-sm font-semibold text-zinc-900 min-w-[120px]">{s.name}</p>
                     <div className={`flex-1 flex items-center gap-2 rounded-lg px-3 py-1.5 ${c.bg} border ${c.border} min-w-0`}>
                       <code className={`text-xs font-mono ${c.color} truncate flex-1`}>
                         {isCommand ? "$ " : ""}{s.access.value}
@@ -584,12 +584,12 @@ function FitScene() {
             className={`glass rounded-xl p-4 border text-left transition-all duration-150 ${
               active?.id === opt.id
                 ? "border-egg-400/30 bg-egg-400/10"
-                : "border-white/8 hover:border-white/15"
+                : "border-zinc-200 hover:border-zinc-300"
             }`}
           >
             <span className="text-2xl mb-2 block">{opt.emoji}</span>
-            <p className="text-sm font-semibold text-white mb-1">{opt.label}</p>
-            <p className="text-[11px] text-slate-600 leading-relaxed">{opt.description}</p>
+            <p className="text-sm font-semibold text-zinc-900 mb-1">{opt.label}</p>
+            <p className="text-[11px] text-zinc-400 leading-relaxed">{opt.description}</p>
           </button>
         ))}
       </div>
@@ -605,7 +605,7 @@ function FitScene() {
           >
             {/* Reason */}
             <div className="glass rounded-xl p-4 border border-egg-400/15 mb-4">
-              <p className="text-sm text-slate-300 leading-relaxed">{active.reason}</p>
+              <p className="text-sm text-zinc-700 leading-relaxed">{active.reason}</p>
             </div>
 
             {/* Recommended cards */}
@@ -626,8 +626,8 @@ function FitScene() {
                         {surface.category}
                       </span>
                     </div>
-                    <p className="text-sm font-semibold text-white mb-1">{surface.name}</p>
-                    <p className="text-[11px] text-slate-500 leading-relaxed">{surface.tagline}</p>
+                    <p className="text-sm font-semibold text-zinc-900 mb-1">{surface.name}</p>
+                    <p className="text-[11px] text-zinc-500 leading-relaxed">{surface.tagline}</p>
                     {surface.access.type === "command" ? (
                       <div className={`mt-3 rounded-lg px-2.5 py-1.5 ${c.bg} border ${c.border} flex items-center gap-1`}>
                         <code className={`text-[10px] font-mono ${c.color} truncate`}>$ {surface.access.value}</code>
@@ -648,7 +648,7 @@ function FitScene() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="text-sm text-slate-600 font-mono text-center py-8"
+            className="text-sm text-zinc-400 font-mono text-center py-8"
           >
             Select a use case above to see recommended surfaces
           </motion.p>
@@ -672,31 +672,31 @@ export default function ClaudeInterfacesExplainer() {
   const [scene, setScene] = useState<Scene>("directory");
 
   return (
-    <div className="rounded-2xl border border-white/8 bg-[#080c14] overflow-hidden">
+    <div className="rounded-2xl border border-zinc-200 bg-[#080c14] overflow-hidden">
       {/* Header */}
-      <div className="border-b border-white/5 px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
+      <div className="border-b border-zinc-200 px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-3">
           <div className="w-7 h-7 rounded-lg bg-egg-400/15 border border-egg-400/20 flex items-center justify-center text-sm">
             ◉
           </div>
           <div>
-            <p className="text-sm font-semibold text-white leading-none">All Ways to Use Claude</p>
-            <p className="text-[10px] font-mono text-slate-600 mt-0.5">
+            <p className="text-sm font-semibold text-zinc-900 leading-none">All Ways to Use Claude</p>
+            <p className="text-[10px] font-mono text-zinc-400 mt-0.5">
               {SURFACES.length} surfaces · web · mobile · IDE · API · enterprise · labs
             </p>
           </div>
         </div>
 
         {/* Scene tabs */}
-        <div className="flex items-center gap-1 p-1 rounded-xl bg-white/[0.03] border border-white/5">
+        <div className="flex items-center gap-1 p-1 rounded-xl bg-white/[0.03] border border-zinc-200">
           {SCENES.map((s) => (
             <button
               key={s.id}
               onClick={() => setScene(s.id)}
               className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-150 whitespace-nowrap ${
                 scene === s.id
-                  ? "bg-egg-400/20 text-egg-300 border border-egg-400/25"
-                  : "text-slate-500 hover:text-slate-300"
+                  ? "bg-egg-400/20 text-egg-400 border border-egg-400/25"
+                  : "text-zinc-500 hover:text-zinc-700"
               }`}
             >
               <span className="mr-1">{s.icon}</span>
@@ -724,15 +724,15 @@ export default function ClaudeInterfacesExplainer() {
       </div>
 
       {/* Footer */}
-      <div className="border-t border-white/5 px-5 py-3 flex items-center justify-between gap-2">
-        <p className="text-[10px] font-mono text-slate-700">
+      <div className="border-t border-zinc-200 px-5 py-3 flex items-center justify-between gap-2">
+        <p className="text-[10px] font-mono text-zinc-700">
           Eggthropic-curated directory · verified May 2026
         </p>
         <a
           href="https://www.anthropic.com/claude"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[10px] font-mono text-slate-600 hover:text-slate-400 transition-colors"
+          className="text-[10px] font-mono text-zinc-400 hover:text-zinc-600 transition-colors"
         >
           anthropic.com/claude ↗
         </a>

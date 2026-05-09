@@ -345,7 +345,7 @@ function ArchitectureScene() {
               <div className={`font-mono text-xs font-bold tracking-widest ${node.text}`}>
                 {node.label}
               </div>
-              <div className="text-[10px] text-slate-500 mt-0.5">{node.sublabel}</div>
+              <div className="text-[10px] text-zinc-500 mt-0.5">{node.sublabel}</div>
               {isNodeActive(node.id) && (
                 <motion.div
                   className="absolute inset-0 rounded-2xl pointer-events-none"
@@ -363,10 +363,10 @@ function ArchitectureScene() {
                 <div className={`relative w-full h-[2px] transition-colors duration-300 ${
                   isArrowActive(NODES[i].id, NODES[i + 1].id)
                     ? "bg-cyan-400"
-                    : "bg-white/10"
+                    : "bg-zinc-200"
                 }`}>
                   <span className={`absolute right-0 top-1/2 -translate-y-1/2 text-xs transition-colors duration-300 ${
-                    isArrowActive(NODES[i].id, NODES[i + 1].id) ? "text-cyan-400" : "text-white/10"
+                    isArrowActive(NODES[i].id, NODES[i + 1].id) ? "text-cyan-400" : "text-zinc-900/10"
                   }`}>▶</span>
                   {isArrowActive(NODES[i].id, NODES[i + 1].id) && (
                     <motion.div
@@ -379,7 +379,7 @@ function ArchitectureScene() {
                 </div>
 
                 {/* JSON-RPC label */}
-                <span className="text-[9px] font-mono text-slate-600 mt-1 whitespace-nowrap">
+                <span className="text-[9px] font-mono text-zinc-400 mt-1 whitespace-nowrap">
                   JSON-RPC 2.0
                 </span>
 
@@ -387,10 +387,10 @@ function ArchitectureScene() {
                 <div className={`relative w-full h-[2px] mt-1 transition-colors duration-300 ${
                   isArrowActive(NODES[i + 1].id, NODES[i].id)
                     ? "bg-purple-400"
-                    : "bg-white/10"
+                    : "bg-zinc-200"
                 }`}>
                   <span className={`absolute left-0 top-1/2 -translate-y-1/2 text-xs transition-colors duration-300 ${
-                    isArrowActive(NODES[i + 1].id, NODES[i].id) ? "text-purple-400" : "text-white/10"
+                    isArrowActive(NODES[i + 1].id, NODES[i].id) ? "text-purple-400" : "text-zinc-900/10"
                   }`}>◀</span>
                   {isArrowActive(NODES[i + 1].id, NODES[i].id) && (
                     <motion.div
@@ -431,7 +431,7 @@ function ArchitectureScene() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25 }}
-              className="glass rounded-xl p-5 border border-white/10"
+              className="glass rounded-xl p-5 border border-zinc-200"
             >
               <div className="flex items-center gap-3 mb-2">
                 <span className={`font-mono text-[10px] tracking-widest px-2 py-0.5 rounded-full border ${
@@ -441,22 +441,22 @@ function ArchitectureScene() {
                 }`}>
                   {step.direction === "request" ? "→ REQUEST" : "← RESPONSE"}
                 </span>
-                <span className="font-mono text-xs text-slate-400">{step.from} → {step.to}</span>
+                <span className="font-mono text-xs text-zinc-600">{step.from} → {step.to}</span>
                 <span className="font-mono text-xs text-egg-400 ml-auto">
                   Step {step.id}/{TRACE_STEPS.length}
                 </span>
               </div>
-              <p className="text-sm font-semibold text-white mb-1">{step.label}</p>
-              <p className="text-sm text-slate-400">{step.description}</p>
+              <p className="text-sm font-semibold text-zinc-900 mb-1">{step.label}</p>
+              <p className="text-sm text-zinc-600">{step.description}</p>
             </motion.div>
           ) : (
             <motion.div
               key="idle"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="glass rounded-xl p-5 border border-white/5 flex items-center justify-center"
+              className="glass rounded-xl p-5 border border-zinc-200 flex items-center justify-center"
             >
-              <p className="text-sm text-slate-500 font-mono">
+              <p className="text-sm text-zinc-500 font-mono">
                 Press <span className="text-egg-400">Run Trace</span> to watch a live MCP request flow step by step.
               </p>
             </motion.div>
@@ -476,7 +476,7 @@ function ArchitectureScene() {
         {activeStep >= 0 && (
           <button
             onClick={reset}
-            className="px-4 py-2.5 rounded-lg glass border border-white/10 text-slate-400 text-sm hover:text-white transition-colors"
+            className="px-4 py-2.5 rounded-lg glass border border-zinc-200 text-zinc-600 text-sm hover:text-zinc-900 transition-colors"
           >
             Reset
           </button>
@@ -487,7 +487,7 @@ function ArchitectureScene() {
             <div
               key={i}
               className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${
-                i <= activeStep ? "bg-egg-400" : "bg-white/10"
+                i <= activeStep ? "bg-egg-400" : "bg-zinc-200"
               }`}
             />
           ))}
@@ -518,7 +518,7 @@ function PrimitivesScene() {
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-mono text-sm font-semibold transition-all duration-200 border ${
                 isActive
                   ? `${p.bgClass} ${p.borderClass} ${p.colorClass}`
-                  : "bg-white/[0.02] border-white/10 text-slate-500 hover:text-slate-300"
+                  : "bg-white/[0.02] border-zinc-200 text-zinc-500 hover:text-zinc-700"
               }`}
             >
               <span>{p.icon}</span>
@@ -548,16 +548,16 @@ function PrimitivesScene() {
               </span>
               <div>
                 <h3 className={`font-bold text-lg ${prim.colorClass}`}>{prim.title}</h3>
-                <p className="text-xs text-slate-500 font-mono">{prim.tagline}</p>
+                <p className="text-xs text-zinc-500 font-mono">{prim.tagline}</p>
               </div>
             </div>
-            <p className="text-sm text-slate-300 leading-relaxed">{prim.description}</p>
+            <p className="text-sm text-zinc-700 leading-relaxed">{prim.description}</p>
 
             <div className="mt-5 flex gap-2">
               <button
                 onClick={() => setShowCall(false)}
                 className={`text-xs font-mono px-3 py-1.5 rounded-lg border transition-colors ${
-                  !showCall ? `${prim.bgClass} ${prim.borderClass} ${prim.colorClass}` : "bg-white/5 border-white/10 text-slate-500"
+                  !showCall ? `${prim.bgClass} ${prim.borderClass} ${prim.colorClass}` : "bg-zinc-50 border-zinc-200 text-zinc-500"
                 }`}
               >
                 Definition
@@ -565,7 +565,7 @@ function PrimitivesScene() {
               <button
                 onClick={() => setShowCall(true)}
                 className={`text-xs font-mono px-3 py-1.5 rounded-lg border transition-colors ${
-                  showCall ? `${prim.bgClass} ${prim.borderClass} ${prim.colorClass}` : "bg-white/5 border-white/10 text-slate-500"
+                  showCall ? `${prim.bgClass} ${prim.borderClass} ${prim.colorClass}` : "bg-zinc-50 border-zinc-200 text-zinc-500"
                 }`}
               >
                 JSON-RPC call
@@ -574,14 +574,14 @@ function PrimitivesScene() {
           </div>
 
           {/* Code panel */}
-          <div className="rounded-2xl border border-white/10 bg-[#060a11] overflow-hidden">
-            <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/5">
+          <div className="rounded-2xl border border-zinc-200 bg-[#060a11] overflow-hidden">
+            <div className="flex items-center gap-2 px-4 py-2.5 border-b border-zinc-200">
               <div className="flex gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                <span className="w-2.5 h-2.5 rounded-full bg-zinc-200" />
+                <span className="w-2.5 h-2.5 rounded-full bg-zinc-200" />
+                <span className="w-2.5 h-2.5 rounded-full bg-zinc-200" />
               </div>
-              <span className="font-mono text-[10px] text-slate-500 ml-2">
+              <span className="font-mono text-[10px] text-zinc-500 ml-2">
                 {showCall ? prim.callExample.label : prim.example.label}
               </span>
             </div>
@@ -592,7 +592,7 @@ function PrimitivesScene() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.15 }}
-                className="p-4 text-xs font-mono text-slate-300 overflow-auto leading-relaxed"
+                className="p-4 text-xs font-mono text-zinc-700 overflow-auto leading-relaxed"
                 style={{ maxHeight: "280px" }}
               >
                 <JsonHighlight code={showCall ? prim.callExample.code : prim.example.code} />
@@ -630,14 +630,14 @@ function TraceScene() {
 
   return (
     <div className="space-y-5">
-      <div className="rounded-2xl border border-white/10 bg-[#060a11] overflow-hidden">
-        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/5">
+      <div className="rounded-2xl border border-zinc-200 bg-[#060a11] overflow-hidden">
+        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-zinc-200">
           <div className="flex gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-rose-400/60" />
             <span className="w-2.5 h-2.5 rounded-full bg-amber-400/60" />
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/60" />
           </div>
-          <span className="font-mono text-[10px] text-slate-500 ml-2">MCP message trace</span>
+          <span className="font-mono text-[10px] text-zinc-500 ml-2">MCP message trace</span>
           {running && (
             <span className="ml-auto flex items-center gap-1.5 font-mono text-[10px] text-emerald-400">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -661,10 +661,10 @@ function TraceScene() {
                 }`}>
                   <span>{step.direction === "request" ? "→" : "←"}</span>
                   <span>{step.from} → {step.to}</span>
-                  <span className="text-slate-600">·</span>
-                  <span className="text-slate-500">{step.label}</span>
+                  <span className="text-zinc-400">·</span>
+                  <span className="text-zinc-500">{step.label}</span>
                 </div>
-                <pre className="text-xs text-slate-400 font-mono bg-white/[0.02] rounded-lg p-3 overflow-x-auto leading-relaxed">
+                <pre className="text-xs text-zinc-600 font-mono bg-white/[0.02] rounded-lg p-3 overflow-x-auto leading-relaxed">
                   <JsonHighlight code={JSON.stringify(step.payload, null, 2)} />
                 </pre>
               </motion.div>
@@ -672,7 +672,7 @@ function TraceScene() {
           </AnimatePresence>
 
           {visibleSteps === 0 && (
-            <p className="text-sm text-slate-600 font-mono text-center py-8">
+            <p className="text-sm text-zinc-400 font-mono text-center py-8">
               Press <span className="text-egg-400">Start Trace</span> to replay a full MCP conversation.
             </p>
           )}
@@ -681,7 +681,7 @@ function TraceScene() {
             <motion.div
               animate={{ opacity: [0.3, 1, 0.3] }}
               transition={{ duration: 0.8, repeat: Infinity }}
-              className="font-mono text-[10px] text-slate-600"
+              className="font-mono text-[10px] text-zinc-400"
             >
               waiting for response…
             </motion.div>
@@ -702,7 +702,7 @@ function TraceScene() {
         {visibleSteps > 0 && !running && (
           <button
             onClick={() => setVisibleSteps(0)}
-            className="px-4 py-2.5 rounded-lg glass border border-white/10 text-slate-400 text-sm hover:text-white transition-colors"
+            className="px-4 py-2.5 rounded-lg glass border border-zinc-200 text-zinc-600 text-sm hover:text-zinc-900 transition-colors"
           >
             Clear
           </button>
@@ -736,25 +736,25 @@ export default function MCPExplainer() {
 
   return (
     <div
-      className="relative rounded-2xl border border-white/[0.06] overflow-hidden"
+      className="relative rounded-2xl border border-zinc-200 overflow-hidden"
       style={{ backgroundColor: "#080c14" }}
     >
       {/* Scene tabs */}
-      <div className="flex border-b border-white/[0.06]">
+      <div className="flex border-b border-zinc-200">
         {SCENES.map((s, i) => (
           <button
             key={s.id}
             onClick={() => setScene(s.id)}
-            className={`flex-1 flex flex-col items-center gap-0.5 px-4 py-3.5 transition-colors border-r border-white/[0.06] last:border-r-0 ${
+            className={`flex-1 flex flex-col items-center gap-0.5 px-4 py-3.5 transition-colors border-r border-zinc-200 last:border-r-0 ${
               scene === s.id
-                ? "bg-white/[0.04] text-white"
-                : "text-slate-500 hover:text-slate-300 hover:bg-white/[0.02]"
+                ? "bg-white/[0.04] text-zinc-900"
+                : "text-zinc-500 hover:text-zinc-700 hover:bg-white/[0.02]"
             }`}
           >
             <span className="font-mono text-xs font-semibold tracking-wider">
               {String(i + 1).padStart(2, "0")} · {s.label}
             </span>
-            <span className="font-mono text-[10px] text-slate-600">{s.description}</span>
+            <span className="font-mono text-[10px] text-zinc-400">{s.description}</span>
             {scene === s.id && (
               <motion.div
                 layoutId="scene-indicator"
@@ -783,15 +783,15 @@ export default function MCPExplainer() {
       </div>
 
       {/* Footer */}
-      <div className="border-t border-white/[0.04] px-6 py-3 flex items-center justify-between">
-        <span className="font-mono text-[10px] text-slate-600">
+      <div className="border-t border-zinc-200 px-6 py-3 flex items-center justify-between">
+        <span className="font-mono text-[10px] text-zinc-400">
           MCP Spec 2025-11-25 · JSON-RPC 2.0 · stdio / Streamable HTTP
         </span>
         <a
           href="https://modelcontextprotocol.io/specification/2025-11-25"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-mono text-[10px] text-slate-500 hover:text-egg-400 transition-colors"
+          className="font-mono text-[10px] text-zinc-500 hover:text-egg-400 transition-colors"
         >
           Official spec ↗
         </a>

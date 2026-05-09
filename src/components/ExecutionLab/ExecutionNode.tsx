@@ -44,7 +44,7 @@ export default function ExecutionNode({
       className={[
         "w-full h-full rounded-xl border flex flex-col items-center justify-center gap-1 px-2 py-2 relative overflow-hidden",
         "glass",
-        isIdle && "opacity-40 border-white/10",
+        isIdle && "opacity-40 border-zinc-200",
         isRunning && `border-opacity-60 ${phaseBorder}`,
         isSuccess && `${phaseBorder} ${phaseBg}`,
         isError && "border-rose-400/40 bg-rose-400/10",
@@ -85,7 +85,7 @@ export default function ExecutionNode({
         <span
           className={[
             "text-[11px] font-semibold font-mono leading-none",
-            isIdle && "text-slate-500",
+            isIdle && "text-zinc-500",
             isRunning && phaseColor,
             isSuccess && phaseColor,
             isError && "text-rose-400",
@@ -96,7 +96,7 @@ export default function ExecutionNode({
           {label}
         </span>
       </div>
-      <span className="text-[9px] font-mono text-slate-600 tracking-wide uppercase">{sublabel}</span>
+      <span className="text-[9px] font-mono text-zinc-400 tracking-wide uppercase">{sublabel}</span>
     </motion.div>
   );
 }

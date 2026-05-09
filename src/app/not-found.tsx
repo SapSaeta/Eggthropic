@@ -5,8 +5,8 @@ export default function NotFound() {
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center px-4 text-center">
       <div className="text-7xl font-bold text-egg-400/20 font-mono mb-4">404</div>
-      <h1 className="text-2xl font-semibold text-white mb-3">Page not found</h1>
-      <p className="text-slate-400 mb-8 max-w-sm">
+      <h1 className="text-2xl font-semibold text-zinc-900 mb-3">Page not found</h1>
+      <p className="text-zinc-600 mb-8 max-w-sm">
         This experiment doesn&apos;t exist yet — or it got archived. Back to the lab.
       </p>
       <Link

@@ -37,9 +37,9 @@ const labSections = [
     description:
       "Experiments using Claude Code — the agentic CLI that reads your codebase, runs commands, and ships committed code across files.",
     href: "/experiments?category=claude-code",
-    color: "text-violet-400",
-    bg: "bg-violet-500/10",
-    border: "border-violet-500/20",
+    color: "text-violet-600",
+    bg: "bg-violet-50",
+    border: "border-violet-200",
     tag: "claude-code",
   },
   {
@@ -48,9 +48,9 @@ const labSections = [
     description:
       "Building portable, reusable Agent Skills: SKILL.md directories that give Claude persistent capabilities across projects and platforms.",
     href: "/experiments?category=skills",
-    color: "text-fuchsia-400",
-    bg: "bg-fuchsia-500/10",
-    border: "border-fuchsia-500/20",
+    color: "text-fuchsia-600",
+    bg: "bg-fuchsia-50",
+    border: "border-fuchsia-200",
     tag: "skills",
   },
   {
@@ -59,9 +59,9 @@ const labSections = [
     description:
       "Exploring the Model Context Protocol — building servers, clients, and interactive tools around the open JSON-RPC standard.",
     href: "/experiments?category=mcp",
-    color: "text-cyan-400",
-    bg: "bg-cyan-500/10",
-    border: "border-cyan-500/20",
+    color: "text-cyan-700",
+    bg: "bg-cyan-50",
+    border: "border-cyan-200",
     tag: "mcp",
   },
   {
@@ -70,9 +70,9 @@ const labSections = [
     description:
       "Prototyping AI-native interface patterns: streaming displays, tool-call visualizations, and interaction models beyond the chat bubble.",
     href: "/experiments?category=ux-ui",
-    color: "text-amber-400",
-    bg: "bg-amber-500/10",
-    border: "border-amber-500/20",
+    color: "text-amber-600",
+    bg: "bg-amber-50",
+    border: "border-amber-200",
     tag: "ux-ui",
   },
 ];
@@ -86,7 +86,7 @@ export default function HomePage() {
       <Hero experimentCount={experiments.length} noteCount={notes.length} />
 
       {/* Lab sections */}
-      <section className="py-20 border-t border-white/5">
+      <section className="py-20 border-t border-zinc-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             label="What we explore"
@@ -109,10 +109,10 @@ export default function HomePage() {
                     <Icon className={`w-5 h-5 ${section.color}`} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white mb-1.5 group-hover:text-egg-300 transition-colors text-sm">
+                    <h3 className="font-semibold text-zinc-900 mb-1.5 group-hover:text-egg-400 transition-colors text-sm">
                       {section.title}
                     </h3>
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                    <p className="text-xs text-zinc-500 leading-relaxed">
                       {section.description}
                     </p>
                   </div>
@@ -130,7 +130,7 @@ export default function HomePage() {
       </section>
 
       {/* Latest experiments */}
-      <section className="py-20 border-t border-white/5">
+      <section className="py-20 border-t border-zinc-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-10">
             <SectionHeader
@@ -141,7 +141,7 @@ export default function HomePage() {
             />
             <Link
               href="/experiments"
-              className="hidden sm:flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-300 transition-colors font-mono"
+              className="hidden sm:flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-400 transition-colors font-mono"
             >
               All experiments
               <ArrowRight className="w-3.5 h-3.5" />
@@ -166,7 +166,7 @@ export default function HomePage() {
       </section>
 
       {/* Latest notes */}
-      <section className="py-20 border-t border-white/5">
+      <section className="py-20 border-t border-zinc-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-10">
             <SectionHeader
@@ -177,7 +177,7 @@ export default function HomePage() {
             />
             <Link
               href="/notes"
-              className="hidden sm:flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-300 transition-colors font-mono"
+              className="hidden sm:flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-400 transition-colors font-mono"
             >
               All notes
               <ArrowRight className="w-3.5 h-3.5" />
@@ -193,7 +193,7 @@ export default function HomePage() {
       </section>
 
       {/* Lab preview */}
-      <section className="py-20 border-t border-white/5">
+      <section className="py-20 border-t border-zinc-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <LabPreview />
         </div>

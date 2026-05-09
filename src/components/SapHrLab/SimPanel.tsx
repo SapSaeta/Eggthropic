@@ -116,7 +116,7 @@ export function SimPanel() {
             className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
               i === scenarioIdx
                 ? "bg-egg-400 text-lab-900 font-semibold"
-                : "glass text-slate-400 hover:text-white"
+                : "glass text-zinc-600 hover:text-zinc-900"
             }`}
           >
             {s.label}
@@ -125,11 +125,11 @@ export function SimPanel() {
       </div>
 
       {/* Question display */}
-      <div className="glass rounded-xl p-4 border border-white/8">
-        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block mb-2">
+      <div className="glass rounded-xl p-4 border border-zinc-200">
+        <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block mb-2">
           user query
         </span>
-        <p className="text-sm text-slate-300 font-mono">&ldquo;{scenario.question}&rdquo;</p>
+        <p className="text-sm text-zinc-700 font-mono">&ldquo;{scenario.question}&rdquo;</p>
       </div>
 
       {/* Controls */}
@@ -145,7 +145,7 @@ export function SimPanel() {
         {(sim.running || sim.complete) && (
           <button
             onClick={reset}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass border border-white/10 text-sm text-slate-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass border border-zinc-200 text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             Reset
@@ -170,7 +170,7 @@ export function SimPanel() {
                     ? "border-egg-400/40"
                     : status === "done"
                     ? "border-emerald-400/20"
-                    : "border-white/5"
+                    : "border-zinc-200"
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -179,15 +179,15 @@ export function SimPanel() {
                   ) : status === "running" ? (
                     <Loader2 className="w-3.5 h-3.5 text-egg-400 flex-shrink-0 animate-spin" />
                   ) : (
-                    <Circle className="w-3.5 h-3.5 text-slate-600 flex-shrink-0" />
+                    <Circle className="w-3.5 h-3.5 text-zinc-400 flex-shrink-0" />
                   )}
                   <span
                     className={`text-xs font-mono ${
                       status === "running"
                         ? "text-egg-400"
                         : status === "done"
-                        ? "text-slate-300"
-                        : "text-slate-600"
+                        ? "text-zinc-700"
+                        : "text-zinc-400"
                     }`}
                   >
                     {phase.label}
@@ -198,7 +198,7 @@ export function SimPanel() {
                     <motion.p
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
-                      className="text-[11px] text-slate-500 font-mono mt-1.5 ml-6"
+                      className="text-[11px] text-zinc-500 font-mono mt-1.5 ml-6"
                     >
                       {detail}
                     </motion.p>
@@ -221,7 +221,7 @@ export function SimPanel() {
             <span className="text-[10px] font-mono text-egg-400/70 uppercase tracking-widest block mb-3">
               assistant response · simulated
             </span>
-            <div className="text-sm text-slate-300 leading-relaxed whitespace-pre-line">
+            <div className="text-sm text-zinc-700 leading-relaxed whitespace-pre-line">
               {scenario.answer}
             </div>
           </motion.div>

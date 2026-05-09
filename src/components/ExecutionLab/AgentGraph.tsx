@@ -116,7 +116,7 @@ export default function AgentGraph({ nodeStatuses: nodes, nodeConfigs }: Props) 
               <span
                 className={[
                   "text-sm font-mono",
-                  status === "idle" && "text-slate-600",
+                  status === "idle" && "text-zinc-400",
                   status === "running" && cfg.phaseColor,
                   status === "success" && cfg.phaseColor,
                   status === "error" && "text-rose-400",
@@ -126,7 +126,7 @@ export default function AgentGraph({ nodeStatuses: nodes, nodeConfigs }: Props) 
               >
                 {cfg.label}
               </span>
-              <span className="text-[10px] font-mono text-slate-600 uppercase tracking-wide ml-auto">
+              <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-wide ml-auto">
                 {status}
               </span>
             </div>

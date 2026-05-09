@@ -40,7 +40,7 @@ export default function InterfacesLabPage() {
       <div className="mb-8">
         <Link
           href="/lab"
-          className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-500 hover:text-slate-300 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-500 hover:text-zinc-700 transition-colors"
         >
           <ArrowLeft className="w-3 h-3" />
           Back to Lab
@@ -57,13 +57,13 @@ export default function InterfacesLabPage() {
             interactive
           </span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+        <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 mb-3">
           All Ways to Use Claude
         </h1>
-        <p className="text-slate-400 max-w-2xl leading-relaxed">
+        <p className="text-zinc-600 max-w-2xl leading-relaxed">
           An Eggthropic-curated directory of known official Claude surfaces — claude.ai, mobile apps, Claude Code CLI, IDE extensions, the Anthropic API, enterprise tiers, and Anthropic Labs products.
           Verified against official Anthropic sources as of May 2026; check{" "}
-          <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener noreferrer" className="text-egg-400 hover:text-egg-300 transition-colors">anthropic.com/claude</a>
+          <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener noreferrer" className="text-egg-400 hover:text-egg-400 transition-colors">anthropic.com/claude</a>
           {" "}for the authoritative list.
         </p>
       </div>
@@ -72,10 +72,10 @@ export default function InterfacesLabPage() {
       <ClaudeInterfacesExplainer />
 
       {/* Footer nav */}
-      <div className="mt-16 pt-8 border-t border-white/5">
+      <div className="mt-16 pt-8 border-t border-zinc-200">
         <Link
           href="/lab"
-          className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-700 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           All lab experiments

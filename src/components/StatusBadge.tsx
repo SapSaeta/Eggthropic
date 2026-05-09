@@ -7,23 +7,23 @@ const statusConfig: Record<
 > = {
   complete: {
     label: "Complete",
-    className: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
-    dot: "bg-emerald-400",
+    className: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    dot: "bg-emerald-500",
   },
   "in-progress": {
     label: "In Progress",
-    className: "bg-blue-500/10 text-blue-400 border-blue-500/30",
-    dot: "bg-blue-400",
+    className: "bg-indigo-50 text-indigo-700 border-indigo-200",
+    dot: "bg-indigo-500",
   },
   experimental: {
     label: "Experimental",
-    className: "bg-egg-500/10 text-egg-400 border-egg-500/30",
-    dot: "bg-egg-400",
+    className: "bg-amber-50 text-amber-700 border-amber-200",
+    dot: "bg-amber-500",
   },
   archived: {
     label: "Archived",
-    className: "bg-slate-500/10 text-slate-400 border-slate-500/30",
-    dot: "bg-slate-400",
+    className: "bg-zinc-50 text-zinc-600 border-zinc-300",
+    dot: "bg-zinc-400",
   },
 };
 

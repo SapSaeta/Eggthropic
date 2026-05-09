@@ -40,7 +40,7 @@ export default function MCPLabPage() {
       <div className="mb-8">
         <Link
           href="/lab"
-          className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-500 hover:text-slate-300 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-500 hover:text-zinc-700 transition-colors"
         >
           <ArrowLeft className="w-3 h-3" />
           Back to Lab
@@ -57,10 +57,10 @@ export default function MCPLabPage() {
             interactive
           </span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+        <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 mb-3">
           MCP Visual Explainer
         </h1>
-        <p className="text-slate-400 max-w-2xl leading-relaxed">
+        <p className="text-zinc-600 max-w-2xl leading-relaxed">
           An interactive diagram tool that maps how an MCP server, client, and host communicate.
           Explore the architecture, the three core primitives (Tools, Resources, Prompts),
           and a live JSON-RPC 2.0 message trace — all without leaving the browser.
@@ -80,10 +80,10 @@ export default function MCPLabPage() {
       <MCPExplainer />
 
       {/* Footer nav */}
-      <div className="mt-16 pt-8 border-t border-white/5 flex items-center justify-between">
+      <div className="mt-16 pt-8 border-t border-zinc-200 flex items-center justify-between">
         <Link
           href="/lab"
-          className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-700 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           All lab experiments

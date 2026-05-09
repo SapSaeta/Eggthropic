@@ -40,7 +40,7 @@ export default function SkillsLabPage() {
       <div className="mb-8">
         <Link
           href="/lab"
-          className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-500 hover:text-slate-300 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-500 hover:text-zinc-700 transition-colors"
         >
           <ArrowLeft className="w-3 h-3" />
           Back to Lab
@@ -57,20 +57,20 @@ export default function SkillsLabPage() {
             interactive
           </span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+        <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 mb-3">
           Agent Skills Explainer
         </h1>
-        <p className="text-slate-400 max-w-2xl leading-relaxed">
+        <p className="text-zinc-600 max-w-2xl leading-relaxed">
           Agent Skills are directories containing a SKILL.md file that give Claude persistent,
           reusable capabilities — invocable as slash commands in Claude Code. Explore how they
           are structured, what each frontmatter field does, and trace a full invocation from
-          <code className="mx-1 px-1.5 py-0.5 rounded bg-white/5 text-slate-300 text-sm font-mono">/pr-describe</code>
+          <code className="mx-1 px-1.5 py-0.5 rounded bg-zinc-50 text-zinc-700 text-sm font-mono">/pr-describe</code>
           to a generated PR description.
         </p>
         <div className="mt-4">
           <Link
             href="/experiments/first-custom-agent-skill"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-egg-400 hover:text-egg-300 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-egg-400 hover:text-egg-400 transition-colors"
           >
             Read the full experiment write-up
             <ArrowRight className="w-3 h-3" />
@@ -82,17 +82,17 @@ export default function SkillsLabPage() {
       <SkillsExplainer />
 
       {/* Footer nav */}
-      <div className="mt-16 pt-8 border-t border-white/5 flex items-center justify-between">
+      <div className="mt-16 pt-8 border-t border-zinc-200 flex items-center justify-between">
         <Link
           href="/lab"
-          className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-700 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           All lab experiments
         </Link>
         <Link
           href="/experiments/first-custom-agent-skill"
-          className="inline-flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-300 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-400 transition-colors"
         >
           Full write-up
           <ArrowRight className="w-4 h-4" />
