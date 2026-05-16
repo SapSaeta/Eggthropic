@@ -303,6 +303,60 @@ export const experiments: Experiment[] = [
     ],
     lastVerified: "2026-05-08",
   },
+  {
+    slug: "codex-mcp-plugin",
+    labPage: "/lab/codex",
+    title: "Codex MCP Plugin for Claude Code",
+    description:
+      "Building a real MCP server in TypeScript that bridges Claude Code to the OpenAI Codex CLI — three tools (codex_check, codex_run, codex_ask) that let Claude delegate coding tasks to Codex or compare both models' outputs.",
+    category: "claude-code",
+    difficulty: "intermediate",
+    status: "in-progress",
+    date: "2026-05-16",
+    tools: ["Claude Code", "MCP", "OpenAI Codex CLI", "TypeScript", "Node.js"],
+    goal:
+      "Build a minimal, installable MCP server that gives Claude Code full control over the OpenAI Codex CLI — enabling it to check Codex availability, run autonomous coding tasks, and request suggestions without applying changes.",
+    context:
+      "The Model Context Protocol (MCP) lets Claude Code call external tools via a JSON-RPC 2.0 interface over stdio. The OpenAI Codex CLI (@openai/codex) is a terminal-based agentic coding tool that can read a codebase, plan edits, and apply them autonomously. This experiment wires the two together: a TypeScript MCP server spawns Codex as a subprocess with CODEX_QUIET_MODE=1 (disables the interactive TUI), captures its stdout, and returns the result as a structured MCP tool response. Claude Code can then choose when to delegate to Codex, when to ask Codex for suggestions only, and when to handle the task itself.",
+    implementationNotes:
+      "The server uses @modelcontextprotocol/sdk with StdioServerTransport — no open network ports, Claude Code manages the process lifecycle. Three tools: codex_check (execs `codex --version`, returns install status), codex_run (spawns Codex with --approval-mode full-auto for autonomous edits), codex_ask (spawns Codex with --approval-mode suggest for read-only proposals). Prompt inputs are sanitised to strip shell metacharacters before being passed as positional args to spawn(). Configurable per-call timeouts prevent hung subprocesses. The OPENAI_API_KEY is injected via the mcpServers env block in claude_code_config.json and inherited by the Codex subprocess.",
+    result:
+      "The MCP server builds cleanly and the tool schemas are correctly registered. Codex CLI subprocess management works as expected in local testing — CODEX_QUIET_MODE=1 produces parseable plain-text output. Full end-to-end validation (Claude Code → MCP → Codex → OpenAI API) pending a paired environment with both keys available.",
+    whatWorked: [
+      "StdioServerTransport + spawn() combination avoids any network configuration",
+      "CODEX_QUIET_MODE=1 reliably switches Codex from TUI to plain stdout output",
+      "Per-call timeout with SIGTERM prevents zombie subprocesses",
+      "Separate codex_run and codex_ask tools give Claude a safe read-only option",
+      "Prompt sanitisation strips shell metacharacters before spawn args",
+    ],
+    whatFailed: [
+      "Full end-to-end test requires both ANTHROPIC_API_KEY and OPENAI_API_KEY in the same environment",
+      "Codex CLI stdout format is not officially documented — parsing may break on version updates",
+      "CODEX_QUIET_MODE is an internal env var, not a public API guarantee",
+      "No streaming support yet — Codex output is buffered and returned only on completion",
+    ],
+    nextIteration:
+      "Add streaming output support so Claude Code can see Codex progress in real time. Implement a codex_diff tool that returns only the proposed file changes without applying them. Explore whether the MCP server can proxy Codex's internal plan step for Claude to inspect before approving execution.",
+    references: [
+      {
+        label: "MCP Specification (2025-11-25)",
+        url: "https://modelcontextprotocol.io/specification/2025-11-25",
+      },
+      {
+        label: "@modelcontextprotocol/sdk — npm",
+        url: "https://www.npmjs.com/package/@modelcontextprotocol/sdk",
+      },
+      {
+        label: "OpenAI Codex CLI — GitHub",
+        url: "https://github.com/openai/codex",
+      },
+      {
+        label: "Claude Code MCP Configuration — Official Docs",
+        url: "https://code.claude.com/docs/en/mcp",
+      },
+    ],
+    lastVerified: "2026-05-16",
+  },
 ];
 
 export function getExperimentBySlug(slug: string): Experiment | undefined {

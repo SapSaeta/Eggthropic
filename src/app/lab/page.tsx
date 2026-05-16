@@ -6,6 +6,7 @@ import LabStatusBoard from "@/components/LabStatusBoard";
 import MCPExplainer from "@/components/MCPExplainer";
 import SkillsExplainer from "@/components/SkillsExplainer";
 import ClaudeInterfacesExplainer from "@/components/ClaudeInterfacesExplainer";
+import CodexExplainer from "@/components/CodexExplainer";
 import { experiments } from "@/lib/experiments";
 import type { BoardExperiment, BoardCategory, BoardDifficulty, BoardStatus } from "@/components/LabStatusBoard";
 
@@ -359,7 +360,50 @@ export default function LabPage() {
         </div>
       </section>
 
-      {/* ── Section 6: Community Lab ────────────────────────────────────────── */}
+      {/* ── Section 6: Codex MCP Plugin ─────────────────────────────────── */}
+      <section className="border-t border-white/5 pt-16 mb-20">
+        <div className="flex items-start justify-between gap-4 mb-6">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="font-mono text-[10px] tracking-widest text-egg-400 uppercase">
+                Experiment · Claude Code
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-violet-400/10 border border-violet-400/20 text-violet-400 text-[10px] font-mono">
+                new · MCP plugin
+              </span>
+            </div>
+            <h2 className="text-xl font-semibold text-white mb-1">Codex MCP Plugin</h2>
+            <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
+              A real MCP server that bridges Claude Code to the OpenAI Codex CLI.
+              Three tools —{" "}
+              <code className="px-1 py-0.5 rounded bg-white/5 text-slate-300 text-xs font-mono">codex_check</code>,{" "}
+              <code className="px-1 py-0.5 rounded bg-white/5 text-slate-300 text-xs font-mono">codex_run</code>,{" "}
+              <code className="px-1 py-0.5 rounded bg-white/5 text-slate-300 text-xs font-mono">codex_ask</code>{" "}
+              — let Claude delegate coding tasks to Codex or compare both models side by side.
+            </p>
+          </div>
+          <Link
+            href="/lab/codex"
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-violet-400 hover:text-violet-300 transition-colors whitespace-nowrap"
+          >
+            Open full page
+            <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+
+        <CodexExplainer />
+
+        <div className="mt-3">
+          <Link
+            href="/lab/codex"
+            className="sm:hidden inline-flex items-center gap-1.5 text-xs font-mono text-violet-400"
+          >
+            Open full page <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+      </section>
+
+      {/* ── Section 7: Community Lab ────────────────────────────────────────── */}
       <section className="border-t border-white/5 pt-16">
         <div className="mb-10">
           <div className="flex items-center gap-3 mb-2">
