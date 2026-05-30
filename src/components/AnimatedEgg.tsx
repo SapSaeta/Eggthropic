@@ -1,11 +1,186 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 interface AnimatedEggProps {
   size?: number;
   className?: string;
   variant?: "hero" | "small" | "glow";
+}
+
+const ORBIT_DURATION = 4860; // ms — full orbit
+const RX = 170;
+const RY = 55;
+const TILT1_DEG = -35; // Claude ring
+const TILT2_DEG = 35;  // SAP ring
+
+function AtomOrbit({ size }: { size: number }) {
+  const SVG_SIZE = size * 1.1;
+  const CX = SVG_SIZE / 2;
+  const CY = SVG_SIZE / 2;
+
+  const sat1Ref = useRef<SVGGElement>(null);
+  const sat2Ref = useRef<SVGGElement>(null);
+  const satContainerRef = useRef<SVGGElement>(null);
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    const t1Rad = (TILT1_DEG * Math.PI) / 180;
+    const t2Rad = (TILT2_DEG * Math.PI) / 180;
+    const start = performance.now();
+
+    function getSatProps(angle: number, tiltRad: number) {
+      const rawX = RX * Math.cos(angle);
+      const rawY = RY * Math.sin(angle);
+      const sx = rawX * Math.cos(tiltRad) - rawY * Math.sin(tiltRad);
+      const sy = rawX * Math.sin(tiltRad) + rawY * Math.cos(tiltRad);
+      // depth: higher sy (lower on screen) = in front
+      const maxExcursion = Math.sqrt(
+        Math.pow(RX * Math.sin(tiltRad), 2) + Math.pow(RY * Math.cos(tiltRad), 2)
+      );
+      const depth = maxExcursion > 0 ? sy / maxExcursion : 0; // [-1, 1]
+      const scale = 0.6 + 0.6 * ((depth + 1) / 2); // [0.6, 1.2]
+      const opacity = 0.45 + 0.55 * ((depth + 1) / 2); // [0.45, 1.0]
+      return { x: CX + sx, y: CY + sy, depth, scale, opacity };
+    }
+
+    function frame(now: number) {
+      const angle1 = ((now - start) / ORBIT_DURATION) * Math.PI * 2;
+      const angle2 = angle1 + Math.PI;
+
+      const p1 = getSatProps(angle1, t1Rad);
+      const p2 = getSatProps(angle2, t2Rad);
+
+      if (sat1Ref.current) {
+        sat1Ref.current.setAttribute(
+          "transform",
+          `translate(${p1.x.toFixed(2)},${p1.y.toFixed(2)}) scale(${p1.scale.toFixed(3)})`
+        );
+        sat1Ref.current.setAttribute("opacity", p1.opacity.toFixed(3));
+      }
+      if (sat2Ref.current) {
+        sat2Ref.current.setAttribute(
+          "transform",
+          `translate(${p2.x.toFixed(2)},${p2.y.toFixed(2)}) scale(${p2.scale.toFixed(3)})`
+        );
+        sat2Ref.current.setAttribute("opacity", p2.opacity.toFixed(3));
+      }
+
+      // Z-ordering: the satellite more "in front" (higher depth) renders last = on top
+      if (satContainerRef.current && sat1Ref.current && sat2Ref.current) {
+        if (p1.depth >= p2.depth) {
+          satContainerRef.current.appendChild(sat1Ref.current);
+        } else {
+          satContainerRef.current.appendChild(sat2Ref.current);
+        }
+      }
+
+      rafRef.current = requestAnimationFrame(frame);
+    }
+
+    rafRef.current = requestAnimationFrame(frame);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [CX, CY]);
+
+  const offset = (SVG_SIZE - size) / 2;
+
+  return (
+    <svg
+      width={SVG_SIZE}
+      height={SVG_SIZE}
+      style={{
+        position: "absolute",
+        top: -offset,
+        left: -offset,
+        zIndex: 10,
+        pointerEvents: "none",
+      }}
+    >
+      <defs>
+        <filter id="claudeGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <filter id="sapGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+
+      {/* Ring 1 — Claude, tilted -35° */}
+      <g transform={`translate(${CX},${CY}) rotate(${TILT1_DEG})`}>
+        <ellipse
+          cx={0}
+          cy={0}
+          rx={RX}
+          ry={RY}
+          fill="none"
+          stroke="rgba(217,100,66,0.4)"
+          strokeWidth="1.5"
+        />
+      </g>
+
+      {/* Ring 2 — SAP, tilted +35° */}
+      <g transform={`translate(${CX},${CY}) rotate(${TILT2_DEG})`}>
+        <ellipse
+          cx={0}
+          cy={0}
+          rx={RX}
+          ry={RY}
+          fill="none"
+          stroke="rgba(0,112,242,0.4)"
+          strokeWidth="1.5"
+        />
+      </g>
+
+      {/* Satellites — order controlled by rAF loop */}
+      <g ref={satContainerRef}>
+        {/* SAP satellite */}
+        <g ref={sat2Ref}>
+          <circle r={14} fill="#0070F2" filter="url(#sapGlow)" />
+          <text
+            textAnchor="middle"
+            dominantBaseline="central"
+            fill="white"
+            fontFamily="Arial Black, Arial, sans-serif"
+            fontWeight="900"
+            fontSize="7"
+          >
+            SAP
+          </text>
+        </g>
+
+        {/* Claude satellite */}
+        <g ref={sat1Ref} filter="url(#claudeGlow)">
+          <circle r={14} fill="#1a0f0a" stroke="#D96442" strokeWidth="1.5" />
+          {/* Claude mark */}
+          <g transform="scale(0.55)" fill="none">
+            <path
+              d="M 0,-13 C 7,-13 13,-7 13,0 C 13,7 7,13 0,13 C -7,13 -13,7 -13,0 C -13,-5 -10,-10 -6,-12"
+              stroke="#D96442"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+            <path
+              d="M -4,-9 C 1,-11 7,-8 9,-3 C 11,3 7,9 1,11"
+              stroke="#E8956D"
+              strokeWidth="2"
+              strokeLinecap="round"
+              opacity="0.7"
+            />
+            <circle cx={0} cy={0} r={2.5} fill="#D96442" />
+          </g>
+        </g>
+      </g>
+    </svg>
+  );
 }
 
 export function AnimatedEgg({
@@ -36,33 +211,15 @@ export function AnimatedEgg({
         />
       )}
 
-      {/* Mid ring */}
-      {isHero && (
-        <motion.div
-          className="absolute rounded-full border border-egg-400/20"
-          style={{ width: size * 1.1, height: size * 1.1 }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        >
-          {/* Orbit dot */}
-          <div
-            className="absolute bg-egg-400 rounded-full"
-            style={{
-              width: 6,
-              height: 6,
-              top: "50%",
-              left: -3,
-              transform: "translateY(-50%)",
-            }}
-          />
-        </motion.div>
-      )}
+      {/* Dual-ring atom orbit (hero only) */}
+      {isHero && <AtomOrbit size={size} />}
 
       {/* Egg SVG */}
       <motion.svg
         viewBox="0 0 100 120"
         width={size * 0.65}
         height={size * 0.65 * 1.2}
+        style={{ position: "relative", zIndex: 5 }}
         animate={
           isHero
             ? { y: [0, -8, 0], rotate: [-1, 1, -1] }
