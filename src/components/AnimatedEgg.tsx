@@ -157,25 +157,23 @@ function AtomOrbit({ size }: { size: number }) {
           </text>
         </g>
 
-        {/* Claude satellite */}
+        {/* Claude satellite — Anthropic sunburst mark */}
         <g ref={sat1Ref} filter="url(#claudeGlow)">
           <circle r={14} fill="#1a0f0a" stroke="#D96442" strokeWidth="1.5" />
-          {/* Claude mark */}
-          <g transform="scale(0.55)" fill="none">
-            <path
-              d="M 0,-13 C 7,-13 13,-7 13,0 C 13,7 7,13 0,13 C -7,13 -13,7 -13,0 C -13,-5 -10,-10 -6,-12"
-              stroke="#D96442"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            />
-            <path
-              d="M -4,-9 C 1,-11 7,-8 9,-3 C 11,3 7,9 1,11"
-              stroke="#E8956D"
-              strokeWidth="2"
-              strokeLinecap="round"
-              opacity="0.7"
-            />
-            <circle cx={0} cy={0} r={2.5} fill="#D96442" />
+          {/* 12-ray sunburst, scaled to fit inside r=12 */}
+          <g fill="#D96442">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <rect
+                key={i}
+                x={-1.3}
+                y={-11.5}
+                width={2.6}
+                height={6.5}
+                rx={1.3}
+                transform={`rotate(${i * 30})`}
+              />
+            ))}
+            <circle cx={0} cy={0} r={3.5} />
           </g>
         </g>
       </g>
