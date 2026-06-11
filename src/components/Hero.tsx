@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import { AnimatedEgg } from "./AnimatedEgg";
+import { EggClickable } from "./EggClickable";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { GithubIcon } from "./GithubIcon";
 
@@ -12,10 +13,31 @@ interface HeroProps {
 }
 
 export function Hero({ experimentCount, noteCount }: HeroProps) {
+  // Foco suave que sigue al cursor
+  const mx = useMotionValue(-500);
+  const my = useMotionValue(-500);
+  const sx = useSpring(mx, { stiffness: 120, damping: 25 });
+  const sy = useSpring(my, { stiffness: 120, damping: 25 });
+  const spotlight = useMotionTemplate`radial-gradient(420px circle at ${sx}px ${sy}px, rgba(255, 224, 77, 0.06), transparent 70%)`;
+
+  function onMouseMove(e: React.MouseEvent<HTMLElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mx.set(e.clientX - rect.left);
+    my.set(e.clientY - rect.top);
+  }
+
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+    <section
+      className="relative min-h-[90vh] flex items-center overflow-hidden"
+      onMouseMove={onMouseMove}
+    >
       {/* Background effects */}
       <div className="absolute inset-0 grid-bg" />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{ background: spotlight }}
+      />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-egg-400/5 blur-[100px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[400px] bg-lab-200/5 blur-[100px] rounded-full pointer-events-none" />
 
@@ -123,7 +145,9 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <div className="relative">
-              <AnimatedEgg size={320} variant="hero" />
+              <EggClickable>
+                <AnimatedEgg size={320} variant="hero" />
+              </EggClickable>
 
               {/* Floating labels */}
               <motion.div

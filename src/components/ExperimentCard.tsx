@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { StatusBadge } from "./StatusBadge";
+import { TiltCard } from "./TiltCard";
 import { ToolBadge } from "./ToolBadge";
 import { formatDate } from "@/lib/utils";
 import type { Experiment } from "@/types";
@@ -41,8 +42,9 @@ export function ExperimentCard({ experiment, index = 0 }: ExperimentCardProps) {
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.07 }}
     >
-      <Link href={`/experiments/${experiment.slug}`} className="block group">
-        <div className="glass glass-hover rounded-xl p-5 h-full flex flex-col gap-4">
+      <Link href={`/experiments/${experiment.slug}`} className="block group h-full">
+        <TiltCard className="group h-full">
+          <div className="glass glass-hover rounded-xl p-5 h-full flex flex-col gap-4">
           {/* Header */}
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
@@ -76,7 +78,7 @@ export function ExperimentCard({ experiment, index = 0 }: ExperimentCardProps) {
             ))}
             {experiment.tools.length > 4 && (
               <span className="text-xs text-slate-500 py-0.5">
-                +{experiment.tools.length - 4} more
+                +{experiment.tools.length - 4} más
               </span>
             )}
           </div>
@@ -88,7 +90,8 @@ export function ExperimentCard({ experiment, index = 0 }: ExperimentCardProps) {
               {formatDate(experiment.date)}
             </time>
           </div>
-        </div>
+          </div>
+        </TiltCard>
       </Link>
     </motion.div>
   );

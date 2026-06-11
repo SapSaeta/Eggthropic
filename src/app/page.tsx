@@ -104,7 +104,7 @@ export default function HomePage() {
                   className="glass glass-hover rounded-xl p-5 flex flex-col gap-4 group"
                 >
                   <div
-                    className={`w-10 h-10 rounded-lg ${section.bg} border ${section.border} flex items-center justify-center`}
+                    className={`w-10 h-10 rounded-lg ${section.bg} border ${section.border} flex items-center justify-center transition-transform duration-300 group-hover:-rotate-12 group-hover:scale-110`}
                   >
                     <Icon className={`w-5 h-5 ${section.color}`} />
                   </div>

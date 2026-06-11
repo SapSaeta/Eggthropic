@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import { TiltCard } from "./TiltCard";
 import type { Note } from "@/types";
 
 interface NoteCardProps {
@@ -29,8 +30,9 @@ export function NoteCard({ note, index = 0 }: NoteCardProps) {
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.07 }}
     >
-      <Link href={`/notes/${note.slug}`} className="block group">
-        <div className="glass glass-hover rounded-xl p-5 h-full flex flex-col gap-3">
+      <Link href={`/notes/${note.slug}`} className="block group h-full">
+        <TiltCard className="group h-full" intensity={5} glowColor="rgba(94, 234, 212, 0.08)">
+          <div className="glass glass-hover rounded-xl p-5 h-full flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <span className={`text-xs font-mono font-medium ${catColor}`}>
               {note.category}
@@ -59,7 +61,8 @@ export function NoteCard({ note, index = 0 }: NoteCardProps) {
                 ` y ${note.whatCanBeBuilt.length - 1} más`}
             </p>
           </div>
-        </div>
+          </div>
+        </TiltCard>
       </Link>
     </motion.div>
   );
