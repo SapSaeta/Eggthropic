@@ -47,8 +47,8 @@ const categoryLabel: Record<string, string> = {
   mcp: "MCP",
   api: "API",
   "ux-ui": "UX/UI",
-  automation: "Automation",
-  "enterprise-ai": "Enterprise AI",
+  automation: "Automatización",
+  "enterprise-ai": "IA empresarial",
 };
 
 export default async function ExperimentPage({ params }: Props) {
@@ -63,7 +63,7 @@ export default async function ExperimentPage({ params }: Props) {
       <BreadcrumbListJsonLd
         items={[
           { name: "Eggthropic", url: "https://www.eggthropic.com" },
-          { name: "Experiments", url: "https://www.eggthropic.com/experiments" },
+          { name: "Experimentos", url: "https://www.eggthropic.com/experiments" },
           { name: exp.title, url: pageUrl },
         ]}
       />
@@ -95,7 +95,7 @@ export default async function ExperimentPage({ params }: Props) {
           </span>
           <StatusBadge status={exp.status} />
           <span className="text-xs font-mono text-slate-500 capitalize">
-            {exp.difficulty}
+            {({ beginner: "principiante", intermediate: "intermedio", advanced: "avanzado" } as Record<string,string>)[exp.difficulty] ?? exp.difficulty}
           </span>
           <time className="text-xs font-mono text-slate-500 ml-auto">
             {formatDate(exp.date)}
@@ -121,16 +121,16 @@ export default async function ExperimentPage({ params }: Props) {
 
       {/* Content sections */}
       <div className="space-y-10">
-        <Section title="Goal">
+        <Section title="Objetivo">
           <p className="text-slate-300 leading-relaxed">{exp.goal}</p>
         </Section>
 
-        <Section title="Context">
+        <Section title="Contexto">
           <p className="text-slate-300 leading-relaxed">{exp.context}</p>
         </Section>
 
         {exp.prompt && (
-          <Section title="Prompt used">
+          <Section title="Prompt utilizado">
             <div className="glass rounded-xl p-5 border border-egg-400/10">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-xs font-mono text-egg-400/70 uppercase tracking-widest">
@@ -144,19 +144,19 @@ export default async function ExperimentPage({ params }: Props) {
           </Section>
         )}
 
-        <Section title="Implementation notes">
+        <Section title="Notas de implementación">
           <p className="text-slate-300 leading-relaxed">
             {exp.implementationNotes}
           </p>
         </Section>
 
-        <Section title="Result">
+        <Section title="Resultado">
           <p className="text-slate-300 leading-relaxed">{exp.result}</p>
         </Section>
 
         {/* What worked / failed */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <Section title="What worked">
+          <Section title="Qué funcionó">
             <ul className="space-y-2.5">
               {exp.whatWorked.map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5">
@@ -169,7 +169,7 @@ export default async function ExperimentPage({ params }: Props) {
             </ul>
           </Section>
 
-          <Section title="What failed">
+          <Section title="Qué falló">
             <ul className="space-y-2.5">
               {exp.whatFailed.map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5">
@@ -183,13 +183,38 @@ export default async function ExperimentPage({ params }: Props) {
           </Section>
         </div>
 
-        <Section title="Next iteration">
+        <Section title="Próxima iteración">
           <p className="text-slate-300 leading-relaxed">{exp.nextIteration}</p>
+        </Section>
+
+        {/* Reprodúcelo tú */}
+        <Section title="Reprodúcelo tú">
+          <div className="glass rounded-xl p-5 border border-egg-400/15">
+            <p className="text-sm text-slate-300 leading-relaxed mb-4">
+              Este experimento es un playbook: con las herramientas de arriba
+              {exp.prompt
+                ? " y el prompt exacto de esta página"
+                : " y las notas de implementación"}{" "}
+              puedes repetirlo en tu propio entorno. Si lo haces — funcione o no —
+              cuéntanoslo en GitHub: las réplicas con resultados distintos son tan
+              valiosas como el experimento original.
+            </p>
+            <div className="flex flex-wrap gap-2 text-xs font-mono">
+              {exp.tools.map((tool) => (
+                <span
+                  key={tool}
+                  className="px-2 py-1 rounded bg-white/5 border border-white/10 text-slate-400"
+                >
+                  {tool}
+                </span>
+              ))}
+            </div>
+          </div>
         </Section>
 
         {/* References */}
         {exp.references.length > 0 && (
-          <Section title="References">
+          <Section title="Referencias">
             <ul className="space-y-2">
               {exp.references.map((ref, i) => (
                 <li key={i}>
@@ -237,7 +262,7 @@ export default async function ExperimentPage({ params }: Props) {
           className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to all experiments
+          Volver a todos los experimentos
         </Link>
       </div>
     </div>

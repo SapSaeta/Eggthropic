@@ -7,7 +7,7 @@ export function WebsiteJsonLd() {
     name: "Eggthropic",
     url: BASE,
     description:
-      "An independent experimental lab for learning Claude by building real experiments with Claude Code, Agent Skills, MCP, and the Anthropic API.",
+      "An independent experimental lab for learning Claude construyendo experiments with Claude Code, Agent Skills, MCP, and the Anthropic API.",
   };
   return (
     <script

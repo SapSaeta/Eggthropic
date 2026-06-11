@@ -30,7 +30,7 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
             >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-egg-400/20 text-xs font-mono text-egg-400 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-egg-400 animate-pulse" />
-                Independent experimental lab
+                Laboratorio experimental independiente
               </div>
             </motion.div>
 
@@ -40,13 +40,13 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.08 }}
             >
-              A practical lab for
+              Un laboratorio práctico para
               <br />
-              <span className="gradient-text">learning Claude</span>
+              <span className="gradient-text">aprender Claude</span>
               <br />
-              by building real
+              construyendo
               <br />
-              experiments.
+              experimentos reales.
             </motion.h1>
 
             <motion.p
@@ -55,9 +55,9 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.14 }}
             >
-              Eggthropic explores Claude Code, Agent Skills, MCP servers, API
-              patterns, and UX experiments — all documented honestly: what
-              works, what fails, and what comes next.
+              Eggthropic explora Claude Code, Agent Skills, servidores MCP,
+              patrones de API y experimentos de UX — todo documentado con
+              honestidad: qué funciona, qué falla y qué viene después.
             </motion.p>
 
             <motion.div
@@ -70,7 +70,7 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
                 href="/experiments"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-egg-400 text-lab-900 font-semibold text-sm hover:bg-egg-300 transition-colors"
               >
-                Explore experiments
+                Explorar experimentos
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
@@ -78,7 +78,7 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass border border-white/10 text-white text-sm font-medium hover:border-white/20 transition-colors"
               >
                 <BookOpen className="w-4 h-4 text-slate-400" />
-                Read notes
+                Leer las notas
               </Link>
               <a
                 href="https://github.com/sapsaeta/eggthropic"
@@ -99,9 +99,9 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
               transition={{ duration: 0.5, delay: 0.3 }}
             >
               {[
-                { value: String(experimentCount), label: "Experiments" },
-                { value: String(noteCount), label: "Notes" },
-                { value: "100%", label: "Documented" },
+                { value: String(experimentCount), label: "Experimentos" },
+                { value: String(noteCount), label: "Notas" },
+                { value: "100%", label: "Documentado" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <div className="text-2xl font-bold text-white">

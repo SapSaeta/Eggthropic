@@ -53,10 +53,10 @@ export function NoteCard({ note, index = 0 }: NoteCardProps) {
 
           <div className="pt-2 border-t border-white/5">
             <p className="text-xs text-slate-500">
-              <span className="text-slate-400">What can be built: </span>
+              <span className="text-slate-400">Qué se puede construir: </span>
               {note.whatCanBeBuilt[0]}
               {note.whatCanBeBuilt.length > 1 &&
-                ` + ${note.whatCanBeBuilt.length - 1} more`}
+                ` y ${note.whatCanBeBuilt.length - 1} más`}
             </p>
           </div>
         </div>

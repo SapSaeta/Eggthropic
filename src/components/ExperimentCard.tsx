@@ -14,9 +14,14 @@ const categoryLabel: Record<string, string> = {
   mcp: "MCP",
   api: "API",
   "ux-ui": "UX/UI",
-  automation: "Automation",
+  automation: "Automatización",
 };
 
+const difficultyLabel: Record<string, string> = {
+  beginner: "principiante",
+  intermediate: "intermedio",
+  advanced: "avanzado",
+};
 const difficultyColor: Record<string, string> = {
   beginner: "text-emerald-400",
   intermediate: "text-amber-400",
@@ -49,7 +54,7 @@ export function ExperimentCard({ experiment, index = 0 }: ExperimentCardProps) {
                 <span
                   className={`text-xs font-medium capitalize ${difficultyColor[experiment.difficulty]}`}
                 >
-                  {experiment.difficulty}
+                  {difficultyLabel[experiment.difficulty] ?? experiment.difficulty}
                 </span>
               </div>
               <h3 className="font-semibold text-white leading-snug group-hover:text-egg-300 transition-colors">

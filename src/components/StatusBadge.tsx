@@ -6,12 +6,12 @@ const statusConfig: Record<
   { label: string; className: string; dot: string }
 > = {
   complete: {
-    label: "Complete",
+    label: "Completo",
     className: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
     dot: "bg-emerald-400",
   },
   "in-progress": {
-    label: "In Progress",
+    label: "En curso",
     className: "bg-blue-500/10 text-blue-400 border-blue-500/30",
     dot: "bg-blue-400",
   },
@@ -21,7 +21,7 @@ const statusConfig: Record<
     dot: "bg-egg-400",
   },
   archived: {
-    label: "Archived",
+    label: "Archivado",
     className: "bg-slate-500/10 text-slate-400 border-slate-500/30",
     dot: "bg-slate-400",
   },

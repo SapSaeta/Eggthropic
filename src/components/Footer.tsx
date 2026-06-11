@@ -1,21 +1,21 @@
 import Link from "next/link";
 
 const footerLinks = {
-  Lab: [
-    { href: "/experiments", label: "Experiments" },
-    { href: "/notes", label: "Notes" },
-    { href: "/lab", label: "Community Lab" },
-    { href: "/about", label: "About" },
+  Laboratorio: [
+    { href: "/experiments", label: "Experimentos" },
+    { href: "/notes", label: "Notas" },
+    { href: "/lab", label: "Laboratorio comunitario" },
+    { href: "/about", label: "Sobre el lab" },
   ],
-  Resources: [
+  Recursos: [
     {
       href: "https://docs.anthropic.com/en/docs/claude-code/overview",
-      label: "Claude Code Docs",
+      label: "Docs de Claude Code",
       external: true,
     },
     {
       href: "https://docs.anthropic.com/en/docs/agents-and-tools/mcp",
-      label: "MCP Docs",
+      label: "Docs de MCP",
       external: true,
     },
     {
@@ -25,7 +25,12 @@ const footerLinks = {
     },
     {
       href: "https://modelcontextprotocol.io",
-      label: "MCP Spec",
+      label: "Especificación MCP",
+      external: true,
+    },
+    {
+      href: "https://saetaia.com",
+      label: "SaetaIA — Claude × SAP en español",
       external: true,
     },
   ],
@@ -45,11 +50,11 @@ export function Footer() {
               </span>
             </div>
             <p className="text-sm text-slate-500 leading-relaxed max-w-xs">
-              An independent experimental lab for learning Claude by building
+              Un laboratorio experimental independiente para aprender Claude construyendo
               real experiments.
             </p>
             <p className="mt-4 text-xs text-slate-600 leading-relaxed max-w-xs">
-              Not affiliated with, endorsed by, or officially connected to
+              Sin afiliación, respaldo ni conexión oficial con
               Anthropic.
             </p>
           </div>
@@ -98,7 +103,7 @@ export function Footer() {
             rel="noopener noreferrer"
             className="text-xs text-slate-500 hover:text-white transition-colors font-mono"
           >
-            View source on GitHub
+            Ver el código en GitHub
           </a>
         </div>
       </div>

@@ -61,7 +61,7 @@ export default async function NotePage({ params }: Props) {
       <BreadcrumbListJsonLd
         items={[
           { name: "Eggthropic", url: "https://www.eggthropic.com" },
-          { name: "Notes", url: "https://www.eggthropic.com/notes" },
+          { name: "Notas", url: "https://www.eggthropic.com/notes" },
           { name: note.title, url: pageUrl },
         ]}
       />
@@ -107,11 +107,11 @@ export default async function NotePage({ params }: Props) {
 
       {/* Content */}
       <div className="space-y-10">
-        <NoteSection title="What changed">
+        <NoteSection title="Qué ha cambiado">
           <p className="text-slate-300 leading-relaxed">{note.whatChanged}</p>
         </NoteSection>
 
-        <NoteSection title="Why it matters">
+        <NoteSection title="Por qué importa">
           <p className="text-slate-300 leading-relaxed">{note.whyItMatters}</p>
         </NoteSection>
 
@@ -142,7 +142,7 @@ export default async function NotePage({ params }: Props) {
         </NoteSection>
 
         {note.references.length > 0 && (
-          <NoteSection title="References">
+          <NoteSection title="Referencias">
             <ul className="space-y-2">
               {note.references.map((ref, i) => (
                 <li key={i}>
@@ -162,12 +162,12 @@ export default async function NotePage({ params }: Props) {
         )}
       </div>
 
-      {/* Related experiments */}
+      {/* Experimentos relacionados */}
       {note.relatedExperiments && note.relatedExperiments.length > 0 && (
         <div className="mt-10 glass rounded-xl p-5 border border-egg-400/10">
           <h2 className="text-xs font-mono tracking-widest text-egg-400/70 uppercase mb-3 flex items-center gap-2">
             <span className="w-4 h-px bg-egg-400/30" />
-            Related experiments
+            Experimentos relacionados
           </h2>
           <ul className="space-y-2">
             {note.relatedExperiments.map((expSlug) => {
@@ -196,7 +196,7 @@ export default async function NotePage({ params }: Props) {
           className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to all notes
+          Volver a todas las notas
         </Link>
       </div>
     </div>

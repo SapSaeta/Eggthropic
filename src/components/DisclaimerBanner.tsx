@@ -6,8 +6,7 @@ export function DisclaimerBanner() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
         <p className="text-xs text-slate-400 flex items-center gap-2">
           <Info className="w-3.5 h-3.5 text-egg-400/70 flex-shrink-0" />
-          Eggthropic is an independent experimental project and is not affiliated
-          with, endorsed by, or officially connected to Anthropic.
+          Eggthropic es un proyecto experimental independiente, sin afiliación ni respaldo de Anthropic.
         </p>
       </div>
     </div>

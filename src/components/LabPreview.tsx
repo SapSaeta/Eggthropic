@@ -27,7 +27,7 @@ export function LabPreview() {
         </div>
 
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-egg-400/10 border border-egg-400/20 text-egg-400 text-xs font-mono mb-4">
-          Coming soon
+          Próximamente
         </div>
 
         <h3 className="text-xl font-semibold text-white mb-3">
@@ -41,11 +41,11 @@ export function LabPreview() {
         <div className="flex items-center justify-center gap-3 flex-wrap">
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-slate-300">
             <GitPullRequest className="w-4 h-4 text-slate-400" />
-            Submit via PR
+            Propón por PR
           </div>
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-slate-300">
             <FlaskConical className="w-4 h-4 text-slate-400" />
-            Sandboxed environment
+            Entorno aislado
           </div>
         </div>
 
@@ -54,7 +54,7 @@ export function LabPreview() {
             href="/lab"
             className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors"
           >
-            Learn more about the lab
+            Conoce el laboratorio
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

@@ -3,40 +3,40 @@ import type { Note } from "@/types";
 export const notes: Note[] = [
   {
     slug: "claude-code-agentic-coding-2026",
-    title: "Claude Code: What Agentic Coding Looks Like in Practice",
+    title: "Claude Code: cómo es programar con agentes en la práctica",
     summary:
-      "Claude Code moves beyond autocomplete — it reads your full codebase, runs commands, and ships committed code across multiple files. Here's what that actually means for daily developer workflows.",
+      "Claude Code va mucho más allá del autocompletado: lee tu base de código completa, ejecuta comandos y entrega código commiteado en varios archivos. Esto es lo que significa para el día a día de un desarrollador.",
     date: "2026-04-05",
     category: "Claude Code",
     whatChanged:
-      "Claude Code has evolved from a simple CLI wrapper into a fully agentic coding system. Key capabilities include reading entire codebases, creating and editing files across directories, running tests and terminal commands, and committing code — all within a permission-aware model that asks before taking irreversible actions. The 2026 updates added scheduled tasks (Routines, currently in research preview) that run on Anthropic-managed infrastructure and persist when your machine is off, plus Remote Control for running Claude Code on servers or CI environments and interacting with it via API or thin client.",
+      "Claude Code ha evolucionado de simple wrapper de CLI a un sistema de programación completamente agéntico. Capacidades clave: leer bases de código enteras, crear y editar archivos en cualquier directorio, ejecutar tests y comandos de terminal, y hacer commits — todo dentro de un modelo de permisos que pregunta antes de acciones irreversibles. Las actualizaciones de 2026 añadieron tareas programadas (Routines, en research preview) que corren en infraestructura de Anthropic y persisten con tu máquina apagada, además de Remote Control para ejecutar Claude Code en servidores o CI e interactuar vía API o cliente ligero.",
     whyItMatters:
-      "The gap between 'AI writes code snippets' and 'AI ships features' has meaningfully narrowed. Claude Code can handle multi-step refactors, complete features from a brief, and iterate based on test output — compressing work that previously required significant developer context-switching. The permission model and explicit human checkpoints keep the developer in control of what ships. Always review generated changes before merging.",
+      "La distancia entre «la IA escribe snippets» y «la IA entrega features» se ha acortado de verdad. Claude Code maneja refactors multi-paso, completa features desde un brief e itera según la salida de los tests — comprimiendo trabajo que antes exigía mucho cambio de contexto del desarrollador. El modelo de permisos y los checkpoints humanos explícitos mantienen el control en tus manos. Revisa siempre los cambios generados antes de mergear.",
     whatCanBeBuilt: [
-      "Automated PR description generation from git diff (see our Agent Skills experiment)",
-      "Multi-step refactors driven by a CLAUDE.md project spec",
-      "Test-driven development loops where Claude writes the test, implements the feature, and iterates until passing",
-      "Scheduled code hygiene routines (dependency updates, lint fixes) that run without manual trigger via Routines",
-      "Multi-agent pipelines using the Claude Agent SDK, with one Claude instance orchestrating parallel sub-agents",
+      "Generación automática de descripciones de PR desde el git diff (ver nuestro experimento de Agent Skills)",
+      "Refactors multi-paso dirigidos por una especificación de proyecto en CLAUDE.md",
+      "Bucles de TDD donde Claude escribe el test, implementa la feature e itera hasta que pasa",
+      "Rutinas programadas de higiene de código (actualizar dependencias, arreglar lint) sin disparo manual vía Routines",
+      "Pipelines multi-agente con el Claude Agent SDK, con una instancia orquestando sub-agentes en paralelo",
     ],
     limitationsOrRisks: [
-      "Claude Code requires explicit permission grants — defaults are conservative, but always review changes before committing or merging",
-      "Scheduled Routines run on Anthropic infrastructure — data sent to those routines should be treated as API data per Anthropic's privacy policy",
-      "Remote Control runs over network — use only on trusted infrastructure for sensitive codebases",
-      "Agentic coding amplifies vague prompts: an unclear task brief can produce a large, incorrect multi-file change across your repo",
-      "Not a replacement for security-critical code review — always validate generated code with tests and human review before shipping",
+      "Claude Code requiere permisos explícitos — los defaults son conservadores, pero revisa siempre antes de commitear o mergear",
+      "Las Routines corren en infraestructura de Anthropic: los datos enviados se rigen por su política de privacidad de API",
+      "Remote Control funciona por red — úsalo solo en infraestructura de confianza con código sensible",
+      "La programación agéntica amplifica los prompts vagos: un brief poco claro puede producir un cambio multi-archivo grande y equivocado",
+      "No sustituye la revisión de código crítico de seguridad — valida siempre con tests y revisión humana antes de desplegar",
     ],
     references: [
       {
-        label: "Claude Code Overview — Anthropic Docs",
+        label: "Claude Code Overview — Docs de Anthropic",
         url: "https://docs.anthropic.com/en/docs/claude-code/overview",
       },
       {
-        label: "Claude Code Product Page",
+        label: "Página de producto de Claude Code",
         url: "https://www.anthropic.com/claude-code",
       },
       {
-        label: "Automate work with routines — Claude Code Docs",
+        label: "Automatiza trabajo con routines — Docs de Claude Code",
         url: "https://code.claude.com/docs/en/routines",
       },
     ],
@@ -45,52 +45,52 @@ export const notes: Note[] = [
   },
   {
     slug: "mcp-the-usb-c-for-ai-tools",
-    title: "MCP: The USB-C for AI Tools",
+    title: "MCP: el USB-C de las herramientas de IA",
     summary:
-      "The Model Context Protocol is an open standard for connecting AI applications to external data and tools — widely adopted across the AI ecosystem since its November 2024 launch.",
+      "El Model Context Protocol es un estándar abierto para conectar aplicaciones de IA con datos y herramientas externas — adoptado masivamente por el ecosistema desde su lanzamiento en noviembre de 2024.",
     date: "2026-04-22",
     category: "MCP",
     whatChanged:
-      "Anthropic launched MCP in November 2024 as an open-source protocol based on JSON-RPC 2.0, taking design inspiration from the Language Server Protocol. MCP defines three primitives: Tools (executable functions the model can call), Resources (structured data included in context), and Prompts (reusable templates). MCP is an open standard — not Anthropic-exclusive — with SDKs for all major languages and broad industry adoption. The official MCP Registry launched in September 2025 at registry.modelcontextprotocol.io as a centralized server discovery catalog. Anthropic also launched an MCP Connector on the API that lets you connect to remote MCP servers directly from the Messages API without a separate client. MCP Apps (SEP-1865), formalized in early 2026, extends the protocol to support interactive HTML-based UIs delivered from MCP servers via sandboxed iframes. Note: SSE (Server-Sent Events) transport was deprecated in the 2025-03-26 spec revision; the current remote transport is Streamable HTTP.",
+      "Anthropic lanzó MCP en noviembre de 2024 como protocolo open source basado en JSON-RPC 2.0, inspirado en el Language Server Protocol. Define tres primitivas: Tools (funciones ejecutables que el modelo puede llamar), Resources (datos estructurados para el contexto) y Prompts (plantillas reutilizables). Es un estándar abierto — no exclusivo de Anthropic — con SDKs para todos los lenguajes principales y adopción amplia en la industria. El MCP Registry oficial llegó en septiembre de 2025 (registry.modelcontextprotocol.io) como catálogo centralizado de servidores. Anthropic también lanzó el MCP Connector en la API, que permite conectar con servidores MCP remotos directamente desde la Messages API sin cliente aparte. MCP Apps (SEP-1865), formalizado a principios de 2026, extiende el protocolo para servir interfaces HTML interactivas desde servidores MCP vía iframes aislados. Nota: el transporte SSE quedó obsoleto en la revisión de spec de 2025-03-26; el transporte remoto actual es Streamable HTTP.",
     whyItMatters:
-      "MCP eliminates the bespoke integration tax. Before MCP, every AI tool needed its own custom connector to every data source. With MCP, build one server per data source and any MCP-compatible host can connect. This compounds: as more hosts adopt MCP (Claude, IDEs, custom agents), your MCP server works everywhere automatically. The API connector removes the need to run a local MCP client, making server-side agent architectures much simpler.",
+      "MCP elimina el impuesto de las integraciones a medida. Antes, cada herramienta de IA necesitaba su conector propio para cada fuente de datos. Con MCP construyes un servidor por fuente y cualquier host compatible se conecta. Y compone: cuantos más hosts adoptan MCP (Claude, IDEs, agentes propios), más sitios funcionan con tu servidor automáticamente. El conector de la API elimina la necesidad de un cliente MCP local, simplificando mucho las arquitecturas de agentes en servidor.",
     whatCanBeBuilt: [
-      "MCP servers exposing internal APIs, databases, or file systems to Claude agents",
-      "Developer tools that read live codebase context via MCP resources",
-      "Multi-agent workflows where each agent has a dedicated MCP server for its domain",
-      "Interactive dashboards delivered from MCP servers using MCP Apps (SEP-1865)",
-      "MCP servers wrapped around legacy REST APIs to make them agent-accessible",
-      "Local MCP development servers for testing agent capabilities before deploying",
+      "Servidores MCP que exponen APIs internas, bases de datos o sistemas de archivos a agentes Claude",
+      "Herramientas de desarrollo que leen contexto vivo del codebase vía resources",
+      "Flujos multi-agente donde cada agente tiene su servidor MCP de dominio",
+      "Dashboards interactivos servidos desde servidores MCP con MCP Apps (SEP-1865)",
+      "Servidores MCP que envuelven APIs REST legacy para hacerlas accesibles a agentes",
+      "Servidores MCP locales de desarrollo para probar capacidades antes de desplegar",
     ],
     limitationsOrRisks: [
-      "Treat MCP servers as untrusted integrations unless you control or have audited the server code — malicious servers can send crafted responses",
-      "Prompt injection: MCP tool responses are included in Claude's context; a malicious server can embed instructions designed to hijack Claude's behavior",
-      "Data exfiltration risk: a compromised MCP server with broad tool permissions can read files, environment variables, or API keys and exfiltrate them via network calls",
-      "Excessive permissions: grant only the tools and resources a server actually needs — treat MCP permission scoping like UNIX file permissions",
-      "RCE risk in STDIO transport: security researchers discovered that the default STDIO execution model in MCP can be exploited for remote code execution if the server binary is untrusted; only run MCP server binaries from verified sources",
-      "The OAuth authorization spec for MCP (June 2025 update) is still evolving — review before implementing auth flows",
-      "MCP server performance directly impacts agent latency — slow resource reads block the agent synchronously",
-      "No built-in rate limiting in the MCP spec — implement rate limits at the server layer",
+      "Trata los servidores MCP como integraciones no confiables salvo que controles o hayas auditado su código — un servidor malicioso puede enviar respuestas manipuladas",
+      "Inyección de prompts: las respuestas de tools entran en el contexto de Claude; un servidor malicioso puede incrustar instrucciones para secuestrar su comportamiento",
+      "Riesgo de exfiltración: un servidor comprometido con permisos amplios puede leer archivos, variables de entorno o API keys y sacarlas por red",
+      "Permisos excesivos: concede solo las tools y resources que el servidor necesita de verdad — trata el scoping como permisos de archivos UNIX",
+      "Riesgo de RCE en transporte STDIO: investigadores demostraron que el modelo de ejecución STDIO puede explotarse si el binario del servidor no es de confianza; ejecuta solo binarios de fuentes verificadas",
+      "La spec de autorización OAuth para MCP (actualización de junio 2025) sigue evolucionando — revísala antes de implementar flujos de auth",
+      "El rendimiento del servidor MCP impacta directamente en la latencia del agente — las lecturas lentas bloquean síncronamente",
+      "La spec no trae rate limiting de serie — impleméntalo en la capa del servidor",
     ],
     references: [
       {
-        label: "Introducing Model Context Protocol — Anthropic",
+        label: "Presentación del Model Context Protocol — Anthropic",
         url: "https://www.anthropic.com/news/model-context-protocol",
       },
       {
-        label: "MCP Specification (2025-11-25)",
+        label: "Especificación MCP (2025-11-25)",
         url: "https://modelcontextprotocol.io/specification/2025-11-25",
       },
       {
-        label: "Official MCP Registry",
+        label: "MCP Registry oficial",
         url: "https://registry.modelcontextprotocol.io",
       },
       {
-        label: "MCP Security Best Practices — Official Docs",
+        label: "Buenas prácticas de seguridad MCP — docs oficiales",
         url: "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
       },
       {
-        label: "What is MCP? — Anthropic Docs",
+        label: "¿Qué es MCP? — Docs de Anthropic",
         url: "https://docs.anthropic.com/en/docs/agents-and-tools/mcp",
       },
       {
