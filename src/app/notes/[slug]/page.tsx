@@ -41,11 +41,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const categoryColors: Record<string, string> = {
-  "Claude Code": "text-violet-400",
-  "Agent Skills": "text-fuchsia-400",
-  MCP: "text-cyan-400",
-  Workflows: "text-amber-400",
-  "Claude Design": "text-rose-400",
+  "Claude Code": "text-violet-700",
+  "Agent Skills": "text-fuchsia-700",
+  MCP: "text-cyan-700",
+  Workflows: "text-amber-700",
+  "Claude Design": "text-rose-600",
 };
 
 export default async function NotePage({ params }: Props) {
@@ -53,7 +53,7 @@ export default async function NotePage({ params }: Props) {
   const note = getNoteBySlug(slug);
   if (!note) notFound();
 
-  const catColor = categoryColors[note.category] ?? "text-slate-400";
+  const catColor = categoryColors[note.category] ?? "text-ink-soft";
   const pageUrl = `https://www.eggthropic.com/notes/${slug}`;
 
   return (
@@ -72,16 +72,16 @@ export default async function NotePage({ params }: Props) {
         datePublished={note.date}
       />
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-slate-500 mb-8">
+      <div className="flex items-center gap-2 text-sm text-ink-faint mb-8">
         <Link
           href="/notes"
-          className="hover:text-white transition-colors flex items-center gap-1"
+          className="hover:text-ink transition-colors flex items-center gap-1"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           Notes
         </Link>
         <span>/</span>
-        <span className="text-slate-400 truncate">{note.title}</span>
+        <span className="text-ink-soft truncate">{note.title}</span>
       </div>
 
       {/* Header */}
@@ -90,37 +90,37 @@ export default async function NotePage({ params }: Props) {
           <span className={`text-xs font-mono font-medium ${catColor}`}>
             {note.category}
           </span>
-          <time className="text-xs font-mono text-slate-500">
+          <time className="text-xs font-mono text-ink-faint">
             {formatDate(note.date)}
           </time>
         </div>
         {note.lastVerified && (
-          <p className="text-[10px] font-mono text-slate-600 mb-4">
-            Content verified {note.lastVerified} · Eggthropic independent research
+          <p className="text-[10px] font-mono text-ink-faint mb-4">
+            Contenido verificado el {note.lastVerified} · Eggthropic independent research
           </p>
         )}
-        <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-4">
+        <h1 className="text-3xl sm:text-4xl font-bold text-ink leading-tight mb-4">
           {note.title}
         </h1>
-        <p className="text-lg text-slate-400 leading-relaxed">{note.summary}</p>
+        <p className="text-lg text-ink-soft leading-relaxed">{note.summary}</p>
       </div>
 
       {/* Content */}
       <div className="space-y-10">
         <NoteSection title="Qué ha cambiado">
-          <p className="text-slate-300 leading-relaxed">{note.whatChanged}</p>
+          <p className="text-ink-soft leading-relaxed">{note.whatChanged}</p>
         </NoteSection>
 
         <NoteSection title="Por qué importa">
-          <p className="text-slate-300 leading-relaxed">{note.whyItMatters}</p>
+          <p className="text-ink-soft leading-relaxed">{note.whyItMatters}</p>
         </NoteSection>
 
-        <NoteSection title="What can be built" icon={<Wrench className="w-4 h-4 text-egg-400/70" />}>
+        <NoteSection title="What can be built" icon={<Wrench className="w-4 h-4 text-egg-600/70" />}>
           <ul className="space-y-2.5">
             {note.whatCanBeBuilt.map((item, i) => (
               <li key={i} className="flex items-start gap-2.5">
-                <Lightbulb className="w-4 h-4 text-egg-400/70 flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-slate-300 leading-relaxed">
+                <Lightbulb className="w-4 h-4 text-egg-600/70 flex-shrink-0 mt-0.5" />
+                <span className="text-sm text-ink-soft leading-relaxed">
                   {item}
                 </span>
               </li>
@@ -128,12 +128,12 @@ export default async function NotePage({ params }: Props) {
           </ul>
         </NoteSection>
 
-        <NoteSection title="Limitations &amp; risks" icon={<AlertTriangle className="w-4 h-4 text-amber-400/70" />}>
+        <NoteSection title="Limitations &amp; risks" icon={<AlertTriangle className="w-4 h-4 text-amber-700/70" />}>
           <ul className="space-y-2.5">
             {note.limitationsOrRisks.map((item, i) => (
               <li key={i} className="flex items-start gap-2.5">
-                <AlertTriangle className="w-4 h-4 text-amber-400/70 flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-slate-300 leading-relaxed">
+                <AlertTriangle className="w-4 h-4 text-amber-700/70 flex-shrink-0 mt-0.5" />
+                <span className="text-sm text-ink-soft leading-relaxed">
                   {item}
                 </span>
               </li>
@@ -150,7 +150,7 @@ export default async function NotePage({ params }: Props) {
                     href={ref.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-sm text-lab-100 hover:text-egg-300 transition-colors"
+                    className="flex items-center gap-1.5 text-sm text-ink hover:text-egg-600 transition-colors"
                   >
                     <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
                     {ref.label}
@@ -165,7 +165,7 @@ export default async function NotePage({ params }: Props) {
       {/* Experimentos relacionados */}
       {note.relatedExperiments && note.relatedExperiments.length > 0 && (
         <div className="mt-10 glass rounded-xl p-5 border border-egg-400/10">
-          <h2 className="text-xs font-mono tracking-widest text-egg-400/70 uppercase mb-3 flex items-center gap-2">
+          <h2 className="text-xs font-mono tracking-widest text-egg-600/70 uppercase mb-3 flex items-center gap-2">
             <span className="w-4 h-px bg-egg-400/30" />
             Experimentos relacionados
           </h2>
@@ -177,7 +177,7 @@ export default async function NotePage({ params }: Props) {
                 <li key={expSlug}>
                   <Link
                     href={`/experiments/${expSlug}`}
-                    className="flex items-center gap-1.5 text-sm text-lab-100 hover:text-egg-300 transition-colors"
+                    className="flex items-center gap-1.5 text-sm text-ink hover:text-egg-600 transition-colors"
                   >
                     <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
                     {exp.title}
@@ -190,10 +190,10 @@ export default async function NotePage({ params }: Props) {
       )}
 
       {/* Back */}
-      <div className="mt-12 pt-8 border-t border-white/5">
+      <div className="mt-12 pt-8 border-t border-paper-line">
         <Link
           href="/notes"
-          className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-ink-soft hover:text-ink transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Volver a todas las notas
@@ -213,7 +213,7 @@ function NoteSection({
 }) {
   return (
     <div>
-      <h2 className="text-xs font-mono tracking-widest text-egg-400/70 uppercase mb-3 flex items-center gap-2">
+      <h2 className="text-xs font-mono tracking-widest text-egg-600/70 uppercase mb-3 flex items-center gap-2">
         <span className="w-4 h-px bg-egg-400/30" />
         {title}
       </h2>

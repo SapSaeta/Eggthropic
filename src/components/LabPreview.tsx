@@ -22,29 +22,29 @@ export function LabPreview() {
       <div className="relative z-10">
         <div className="flex justify-center mb-4">
           <div className="w-14 h-14 rounded-2xl bg-lab-500/30 border border-lab-300/20 flex items-center justify-center">
-            <FlaskConical className="w-7 h-7 text-lab-100" />
+            <FlaskConical className="w-7 h-7 text-ink" />
           </div>
         </div>
 
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-egg-400/10 border border-egg-400/20 text-egg-400 text-xs font-mono mb-4">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-egg-400/10 border border-egg-400/20 text-egg-600 text-xs font-mono mb-4">
           Próximamente
         </div>
 
-        <h3 className="text-xl font-semibold text-white mb-3">
+        <h3 className="text-xl font-semibold text-ink mb-3">
           Community Lab
         </h3>
-        <p className="text-slate-400 max-w-md mx-auto mb-6 leading-relaxed">
+        <p className="text-ink-soft max-w-md mx-auto mb-6 leading-relaxed">
           Soon: a controlled public lab where contributors can propose
           Claude-powered experiments through GitHub pull requests.
         </p>
 
         <div className="flex items-center justify-center gap-3 flex-wrap">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-slate-300">
-            <GitPullRequest className="w-4 h-4 text-slate-400" />
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-paper-deep border border-paper-line text-sm text-ink-soft">
+            <GitPullRequest className="w-4 h-4 text-ink-soft" />
             Propón por PR
           </div>
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-slate-300">
-            <FlaskConical className="w-4 h-4 text-slate-400" />
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-paper-deep border border-paper-line text-sm text-ink-soft">
+            <FlaskConical className="w-4 h-4 text-ink-soft" />
             Entorno aislado
           </div>
         </div>
@@ -52,7 +52,7 @@ export function LabPreview() {
         <div className="mt-6">
           <Link
             href="/lab"
-            className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-ink-soft hover:text-ink transition-colors"
           >
             Conoce el laboratorio
             <ArrowRight className="w-3.5 h-3.5" />

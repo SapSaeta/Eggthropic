@@ -51,8 +51,8 @@ export function ExperimentsClient({ experiments, initialCategory = "all" }: Prop
               onClick={() => setActiveCategory(cat.value)}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                 activeCategory === cat.value
-                  ? "bg-egg-400 text-lab-900"
-                  : "glass text-slate-400 hover:text-white"
+                  ? "bg-egg-400 text-ink"
+                  : "glass text-ink-soft hover:text-ink"
               }`}
             >
               {cat.label}
@@ -61,19 +61,19 @@ export function ExperimentsClient({ experiments, initialCategory = "all" }: Prop
         </div>
 
         <div className="relative sm:ml-auto">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-faint" />
           <input
             type="text"
             placeholder="Buscar experimentos…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full sm:w-64 pl-9 pr-4 py-1.5 rounded-lg glass border border-white/10 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-egg-400/50"
+            className="w-full sm:w-64 pl-9 pr-4 py-1.5 rounded-lg glass border border-paper-line text-sm text-ink placeholder-slate-500 focus:outline-none focus:border-egg-400/50"
           />
         </div>
       </div>
 
       {/* Count */}
-      <p className="text-xs text-slate-500 font-mono mb-6">
+      <p className="text-xs text-ink-faint font-mono mb-6">
         {filtered.length} experiment{filtered.length !== 1 ? "s" : ""} found
       </p>
 
@@ -99,7 +99,7 @@ export function ExperimentsClient({ experiments, initialCategory = "all" }: Prop
             animate={{ opacity: 1 }}
             className="py-20 text-center"
           >
-            <p className="text-slate-500 text-sm">
+            <p className="text-ink-faint text-sm">
               No experiments found. Try a different filter or search.
             </p>
           </motion.div>

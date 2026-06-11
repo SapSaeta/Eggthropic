@@ -24,9 +24,9 @@ const difficultyLabel: Record<string, string> = {
   advanced: "avanzado",
 };
 const difficultyColor: Record<string, string> = {
-  beginner: "text-emerald-400",
-  intermediate: "text-amber-400",
-  advanced: "text-rose-400",
+  beginner: "text-emerald-700",
+  intermediate: "text-amber-700",
+  advanced: "text-rose-600",
 };
 
 interface ExperimentCardProps {
@@ -49,25 +49,25 @@ export function ExperimentCard({ experiment, index = 0 }: ExperimentCardProps) {
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-mono text-lab-100/60">
+                <span className="text-xs font-mono text-ink-faint">
                   {categoryLabel[experiment.category]}
                 </span>
-                <span className="text-lab-400/40">·</span>
+                <span className="text-ink-faint/60">·</span>
                 <span
                   className={`text-xs font-medium capitalize ${difficultyColor[experiment.difficulty]}`}
                 >
                   {difficultyLabel[experiment.difficulty] ?? experiment.difficulty}
                 </span>
               </div>
-              <h3 className="font-semibold text-white leading-snug group-hover:text-egg-300 transition-colors">
+              <h3 className="font-semibold text-ink leading-snug group-hover:text-egg-600 transition-colors">
                 {experiment.title}
               </h3>
             </div>
-            <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-egg-400 group-hover:translate-x-1 transition-all flex-shrink-0 mt-0.5" />
+            <ArrowRight className="w-4 h-4 text-ink-faint group-hover:text-egg-600 group-hover:translate-x-1 transition-all flex-shrink-0 mt-0.5" />
           </div>
 
           {/* Description */}
-          <p className="text-sm text-slate-400 leading-relaxed flex-1">
+          <p className="text-sm text-ink-soft leading-relaxed flex-1">
             {experiment.description}
           </p>
 
@@ -77,16 +77,16 @@ export function ExperimentCard({ experiment, index = 0 }: ExperimentCardProps) {
               <ToolBadge key={tool} tool={tool} />
             ))}
             {experiment.tools.length > 4 && (
-              <span className="text-xs text-slate-500 py-0.5">
+              <span className="text-xs text-ink-faint py-0.5">
                 +{experiment.tools.length - 4} más
               </span>
             )}
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between pt-1 border-t border-white/5">
+          <div className="flex items-center justify-between pt-1 border-t border-paper-line">
             <StatusBadge status={experiment.status} />
-            <time className="text-xs text-slate-500 font-mono">
+            <time className="text-xs text-ink-faint font-mono">
               {formatDate(experiment.date)}
             </time>
           </div>

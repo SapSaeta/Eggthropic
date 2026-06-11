@@ -37,9 +37,11 @@ export function EggClickable({ children }: { children: ReactNode }) {
   const [clicks, setClicks] = useState(0);
   const [bubble, setBubble] = useState<string | null>(null);
   const [particles, setParticles] = useState<Particle[]>([]);
+  const [tocado, setTocado] = useState(false);
   const controls = useAnimationControls();
 
   async function onClick() {
+    setTocado(true);
     const next = clicks + 1;
 
     if (next >= HATCH_AT) {
@@ -76,6 +78,24 @@ export function EggClickable({ children }: { children: ReactNode }) {
     >
       {children}
 
+      {/* Pista sutil: "tócame" hasta la primera interacción */}
+      <AnimatePresence>
+        {!tocado && (
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, y: [0, -5, 0] }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{
+              opacity: { delay: 1.6, duration: 0.6 },
+              y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+            }}
+            className="pointer-events-none absolute -bottom-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-egg-400/25 bg-egg-400/10 px-3 py-1 font-mono text-[11px] text-egg-600/90 backdrop-blur-sm"
+          >
+            👆 tócame
+          </motion.span>
+        )}
+      </AnimatePresence>
+
       {/* Bocadillo */}
       <AnimatePresence>
         {bubble && (
@@ -85,7 +105,7 @@ export function EggClickable({ children }: { children: ReactNode }) {
             animate={{ opacity: 1, y: -6, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.9 }}
             transition={{ duration: 0.25 }}
-            className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-egg-400/30 bg-lab-900/90 px-3 py-1 font-mono text-xs text-egg-300"
+            className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-egg-400/30 bg-paper-card/95 px-3 py-1 font-mono text-xs text-egg-600"
           >
             {bubble}
           </motion.span>

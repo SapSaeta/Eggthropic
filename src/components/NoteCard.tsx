@@ -13,15 +13,15 @@ interface NoteCardProps {
 }
 
 const categoryColors: Record<string, string> = {
-  "Claude Code": "text-violet-400",
-  "Agent Skills": "text-fuchsia-400",
-  MCP: "text-cyan-400",
-  Workflows: "text-amber-400",
-  "Claude Design": "text-rose-400",
+  "Claude Code": "text-violet-700",
+  "Agent Skills": "text-fuchsia-700",
+  MCP: "text-cyan-700",
+  Workflows: "text-amber-700",
+  "Claude Design": "text-rose-600",
 };
 
 export function NoteCard({ note, index = 0 }: NoteCardProps) {
-  const catColor = categoryColors[note.category] ?? "text-slate-400";
+  const catColor = categoryColors[note.category] ?? "text-ink-soft";
 
   return (
     <motion.div
@@ -37,25 +37,25 @@ export function NoteCard({ note, index = 0 }: NoteCardProps) {
             <span className={`text-xs font-mono font-medium ${catColor}`}>
               {note.category}
             </span>
-            <time className="text-xs text-slate-500 font-mono">
+            <time className="text-xs text-ink-faint font-mono">
               {formatDate(note.date)}
             </time>
           </div>
 
           <div className="flex items-start justify-between gap-3">
-            <h3 className="font-semibold text-white leading-snug group-hover:text-egg-300 transition-colors flex-1">
+            <h3 className="font-semibold text-ink leading-snug group-hover:text-egg-600 transition-colors flex-1">
               {note.title}
             </h3>
-            <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-egg-400 group-hover:translate-x-1 transition-all flex-shrink-0 mt-0.5" />
+            <ArrowRight className="w-4 h-4 text-ink-faint group-hover:text-egg-600 group-hover:translate-x-1 transition-all flex-shrink-0 mt-0.5" />
           </div>
 
-          <p className="text-sm text-slate-400 leading-relaxed flex-1">
+          <p className="text-sm text-ink-soft leading-relaxed flex-1">
             {note.summary}
           </p>
 
-          <div className="pt-2 border-t border-white/5">
-            <p className="text-xs text-slate-500">
-              <span className="text-slate-400">Qué se puede construir: </span>
+          <div className="pt-2 border-t border-paper-line">
+            <p className="text-xs text-ink-faint">
+              <span className="text-ink-soft">Qué se puede construir: </span>
               {note.whatCanBeBuilt[0]}
               {note.whatCanBeBuilt.length > 1 &&
                 ` y ${note.whatCanBeBuilt.length - 1} más`}

@@ -10,7 +10,7 @@ export default function OgImage() {
     (
       <div
         style={{
-          background: "#080c14",
+          background: "#F4EEE2",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -67,7 +67,7 @@ export default function OgImage() {
           style={{
             fontSize: 72,
             fontWeight: 800,
-            color: "#ffffff",
+            color: "#2C2620",
             letterSpacing: "-2.5px",
             lineHeight: 1,
             marginBottom: 16,
@@ -80,7 +80,7 @@ export default function OgImage() {
         <div
           style={{
             fontSize: 26,
-            color: "#94a3b8",
+            color: "#5C5347",
             marginBottom: 36,
             letterSpacing: "-0.3px",
           }}
@@ -98,7 +98,7 @@ export default function OgImage() {
                 borderRadius: 8,
                 background: "rgba(255,255,255,0.05)",
                 border: "1px solid rgba(255,255,255,0.1)",
-                color: "#64748b",
+                color: "#8A7E6D",
                 fontSize: 16,
                 fontFamily: "monospace",
               }}
@@ -114,7 +114,7 @@ export default function OgImage() {
             position: "absolute",
             bottom: 28,
             fontSize: 14,
-            color: "#334155",
+            color: "#8A7E6D",
             letterSpacing: "0.5px",
           }}
         >

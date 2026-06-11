@@ -1,39 +1,56 @@
 @import "tailwindcss";
 
 @theme {
+  /* ── Acento huevo (identidad propia de Eggthropic) ── */
   --color-egg-50: #fffdf0;
   --color-egg-100: #fffbe0;
   --color-egg-200: #fff5b3;
   --color-egg-300: #ffed80;
   --color-egg-400: #ffe04d;
   --color-egg-500: #ffd21a;
-  --color-egg-600: #e6b800;
-  --color-egg-700: #b38d00;
+  --color-egg-600: #c79b00;
+  --color-egg-700: #9a7800;
   --color-egg-800: #806400;
   --color-egg-900: #4d3c00;
 
-  --color-lab-900: #080c14;
-  --color-lab-800: #0d1320;
-  --color-lab-750: #0f172a;
-  --color-lab-700: #111827;
-  --color-lab-600: #1a2540;
-  --color-lab-500: #243055;
-  --color-lab-400: #2d3d6e;
-  --color-lab-300: #3d5299;
-  --color-lab-200: #4d66c2;
-  --color-lab-100: #6b82e0;
+  /* ── Paleta papel cálido (compartida con saetaia.com) ──
+     La rampa lab-* se reinterpreta: 900 = fondo claro … 100 = tinta.
+     Así todo el código existente (bg-lab-900, text-lab-100…) hereda el tema. */
+  --color-lab-900: #f4eee2; /* fondo papel */
+  --color-lab-800: #efe7d8;
+  --color-lab-750: #ece3d2;
+  --color-lab-700: #eae1cf; /* bandas */
+  --color-lab-600: #e0d6c2; /* lineas */
+  --color-lab-500: #d8ccb4;
+  --color-lab-400: #c2b6a0;
+  --color-lab-300: #8a7e6d; /* texto debil */
+  --color-lab-200: #5c5347; /* texto suave */
+  --color-lab-100: #2c2620; /* tinta */
 
-  --color-glass-white: rgba(255, 255, 255, 0.04);
-  --color-glass-border: rgba(255, 255, 255, 0.08);
+  /* Tokens hermanos explicitos */
+  --color-paper: #f4eee2;
+  --color-paper-card: #fcf8ef;
+  --color-paper-deep: #eae1cf;
+  --color-paper-line: #e0d6c2;
+  --color-ink: #2c2620;
+  --color-ink-soft: #5c5347;
+  --color-ink-faint: #8a7e6d;
+  --color-teja: #c2542b;
+  --color-teja-dark: #9e3f1d;
+  --color-teja-soft: #f3ddd2;
+  --color-joule: #0a6ed1;
+
+  --color-glass-white: rgba(44, 38, 32, 0.03);
+  --color-glass-border: rgba(44, 38, 32, 0.1);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 :root {
-  --background: #080c14;
-  --foreground: #e8eaf0;
-  color-scheme: dark;
+  --background: #f4eee2;
+  --foreground: #2c2620;
+  color-scheme: light;
 }
 
 * {
@@ -51,49 +68,48 @@ body {
   min-height: 100vh;
 }
 
-/* Glassmorphism utility */
+/* Tarjeta "glass" reinterpretada en papel: superficie clara con borde tinta suave */
 .glass {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #fcf8ef;
+  border: 1px solid rgba(44, 38, 32, 0.12);
 }
 
 .glass-hover {
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .glass-hover:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.14);
+  background: #fffdf6;
+  border-color: rgba(194, 84, 43, 0.45);
+  box-shadow: 0 2px 12px rgba(60, 46, 20, 0.08);
 }
 
-/* Gradient text */
+/* Texto degradado — teja, como la saeta de saetaia.com */
 .gradient-text {
-  background: linear-gradient(135deg, #ffd21a 0%, #ffe57a 50%, #fff0a0 100%);
+  background: linear-gradient(135deg, #9e3f1d 0%, #c2542b 50%, #e8853c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Subtle grid background */
+/* Rejilla de fondo sutil */
 .grid-bg {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(44, 38, 32, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(44, 38, 32, 0.05) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
-/* Glow effects */
+/* Brillos */
 .glow-egg {
-  box-shadow: 0 0 60px rgba(255, 210, 26, 0.15), 0 0 120px rgba(255, 210, 26, 0.05);
+  box-shadow: 0 0 60px rgba(255, 210, 26, 0.18), 0 0 120px rgba(255, 210, 26, 0.06);
 }
 
 .glow-blue {
-  box-shadow: 0 0 60px rgba(77, 102, 194, 0.2), 0 0 120px rgba(77, 102, 194, 0.05);
+  box-shadow: 0 0 60px rgba(10, 110, 209, 0.12), 0 0 120px rgba(10, 110, 209, 0.04);
 }
 
-/* Respect reduced motion */
+/* Respetar reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -102,7 +118,7 @@ body {
   }
 }
 
-/* Page transition */
+/* Transicion de pagina */
 @keyframes page-enter {
   from {
     opacity: 0;
@@ -123,12 +139,12 @@ main {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #080c14;
+  background: #f4eee2;
 }
 ::-webkit-scrollbar-thumb {
-  background: #243055;
+  background: #d8cdb8;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4d66c2;
+  background: #c2b6a0;
 }

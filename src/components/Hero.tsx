@@ -50,14 +50,14 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-egg-400/20 text-xs font-mono text-egg-400 mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-egg-400/20 text-xs font-mono text-egg-600 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-egg-400 animate-pulse" />
                 Laboratorio experimental independiente
               </div>
             </motion.div>
 
             <motion.h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] tracking-tight mb-6"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-ink leading-[1.08] tracking-tight mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.08 }}
@@ -72,7 +72,7 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
             </motion.h1>
 
             <motion.p
-              className="text-slate-400 text-lg leading-relaxed mb-8 max-w-lg"
+              className="text-ink-soft text-lg leading-relaxed mb-8 max-w-lg"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.14 }}
@@ -90,25 +90,25 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
             >
               <Link
                 href="/experiments"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-egg-400 text-lab-900 font-semibold text-sm hover:bg-egg-300 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-egg-400 text-ink font-semibold text-sm hover:bg-egg-300 transition-colors"
               >
                 Explorar experimentos
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/notes"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass border border-white/10 text-white text-sm font-medium hover:border-white/20 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass border border-paper-line text-ink text-sm font-medium hover:border-teja/50 transition-colors"
               >
-                <BookOpen className="w-4 h-4 text-slate-400" />
+                <BookOpen className="w-4 h-4 text-ink-soft" />
                 Leer las notas
               </Link>
               <a
                 href="https://github.com/sapsaeta/eggthropic"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass border border-white/10 text-white text-sm font-medium hover:border-white/20 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass border border-paper-line text-ink text-sm font-medium hover:border-teja/50 transition-colors"
               >
-                <GithubIcon className="w-4 h-4 text-slate-400" />
+                <GithubIcon className="w-4 h-4 text-ink-soft" />
                 GitHub
               </a>
             </motion.div>
@@ -126,10 +126,10 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
                 { value: "100%", label: "Documentado" },
               ].map((stat) => (
                 <div key={stat.label}>
-                  <div className="text-2xl font-bold text-white">
+                  <div className="text-2xl font-bold text-ink">
                     {stat.value}
                   </div>
-                  <div className="text-xs text-slate-500 mt-0.5">
+                  <div className="text-xs text-ink-faint mt-0.5">
                     {stat.label}
                   </div>
                 </div>
@@ -151,28 +151,28 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
 
               {/* Floating labels */}
               <motion.div
-                className="absolute top-8 -left-16 glass rounded-lg px-3 py-2 text-xs font-mono text-egg-300 border border-egg-400/20"
+                className="absolute top-8 -left-16 glass rounded-lg px-3 py-2 text-xs font-mono text-egg-600 border border-egg-400/20"
                 animate={{ y: [0, -4, 0] }}
                 transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
               >
                 claude-code
               </motion.div>
               <motion.div
-                className="absolute top-24 -right-20 glass rounded-lg px-3 py-2 text-xs font-mono text-cyan-300 border border-cyan-400/20"
+                className="absolute top-24 -right-20 glass rounded-lg px-3 py-2 text-xs font-mono text-cyan-700 border border-cyan-400/20"
                 animate={{ y: [0, -4, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, delay: 1 }}
               >
                 mcp-server
               </motion.div>
               <motion.div
-                className="absolute bottom-20 -left-20 glass rounded-lg px-3 py-2 text-xs font-mono text-fuchsia-300 border border-fuchsia-400/20"
+                className="absolute bottom-20 -left-20 glass rounded-lg px-3 py-2 text-xs font-mono text-fuchsia-700 border border-fuchsia-400/20"
                 animate={{ y: [0, -4, 0] }}
                 transition={{ duration: 4, repeat: Infinity, delay: 1.5 }}
               >
                 agent-skill
               </motion.div>
               <motion.div
-                className="absolute bottom-8 -right-12 glass rounded-lg px-3 py-2 text-xs font-mono text-violet-300 border border-violet-400/20"
+                className="absolute bottom-8 -right-12 glass rounded-lg px-3 py-2 text-xs font-mono text-violet-700 border border-violet-400/20"
                 animate={{ y: [0, -4, 0] }}
                 transition={{ duration: 3.2, repeat: Infinity, delay: 0.8 }}
               >

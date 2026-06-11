@@ -37,7 +37,7 @@ const CATEGORY_META: Record<
   "Claude Code": {
     color: "#00d4ff",
     border: "border-cyan-400/40",
-    text: "text-cyan-400",
+    text: "text-cyan-300",
     bg: "bg-cyan-400/10",
     icon: "⬡",
   },
@@ -118,9 +118,9 @@ function CategoryPill({ category }: { category: BoardCategory }) {
 
 function DifficultyBadge({ difficulty }: { difficulty: BoardDifficulty }) {
   const colors: Record<BoardDifficulty, string> = {
-    INICIAL: "border-slate-500/40 text-slate-400 bg-slate-500/10",
+    INICIAL: "border-slate-500/40 text-stone-300 bg-slate-500/10",
     INTERMEDIO: "border-sky-500/30 text-sky-300 bg-sky-500/10",
-    AVANZADO: "border-rose-500/30 text-rose-300 bg-rose-500/10",
+    AVANZADO: "border-rose-500/30 text-rose-400 bg-rose-500/10",
   };
   return (
     <span
@@ -142,7 +142,7 @@ function ProgressBar({
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between">
-        <span className="font-mono text-[10px] tracking-widest text-slate-500">
+        <span className="font-mono text-[10px] tracking-widest text-stone-400">
           PROGRESS
         </span>
         <span className={`font-mono text-xs font-semibold ${meta.text}`}>
@@ -170,7 +170,7 @@ function ExperimentCard({ exp }: { exp: BoardExperiment }) {
   return (
     <a
       href={`/experiments/${exp.slug}`}
-      className="group relative flex flex-col gap-3 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-white/20 cursor-pointer"
+      className="group relative flex flex-col gap-3 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-teja/50 cursor-pointer"
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLAnchorElement).style.boxShadow =
           `0 0 20px ${catMeta.color}30, inset 0 0 20px ${catMeta.color}08`;
@@ -190,7 +190,7 @@ function ExperimentCard({ exp }: { exp: BoardExperiment }) {
 
       {/* Header row */}
       <div className="flex items-start justify-between gap-2 pt-1">
-        <span className="font-mono text-[10px] tracking-widest text-slate-600">
+        <span className="font-mono text-[10px] tracking-widest text-stone-400">
           {exp.id}
         </span>
         <div className={`flex items-center gap-1.5 ${statusMeta.text}`}>
@@ -202,7 +202,7 @@ function ExperimentCard({ exp }: { exp: BoardExperiment }) {
       </div>
 
       {/* Title */}
-      <h3 className="text-sm font-bold leading-snug text-white group-hover:text-[#ffd21a] transition-colors">
+      <h3 className="text-sm font-bold leading-snug text-stone-100 group-hover:text-[#ffd21a] transition-colors">
         {exp.title}
       </h3>
 
@@ -216,11 +216,11 @@ function ExperimentCard({ exp }: { exp: BoardExperiment }) {
       <ProgressBar progress={exp.progress} category={exp.category} />
 
       {/* Footer */}
-      <div className="flex items-center justify-between border-t border-white/5 pt-2">
-        <span className="font-mono text-[10px] text-slate-600">
+      <div className="flex items-center justify-between border-t border-white/10 pt-2">
+        <span className="font-mono text-[10px] text-stone-400">
           RUN · {exp.runId}
         </span>
-        <span className="flex items-center gap-1 font-mono text-[10px] text-slate-500">
+        <span className="flex items-center gap-1 font-mono text-[10px] text-stone-400">
           <svg className="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <circle cx="12" cy="12" r="10" />
             <polyline points="12 6 12 12 16 14" />
@@ -254,7 +254,7 @@ function Sidebar({ experiments }: { experiments: BoardExperiment[] }) {
   return (
     <aside className="flex w-44 shrink-0 flex-col gap-4">
       <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
-        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-slate-600">{"// CATEGORIES"}</p>
+        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-stone-400">{"// CATEGORIES"}</p>
         <ul className="space-y-2.5">
           {CATEGORIES.map((cat) => {
             const meta = CATEGORY_META[cat];
@@ -266,7 +266,7 @@ function Sidebar({ experiments }: { experiments: BoardExperiment[] }) {
                   </span>
                   <span className={`font-mono text-[11px] font-medium ${meta.text}`}>{cat}</span>
                 </div>
-                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-white/5 font-mono text-[9px] text-slate-400">
+                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-white/5 font-mono text-[9px] text-stone-300">
                   {counts[cat]}
                 </span>
               </li>
@@ -276,24 +276,24 @@ function Sidebar({ experiments }: { experiments: BoardExperiment[] }) {
       </div>
 
       <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
-        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-slate-600">RESUMEN DE ESTADO</p>
+        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-stone-400">RESUMEN DE ESTADO</p>
         <ul className="space-y-1.5">
           {(["complete", "in-progress", "experimental"] as BoardStatus[]).map((s) => (
             <li key={s} className="flex items-center justify-between">
               <span className={`font-mono text-[10px] tracking-wider ${STATUS_META[s].text}`}>
                 {STATUS_META[s].label}
               </span>
-              <span className="font-mono text-xs font-semibold text-white">{statusCounts[s]}</span>
+              <span className="font-mono text-xs font-semibold text-stone-100">{statusCounts[s]}</span>
             </li>
           ))}
         </ul>
       </div>
 
       <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
-        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-slate-600">LAB HEALTH</p>
+        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-stone-400">LAB HEALTH</p>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] tracking-wider text-slate-500">AVG · COMPLETION</span>
+            <span className="font-mono text-[10px] tracking-wider text-stone-400">AVG · COMPLETION</span>
             <span className="font-mono text-xs font-bold text-[#ffd21a]">{avgCompletion}%</span>
           </div>
           <div className="h-1 w-full overflow-hidden rounded-full bg-white/5">
@@ -322,25 +322,25 @@ function TopBar({
   const filters: (BoardCategory | "ALL")[] = ["ALL", ...CATEGORIES];
 
   return (
-    <header className="flex items-center justify-between gap-4 border-b border-white/[0.06] px-6 py-3">
+    <header className="flex items-center justify-between gap-4 border-b border-white/10 px-6 py-3">
       <div className="flex items-center gap-3">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#ffd21a]/30 bg-[#ffd21a]/10">
           <span className="text-lg">🥚</span>
         </div>
         <div className="font-mono">
-          <span className="text-sm font-bold tracking-widest text-white">EGGTHROPIC</span>
-          <span className="mx-2 text-sm text-slate-600">{"//"}</span>
+          <span className="text-sm font-bold tracking-widest text-stone-100">EGGTHROPIC</span>
+          <span className="mx-2 text-sm text-stone-400">{"//"}</span>
           <span className="text-sm font-semibold tracking-widest text-[#ffd21a]">LAB STATUS</span>
         </div>
       </div>
 
       <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5">
         <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-        <span className="font-mono text-xs tracking-widest text-slate-400">EXPERIMENTS</span>
-        <span className="font-mono text-sm font-bold text-white">
+        <span className="font-mono text-xs tracking-widest text-stone-300">EXPERIMENTS</span>
+        <span className="font-mono text-sm font-bold text-stone-100">
           {String(experiments.length).padStart(2, "0")}
         </span>
-        <span className="font-mono text-xs tracking-widest text-slate-600">ACTIVE</span>
+        <span className="font-mono text-xs tracking-widest text-stone-400">ACTIVE</span>
       </div>
 
       <nav className="flex items-center gap-1">
@@ -353,7 +353,7 @@ function TopBar({
               onClick={() => onFilterChange(f)}
               className={[
                 "relative rounded-md px-3 py-1.5 font-mono text-[11px] font-semibold tracking-widest transition-all duration-200",
-                isActive ? "text-[#ffd21a]" : "text-slate-500 hover:text-slate-300",
+                isActive ? "text-[#ffd21a]" : "text-stone-400 hover:text-stone-300",
               ].join(" ")}
             >
               {f === "ALL" ? "ALL" : f.toUpperCase().replace("-", "‑")}
@@ -405,24 +405,24 @@ function StatusBar({
   node: string;
 }) {
   return (
-    <footer className="flex items-center justify-between border-t border-white/[0.06] px-6 py-2">
+    <footer className="flex items-center justify-between border-t border-white/10 px-6 py-2">
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          <span className="font-mono text-[10px] tracking-widest text-slate-500">TELEMETRY ONLINE</span>
+          <span className="font-mono text-[10px] tracking-widest text-stone-400">TELEMETRY ONLINE</span>
         </div>
-        <span className="font-mono text-[10px] tracking-widest text-slate-600">
+        <span className="font-mono text-[10px] tracking-widest text-stone-400">
           SHOWING <span className="text-[#ffd21a]">{showing}/{total}</span>
         </span>
       </div>
       <div className="flex items-center gap-6">
-        <span className="font-mono text-[10px] tracking-widest text-slate-600">
-          BUILD <span className="text-slate-400">{buildVersion}</span>
+        <span className="font-mono text-[10px] tracking-widest text-stone-400">
+          BUILD <span className="text-stone-300">{buildVersion}</span>
         </span>
-        <span className="font-mono text-[10px] tracking-widest text-slate-600">
-          NODE <span className="text-slate-400">{node}</span>
+        <span className="font-mono text-[10px] tracking-widest text-stone-400">
+          NODE <span className="text-stone-300">{node}</span>
         </span>
-        <span className="font-mono text-[10px] tracking-widest text-slate-600">
+        <span className="font-mono text-[10px] tracking-widest text-stone-400">
           EGGTHROPIC LABS · CLEARANCE LV-3
         </span>
       </div>
@@ -446,8 +446,8 @@ export default function LabStatusBoard({
 
   return (
     <div
-      className="relative flex flex-col overflow-hidden font-mono rounded-2xl border border-white/[0.06]"
-      style={{ backgroundColor: "#080c14", minHeight: "600px" }}
+      className="relative flex flex-col overflow-hidden font-mono rounded-2xl border border-white/10"
+      style={{ backgroundColor: "#262019", minHeight: "600px" }}
     >
       <GridBackground />
 
@@ -463,11 +463,11 @@ export default function LabStatusBoard({
         <main className="flex flex-1 flex-col gap-3 overflow-y-auto">
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-3">
-              <span className="font-mono text-[10px] tracking-widest text-slate-600">[ ACTIVE ]</span>
-              <h2 className="text-sm font-bold tracking-wide text-white">Experiment Roster</h2>
+              <span className="font-mono text-[10px] tracking-widest text-stone-400">[ ACTIVE ]</span>
+              <h2 className="text-sm font-bold tracking-wide text-stone-100">Experiment Roster</h2>
             </div>
-            <span className="font-mono text-[10px] tracking-widest text-slate-600">
-              SHOWING <span className="text-slate-400">{filtered.length} / {experiments.length}</span>
+            <span className="font-mono text-[10px] tracking-widest text-stone-400">
+              SHOWING <span className="text-stone-300">{filtered.length} / {experiments.length}</span>
               {" · "}FILTER: <span className="text-[#ffd21a]">{activeFilter}</span>
             </span>
           </div>
@@ -477,8 +477,8 @@ export default function LabStatusBoard({
               <ExperimentCard key={exp.id} exp={exp} />
             ))}
             {filtered.length === 0 && (
-              <div className="col-span-3 flex h-40 items-center justify-center rounded-xl border border-white/[0.06]">
-                <p className="font-mono text-sm text-slate-600">NO EXPERIMENTS MATCH FILTER</p>
+              <div className="col-span-3 flex h-40 items-center justify-center rounded-xl border border-white/10">
+                <p className="font-mono text-sm text-stone-400">NO EXPERIMENTS MATCH FILTER</p>
               </div>
             )}
           </div>

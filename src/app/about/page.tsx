@@ -43,13 +43,13 @@ export default function AboutPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="mb-10">
-        <span className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-egg-400 uppercase mb-3">
+        <span className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-egg-600 uppercase mb-3">
           <span className="w-6 h-px bg-egg-400/50" />
           Sobre el lab
           <span className="w-6 h-px bg-egg-400/50" />
         </span>
-        <h1 className="text-4xl font-bold text-white mb-4">¿Qué es Eggthropic?</h1>
-        <p className="text-lg text-slate-400 leading-relaxed">
+        <h1 className="text-4xl font-bold text-ink mb-4">¿Qué es Eggthropic?</h1>
+        <p className="text-lg text-ink-soft leading-relaxed">
           Eggthropic es un laboratorio experimental independiente para aprender
           Claude construyendo experimentos reales — y documentándolo todo,
           incluido lo que falla.
@@ -59,14 +59,14 @@ export default function AboutPage() {
       <div className="space-y-12">
         {/* Qué hacemos */}
         <Section title="Qué hacemos">
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p className="text-ink-soft leading-relaxed mb-4">
             Construimos experimentos con Claude Code, Agent Skills, servidores
             MCP, la API de Anthropic y patrones de UX para IA. Cada experimento
             se documenta entero: objetivo, contexto, herramientas, prompts
             exactos, notas de implementación, resultados y un análisis honesto
             de qué funcionó y qué no.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p className="text-ink-soft leading-relaxed">
             También publicamos notas cortas sobre las novedades de Anthropic y
             Claude: qué ha cambiado, por qué importa a quien desarrolla, qué
             permite construir y qué limitaciones o riesgos tiene. Sin
@@ -77,14 +77,14 @@ export default function AboutPage() {
 
         {/* Por qué existe */}
         <Section title="Por qué existe Eggthropic">
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p className="text-ink-soft leading-relaxed mb-4">
             El ecosistema de desarrollo de Claude evoluciona deprisa. Claude
             Code, las Agent Skills y MCP son herramientas serias — pero
             entenderlas exige práctica, no solo leer documentación. Eggthropic
             existe para cubrir ese hueco: tomarse la documentación en serio,
             construir cosas de verdad y publicar lo que pasa de verdad.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p className="text-ink-soft leading-relaxed">
             El huevo del nombre es un guiño a la experimentación: un huevo es un
             comienzo, no un producto terminado. Es el marco mental correcto para
             trabajar con herramientas de IA que cambian cada semana.
@@ -96,8 +96,8 @@ export default function AboutPage() {
           <ul className="space-y-3">
             {forList.map((item, i) => (
               <li key={i} className="flex items-start gap-2.5">
-                <ArrowRight className="w-4 h-4 text-egg-400/70 flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-slate-300 leading-relaxed">
+                <ArrowRight className="w-4 h-4 text-egg-600/70 flex-shrink-0 mt-0.5" />
+                <span className="text-sm text-ink-soft leading-relaxed">
                   {item}
                 </span>
               </li>
@@ -110,10 +110,10 @@ export default function AboutPage() {
           <ul className="space-y-3">
             {notList.map((item, i) => (
               <li key={i} className="flex items-start gap-2.5">
-                <span className="w-4 h-4 flex-shrink-0 mt-0.5 flex items-center justify-center text-rose-400 font-bold text-xs">
+                <span className="w-4 h-4 flex-shrink-0 mt-0.5 flex items-center justify-center text-rose-600 font-bold text-xs">
                   ×
                 </span>
-                <span className="text-sm text-slate-300 leading-relaxed">
+                <span className="text-sm text-ink-soft leading-relaxed">
                   {item}
                 </span>
               </li>
@@ -123,13 +123,13 @@ export default function AboutPage() {
 
         {/* Proyecto hermano */}
         <Section title="El proyecto hermano: SaetaIA">
-          <p className="text-slate-300 leading-relaxed">
+          <p className="text-ink-soft leading-relaxed">
             Eggthropic es el taller;{" "}
             <a
               href="https://saetaia.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-egg-400 hover:text-egg-300 underline underline-offset-2"
+              className="text-egg-600 hover:text-egg-600 underline underline-offset-2"
             >
               SaetaIA
             </a>{" "}
@@ -143,12 +143,12 @@ export default function AboutPage() {
         {/* Disclaimer */}
         <div className="glass rounded-xl p-5 border border-amber-400/20">
           <div className="flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
             <div>
-              <h3 className="font-semibold text-white mb-2">
+              <h3 className="font-semibold text-ink mb-2">
                 Aviso de proyecto independiente
               </h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <p className="text-sm text-ink-soft leading-relaxed">
                 Eggthropic es un proyecto experimental independiente, sin
                 afiliación, respaldo, patrocinio ni conexión oficial con
                 Anthropic. Claude, Anthropic, Claude Code y los nombres
@@ -161,7 +161,7 @@ export default function AboutPage() {
 
         {/* Participa */}
         <Section title="Participa">
-          <p className="text-slate-300 leading-relaxed mb-5">
+          <p className="text-ink-soft leading-relaxed mb-5">
             Eggthropic es open source. Si ves un error factual, quieres sugerir
             un experimento o te interesa contribuir al laboratorio comunitario,
             el mejor sitio para empezar es GitHub.
@@ -171,14 +171,14 @@ export default function AboutPage() {
               href="https://github.com/sapsaeta/eggthropic"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass border border-white/10 text-sm text-white hover:border-white/20 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass border border-paper-line text-sm text-ink hover:border-teja/50 transition-colors"
             >
               <GithubIcon className="w-4 h-4" />
               Ver en GitHub
             </a>
             <Link
               href="/experiments"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-egg-400 text-lab-900 font-semibold text-sm hover:bg-egg-300 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-egg-400 text-ink font-semibold text-sm hover:bg-egg-300 transition-colors"
             >
               Explorar experimentos
               <ArrowRight className="w-4 h-4" />
@@ -199,7 +199,7 @@ function Section({
 }) {
   return (
     <div>
-      <h2 className="text-xs font-mono tracking-widest text-egg-400/70 uppercase mb-4 flex items-center gap-2">
+      <h2 className="text-xs font-mono tracking-widest text-egg-600/70 uppercase mb-4 flex items-center gap-2">
         <span className="w-4 h-px bg-egg-400/30" />
         {title}
       </h2>

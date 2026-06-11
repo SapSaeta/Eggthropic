@@ -38,22 +38,22 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-lab-900/50 mt-auto">
+    <footer className="border-t border-paper-line bg-paper-deep/60 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="text-lg font-semibold">
-                <span className="text-egg-400">Egg</span>
-                <span className="text-white">thropic</span>
+                <span className="text-egg-600">Egg</span>
+                <span className="text-ink">thropic</span>
               </span>
             </div>
-            <p className="text-sm text-slate-500 leading-relaxed max-w-xs">
+            <p className="text-sm text-ink-faint leading-relaxed max-w-xs">
               Un laboratorio experimental independiente para aprender Claude construyendo
               real experiments.
             </p>
-            <p className="mt-4 text-xs text-slate-600 leading-relaxed max-w-xs">
+            <p className="mt-4 text-xs text-ink-faint leading-relaxed max-w-xs">
               Sin afiliación, respaldo ni conexión oficial con
               Anthropic.
             </p>
@@ -62,7 +62,7 @@ export function Footer() {
           {/* Links */}
           {Object.entries(footerLinks).map(([section, links]) => (
             <div key={section}>
-              <h4 className="text-xs font-mono tracking-widest text-slate-500 uppercase mb-4">
+              <h4 className="text-xs font-mono tracking-widest text-ink-faint uppercase mb-4">
                 {section}
               </h4>
               <ul className="space-y-2.5">
@@ -73,14 +73,14 @@ export function Footer() {
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-slate-400 hover:text-white transition-colors"
+                        className="text-sm text-ink-soft hover:text-ink transition-colors"
                       >
                         {link.label} ↗
                       </a>
                     ) : (
                       <Link
                         href={link.href}
-                        className="text-sm text-slate-400 hover:text-white transition-colors"
+                        className="text-sm text-ink-soft hover:text-ink transition-colors"
                       >
                         {link.label}
                       </Link>
@@ -93,15 +93,15 @@ export function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-slate-600">
+        <div className="border-t border-paper-line pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-ink-faint">
             © {new Date().getFullYear()} Eggthropic. Independent project.
           </p>
           <a
             href="https://github.com/sapsaeta/eggthropic"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-slate-500 hover:text-white transition-colors font-mono"
+            className="text-xs text-ink-faint hover:text-ink transition-colors font-mono"
           >
             Ver el código en GitHub
           </a>

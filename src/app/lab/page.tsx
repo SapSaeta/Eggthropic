@@ -87,7 +87,7 @@ const principios = [
     title: "Propuestas por PR",
     description:
       "Propón un experimento abriendo un pull request con la plantilla del repo. Si se acepta, se ejecuta y sus resultados se publican aquí.",
-    color: "text-violet-400",
+    color: "text-violet-700",
     bg: "bg-violet-500/10",
     border: "border-violet-500/20",
   },
@@ -96,7 +96,7 @@ const principios = [
     title: "Ejecución aislada",
     description:
       "Los experimentos corren en entornos aislados — sin acceso a sistemas de producción ni estado persistente entre ejecuciones.",
-    color: "text-emerald-400",
+    color: "text-emerald-700",
     bg: "bg-emerald-500/10",
     border: "border-emerald-500/20",
   },
@@ -105,7 +105,7 @@ const principios = [
     title: "Con Claude dentro",
     description:
       "Los experimentos aceptados pasan por infraestructura de revisión controlada y con límites. Quien contribuye nunca recibe credenciales.",
-    color: "text-cyan-400",
+    color: "text-cyan-700",
     bg: "bg-cyan-500/10",
     border: "border-cyan-500/20",
   },
@@ -114,7 +114,7 @@ const principios = [
     title: "Resultados documentados",
     description:
       "Todo experimento aceptado se documenta con el mismo formato que los nuestros: objetivo, prompt, resultado y análisis honesto de los fallos.",
-    color: "text-egg-400",
+    color: "text-egg-600",
     bg: "bg-egg-400/10",
     border: "border-egg-400/20",
   },
@@ -133,15 +133,15 @@ export default function LabPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Cabecera */}
       <div className="mb-12">
-        <span className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-egg-400 uppercase mb-3">
+        <span className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-egg-600 uppercase mb-3">
           <span className="w-6 h-px bg-egg-400/50" />
           Laboratorio
           <span className="w-6 h-px bg-egg-400/50" />
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+        <h1 className="text-3xl sm:text-4xl font-bold text-ink mb-3">
           El tablón del laboratorio
         </h1>
-        <p className="text-slate-400 max-w-2xl leading-relaxed">
+        <p className="text-ink-soft max-w-2xl leading-relaxed">
           Estado en vivo de todos los experimentos: qué está completo, qué sigue en
           curso y qué acaba de entrar en el nido. Cada fila enlaza a la
           documentación completa.
@@ -151,11 +151,11 @@ export default function LabPage() {
       {/* Tablón */}
       <section className="mb-20">
         <LabStatusBoard experiments={boardExperiments} />
-        <p className="mt-3 text-xs text-slate-600">
+        <p className="mt-3 text-xs text-ink-faint">
           Este tablón se prototipó con{" "}
           <Link
             href="/experiments/claude-design-prototype-to-code"
-            className="text-rose-400 hover:text-rose-300 transition-colors"
+            className="text-rose-600 hover:text-rose-600 transition-colors"
           >
             Claude Design — léelo como experimento
           </Link>
@@ -166,10 +166,10 @@ export default function LabPage() {
       {/* Cómo contribuir */}
       <section className="mb-20">
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-white mb-2">
+          <h2 className="text-2xl font-bold text-ink mb-2">
             Propón tu experimento
           </h2>
-          <p className="text-slate-400 max-w-2xl leading-relaxed">
+          <p className="text-ink-soft max-w-2xl leading-relaxed">
             Eggthropic es open source y el laboratorio está abierto a la
             comunidad. Así funciona:
           </p>
@@ -178,10 +178,10 @@ export default function LabPage() {
         <ol className="space-y-3 mb-8 max-w-2xl">
           {pasos.map((paso, i) => (
             <li key={i} className="flex items-start gap-3">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-egg-400/15 border border-egg-400/30 font-mono text-xs text-egg-400">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-egg-400/15 border border-egg-400/30 font-mono text-xs text-egg-600">
                 {i + 1}
               </span>
-              <span className="text-sm text-slate-300 leading-relaxed">{paso}</span>
+              <span className="text-sm text-ink-soft leading-relaxed">{paso}</span>
             </li>
           ))}
         </ol>
@@ -196,8 +196,8 @@ export default function LabPage() {
                 >
                   <Icon className={`w-5 h-5 ${p.color}`} />
                 </div>
-                <h3 className="font-semibold text-white text-sm mb-1.5">{p.title}</h3>
-                <p className="text-xs text-slate-500 leading-relaxed">{p.description}</p>
+                <h3 className="font-semibold text-ink text-sm mb-1.5">{p.title}</h3>
+                <p className="text-xs text-ink-faint leading-relaxed">{p.description}</p>
               </div>
             );
           })}
@@ -208,14 +208,14 @@ export default function LabPage() {
             href="https://github.com/sapsaeta/eggthropic"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-egg-400 text-lab-900 font-semibold text-sm hover:bg-egg-300 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-egg-400 text-ink font-semibold text-sm hover:bg-egg-300 transition-colors"
           >
             <GithubIcon className="w-4 h-4" />
             Abrir el repositorio
           </a>
           <Link
             href="/experiments"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass border border-white/10 text-white text-sm font-medium hover:border-white/20 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass border border-paper-line text-ink text-sm font-medium hover:border-teja/50 transition-colors"
           >
             Ver el formato de un experimento
             <ArrowRight className="w-4 h-4" />
@@ -226,10 +226,10 @@ export default function LabPage() {
       {/* Recurso didáctico */}
       <section>
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-white mb-2">
+          <h2 className="text-2xl font-bold text-ink mb-2">
             Bonus: cómo funciona MCP, en un diagrama
           </h2>
-          <p className="text-slate-400 max-w-2xl leading-relaxed">
+          <p className="text-ink-soft max-w-2xl leading-relaxed">
             El recurso didáctico que salió de nuestro explicador visual de MCP:
             host, cliente y servidor, y qué viaja entre ellos.
           </p>

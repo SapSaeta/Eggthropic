@@ -37,7 +37,7 @@ const labSections = [
     description:
       "Experimentos con Claude Code — el CLI agéntico que lee tu base de código, ejecuta comandos y entrega código commiteado en varios archivos.",
     href: "/experiments?category=claude-code",
-    color: "text-violet-400",
+    color: "text-violet-700",
     bg: "bg-violet-500/10",
     border: "border-violet-500/20",
     tag: "claude-code",
@@ -48,7 +48,7 @@ const labSections = [
     description:
       "Skills portables y reutilizables: directorios SKILL.md que dan a Claude capacidades persistentes entre proyectos y plataformas.",
     href: "/experiments?category=skills",
-    color: "text-fuchsia-400",
+    color: "text-fuchsia-700",
     bg: "bg-fuchsia-500/10",
     border: "border-fuchsia-500/20",
     tag: "skills",
@@ -59,7 +59,7 @@ const labSections = [
     description:
       "Explorando el Model Context Protocol: servidores, clientes y herramientas interactivas sobre el estándar abierto JSON-RPC.",
     href: "/experiments?category=mcp",
-    color: "text-cyan-400",
+    color: "text-cyan-700",
     bg: "bg-cyan-500/10",
     border: "border-cyan-500/20",
     tag: "mcp",
@@ -70,7 +70,7 @@ const labSections = [
     description:
       "Prototipos de interfaces nativas de IA: streaming, visualización de tool calls y modelos de interacción más allá del chat.",
     href: "/experiments?category=ux-ui",
-    color: "text-amber-400",
+    color: "text-amber-700",
     bg: "bg-amber-500/10",
     border: "border-amber-500/20",
     tag: "ux-ui",
@@ -86,7 +86,7 @@ export default function HomePage() {
       <Hero experimentCount={experiments.length} noteCount={notes.length} />
 
       {/* Lab sections */}
-      <section className="py-20 border-t border-white/5">
+      <section className="py-20 border-t border-paper-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             label="Qué exploramos"
@@ -109,10 +109,10 @@ export default function HomePage() {
                     <Icon className={`w-5 h-5 ${section.color}`} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white mb-1.5 group-hover:text-egg-300 transition-colors text-sm">
+                    <h3 className="font-semibold text-ink mb-1.5 group-hover:text-egg-600 transition-colors text-sm">
                       {section.title}
                     </h3>
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                    <p className="text-xs text-ink-faint leading-relaxed">
                       {section.description}
                     </p>
                   </div>
@@ -130,7 +130,7 @@ export default function HomePage() {
       </section>
 
       {/* Últimos experimentos */}
-      <section className="py-20 border-t border-white/5">
+      <section className="py-20 border-t border-paper-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-10">
             <SectionHeader
@@ -141,7 +141,7 @@ export default function HomePage() {
             />
             <Link
               href="/experiments"
-              className="hidden sm:flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-300 transition-colors font-mono"
+              className="hidden sm:flex items-center gap-1.5 text-sm text-egg-600 hover:text-egg-600 transition-colors font-mono"
             >
               Todos los experimentos
               <ArrowRight className="w-3.5 h-3.5" />
@@ -157,7 +157,7 @@ export default function HomePage() {
           <div className="mt-6 sm:hidden">
             <Link
               href="/experiments"
-              className="inline-flex items-center gap-1.5 text-sm text-egg-400"
+              className="inline-flex items-center gap-1.5 text-sm text-egg-600"
             >
               Todos los experimentos <ArrowRight className="w-3.5 h-3.5" />
             </Link>
@@ -166,7 +166,7 @@ export default function HomePage() {
       </section>
 
       {/* Últimas notas */}
-      <section className="py-20 border-t border-white/5">
+      <section className="py-20 border-t border-paper-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-10">
             <SectionHeader
@@ -177,7 +177,7 @@ export default function HomePage() {
             />
             <Link
               href="/notes"
-              className="hidden sm:flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-300 transition-colors font-mono"
+              className="hidden sm:flex items-center gap-1.5 text-sm text-egg-600 hover:text-egg-600 transition-colors font-mono"
             >
               Todas las notas
               <ArrowRight className="w-3.5 h-3.5" />
@@ -193,7 +193,7 @@ export default function HomePage() {
       </section>
 
       {/* Lab preview */}
-      <section className="py-20 border-t border-white/5">
+      <section className="py-20 border-t border-paper-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <LabPreview />
         </div>
