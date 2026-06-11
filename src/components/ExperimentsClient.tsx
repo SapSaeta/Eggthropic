@@ -13,7 +13,7 @@ const categories: { value: "all" | ExperimentCategory; label: string }[] = [
   { value: "mcp", label: "MCP" },
   { value: "api", label: "API" },
   { value: "ux-ui", label: "UX/UI" },
-  { value: "automation", label: "Automation" },
+  { value: "automation", label: "Automatización" },
   { value: "enterprise-ai", label: "Enterprise AI" },
 ];
 
@@ -64,7 +64,7 @@ export function ExperimentsClient({ experiments, initialCategory = "all" }: Prop
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
           <input
             type="text"
-            placeholder="Search experiments..."
+            placeholder="Buscar experimentos…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full sm:w-64 pl-9 pr-4 py-1.5 rounded-lg glass border border-white/10 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-egg-400/50"

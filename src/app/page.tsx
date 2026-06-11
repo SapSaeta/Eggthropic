@@ -10,32 +10,32 @@ import { experiments } from "@/lib/experiments";
 import { notes } from "@/lib/notes";
 
 export const metadata: Metadata = {
-  title: "Eggthropic — Claude Lab",
+  title: "Eggthropic — Laboratorio de Claude",
   description:
-    "A practical lab for learning Claude by building real experiments with Claude Code, Agent Skills, MCP, and the Anthropic API.",
+    "Un laboratorio práctico para aprender Claude construyendo experimentos reales con Claude Code, Agent Skills, MCP y la API de Anthropic. En español.",
   alternates: { canonical: "https://www.eggthropic.com" },
   openGraph: {
-    title: "Eggthropic — Claude Lab",
+    title: "Eggthropic — Laboratorio de Claude",
     description:
-      "A practical lab for learning Claude by building real experiments with Claude Code, Agent Skills, MCP, and the Anthropic API.",
+      "Un laboratorio práctico para aprender Claude construyendo experimentos reales con Claude Code, Agent Skills, MCP y la API de Anthropic. En español.",
     url: "https://www.eggthropic.com",
     siteName: "Eggthropic",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Eggthropic — Claude Lab",
+    title: "Eggthropic — Laboratorio de Claude",
     description:
-      "A practical lab for learning Claude by building real experiments with Claude Code, Agent Skills, MCP, and the Anthropic API.",
+      "Un laboratorio práctico para aprender Claude construyendo experimentos reales con Claude Code, Agent Skills, MCP y la API de Anthropic. En español.",
   },
 };
 
 const labSections = [
   {
     icon: Code2,
-    title: "Claude Code Lab",
+    title: "Lab de Claude Code",
     description:
-      "Experiments using Claude Code — the agentic CLI that reads your codebase, runs commands, and ships committed code across files.",
+      "Experimentos con Claude Code — el CLI agéntico que lee tu base de código, ejecuta comandos y entrega código commiteado en varios archivos.",
     href: "/experiments?category=claude-code",
     color: "text-violet-400",
     bg: "bg-violet-500/10",
@@ -44,9 +44,9 @@ const labSections = [
   },
   {
     icon: Cpu,
-    title: "Agent Skills Lab",
+    title: "Lab de Agent Skills",
     description:
-      "Building portable, reusable Agent Skills: SKILL.md directories that give Claude persistent capabilities across projects and platforms.",
+      "Skills portables y reutilizables: directorios SKILL.md que dan a Claude capacidades persistentes entre proyectos y plataformas.",
     href: "/experiments?category=skills",
     color: "text-fuchsia-400",
     bg: "bg-fuchsia-500/10",
@@ -55,9 +55,9 @@ const labSections = [
   },
   {
     icon: Network,
-    title: "MCP Lab",
+    title: "Lab de MCP",
     description:
-      "Exploring the Model Context Protocol — building servers, clients, and interactive tools around the open JSON-RPC standard.",
+      "Explorando el Model Context Protocol: servidores, clientes y herramientas interactivas sobre el estándar abierto JSON-RPC.",
     href: "/experiments?category=mcp",
     color: "text-cyan-400",
     bg: "bg-cyan-500/10",
@@ -66,9 +66,9 @@ const labSections = [
   },
   {
     icon: Palette,
-    title: "UX/UI Experiments",
+    title: "Experimentos UX/UI",
     description:
-      "Prototyping AI-native interface patterns: streaming displays, tool-call visualizations, and interaction models beyond the chat bubble.",
+      "Prototipos de interfaces nativas de IA: streaming, visualización de tool calls y modelos de interacción más allá del chat.",
     href: "/experiments?category=ux-ui",
     color: "text-amber-400",
     bg: "bg-amber-500/10",
@@ -89,9 +89,9 @@ export default function HomePage() {
       <section className="py-20 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            label="What we explore"
-            title="Four labs, one mission"
-            description="Each lab focuses on a different layer of the Claude developer ecosystem — from CLI workflows to protocol-level integrations."
+            label="Qué exploramos"
+            title="Cuatro áreas, una misión"
+            description="Cada área explora una capa distinta del ecosistema de desarrollo de Claude — del CLI a las integraciones a nivel de protocolo."
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -119,7 +119,7 @@ export default function HomePage() {
                   <div
                     className={`mt-auto flex items-center gap-1 text-xs ${section.color} font-mono`}
                   >
-                    Explore
+                    Explorar
                     <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
@@ -129,21 +129,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Latest experiments */}
+      {/* Últimos experimentos */}
       <section className="py-20 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-10">
             <SectionHeader
-              label="Latest experiments"
-              title="From the lab"
-              description="Each experiment documents the goal, the prompt, what worked, and what failed."
+              label="Últimos experimentos"
+              title="Desde el laboratorio"
+              description="Cada experimento documenta el objetivo, el prompt, lo que funcionó y lo que falló."
               className="mb-0"
             />
             <Link
               href="/experiments"
               className="hidden sm:flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-300 transition-colors font-mono"
             >
-              All experiments
+              Todos los experimentos
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -159,27 +159,27 @@ export default function HomePage() {
               href="/experiments"
               className="inline-flex items-center gap-1.5 text-sm text-egg-400"
             >
-              All experiments <ArrowRight className="w-3.5 h-3.5" />
+              Todos los experimentos <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Latest notes */}
+      {/* Últimas notas */}
       <section className="py-20 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-10">
             <SectionHeader
-              label="Latest notes"
-              title="Anthropic updates, decoded"
-              description="Short articles on Claude and Anthropic developments: what changed, why it matters, what can be built."
+              label="Últimas notas"
+              title="Las novedades de Anthropic, descifradas"
+              description="Artículos cortos sobre Claude y Anthropic: qué ha cambiado, por qué importa y qué se puede construir."
               className="mb-0"
             />
             <Link
               href="/notes"
               className="hidden sm:flex items-center gap-1.5 text-sm text-egg-400 hover:text-egg-300 transition-colors font-mono"
             >
-              All notes
+              Todas las notas
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>

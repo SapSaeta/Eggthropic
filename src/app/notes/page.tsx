@@ -4,23 +4,23 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { notes } from "@/lib/notes";
 
 export const metadata: Metadata = {
-  title: "Notes",
+  title: "Notas",
   description:
-    "Short articles on Claude and Anthropic updates — what changed, why it matters, what can be built, and what the limitations are.",
+    "Artículos cortos sobre las novedades de Claude y Anthropic: qué ha cambiado, por qué importa, qué se puede construir y qué límites tiene.",
   alternates: { canonical: "https://www.eggthropic.com/notes" },
   openGraph: {
-    title: "Notes — Eggthropic",
+    title: "Notas — Eggthropic",
     description:
-      "Short articles on Claude and Anthropic updates — what changed, why it matters, what can be built, and what the limitations are.",
+      "Artículos cortos sobre las novedades de Claude y Anthropic: qué ha cambiado, por qué importa, qué se puede construir y qué límites tiene.",
     url: "https://www.eggthropic.com/notes",
     siteName: "Eggthropic",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Notes — Eggthropic",
+    title: "Notas — Eggthropic",
     description:
-      "Short articles on Claude and Anthropic updates — what changed, why it matters, what can be built, and what the limitations are.",
+      "Artículos cortos sobre las novedades de Claude y Anthropic: qué ha cambiado, por qué importa, qué se puede construir y qué límites tiene.",
   },
 };
 
@@ -30,8 +30,8 @@ export default function NotesPage() {
       <SectionHeader
         as="h1"
         label="Notes"
-        title="Anthropic updates, decoded"
-        description="Short, practical articles on Claude and Anthropic developments. Each note covers what changed, why it matters to developers, what can be built with it, and what limitations or risks to watch for."
+        title="Las novedades de Anthropic, descifradas"
+        description="Artículos cortos y prácticos sobre las novedades de Claude y Anthropic. Cada nota cubre qué ha cambiado, por qué le importa a quien desarrolla, qué se puede construir y qué limitaciones o riesgos vigilar."
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

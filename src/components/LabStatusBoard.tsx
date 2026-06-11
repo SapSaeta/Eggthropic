@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export type BoardCategory = "Claude Code" | "Skills" | "MCP" | "UX-UI";
 export type BoardStatus = "complete" | "in-progress" | "experimental";
-export type BoardDifficulty = "NOVICE" | "INTERMEDIATE" | "ADVANCED";
+export type BoardDifficulty = "INICIAL" | "INTERMEDIO" | "AVANZADO";
 
 export interface BoardExperiment {
   id: string;
@@ -69,13 +69,13 @@ const STATUS_META: Record<
   { label: string; dot: string; text: string; glow: string }
 > = {
   complete: {
-    label: "COMPLETE",
+    label: "COMPLETO",
     dot: "bg-emerald-400",
     text: "text-emerald-400",
     glow: "shadow-[0_0_8px_#34d399]",
   },
   "in-progress": {
-    label: "IN-PROGRESS",
+    label: "EN-CURSO",
     dot: "bg-blue-400",
     text: "text-blue-400",
     glow: "shadow-[0_0_8px_#60a5fa]",
@@ -118,9 +118,9 @@ function CategoryPill({ category }: { category: BoardCategory }) {
 
 function DifficultyBadge({ difficulty }: { difficulty: BoardDifficulty }) {
   const colors: Record<BoardDifficulty, string> = {
-    NOVICE: "border-slate-500/40 text-slate-400 bg-slate-500/10",
-    INTERMEDIATE: "border-sky-500/30 text-sky-300 bg-sky-500/10",
-    ADVANCED: "border-rose-500/30 text-rose-300 bg-rose-500/10",
+    INICIAL: "border-slate-500/40 text-slate-400 bg-slate-500/10",
+    INTERMEDIO: "border-sky-500/30 text-sky-300 bg-sky-500/10",
+    AVANZADO: "border-rose-500/30 text-rose-300 bg-rose-500/10",
   };
   return (
     <span
@@ -276,7 +276,7 @@ function Sidebar({ experiments }: { experiments: BoardExperiment[] }) {
       </div>
 
       <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
-        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-slate-600">STATUS ROLL-UP</p>
+        <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-slate-600">RESUMEN DE ESTADO</p>
         <ul className="space-y-1.5">
           {(["complete", "in-progress", "experimental"] as BoardStatus[]).map((s) => (
             <li key={s} className="flex items-center justify-between">

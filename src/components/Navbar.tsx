@@ -7,10 +7,10 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/experiments", label: "Experiments" },
-  { href: "/notes", label: "Notes" },
-  { href: "/lab", label: "Lab" },
-  { href: "/about", label: "About" },
+  { href: "/experiments", label: "Experimentos" },
+  { href: "/notes", label: "Notas" },
+  { href: "/lab", label: "Laboratorio" },
+  { href: "/about", label: "Sobre el lab" },
 ];
 
 export function Navbar() {
@@ -74,7 +74,7 @@ export function Navbar() {
           <button
             className="md:hidden p-2 text-slate-400 hover:text-white"
             onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
+            aria-label="Abrir o cerrar menú"
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>

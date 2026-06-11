@@ -19,11 +19,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.eggthropic.com"),
   title: {
-    default: "Eggthropic — Claude Lab",
+    default: "Eggthropic — Laboratorio de Claude",
     template: "%s | Eggthropic",
   },
   description:
-    "An independent experimental lab for learning Claude by building real experiments with Claude Code, Agent Skills, MCP, and the Anthropic API.",
+    "Laboratorio experimental independiente para aprender Claude construyendo experimentos reales con Claude Code, Agent Skills, MCP y la API de Anthropic. En español.",
   keywords: [
     "Claude",
     "Claude Code",
@@ -31,9 +31,9 @@ export const metadata: Metadata = {
     "MCP",
     "Model Context Protocol",
     "Agent Skills",
-    "AI coding",
-    "AI experiments",
-    "developer tools",
+    "experimentos IA",
+    "laboratorio IA",
+    "herramientas de desarrollo",
   ],
   authors: [{ name: "Eggthropic" }],
   alternates: {
@@ -41,26 +41,26 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "es_ES",
     url: "https://www.eggthropic.com",
     siteName: "Eggthropic",
-    title: "Eggthropic — Claude Lab",
+    title: "Eggthropic — Laboratorio de Claude",
     description:
-      "An independent experimental lab for learning Claude by building real experiments.",
+      "Laboratorio experimental independiente: experimentos reales con Claude, documentados con honestidad. En español.",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Eggthropic — Independent Claude Lab",
+        alt: "Eggthropic — laboratorio independiente de Claude",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Eggthropic — Claude Lab",
+    title: "Eggthropic — Laboratorio de Claude",
     description:
-      "An independent experimental lab for learning Claude by building real experiments.",
+      "Laboratorio experimental independiente: experimentos reales con Claude, documentados con honestidad. En español.",
     images: ["/opengraph-image"],
   },
   robots: {
@@ -76,7 +76,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
