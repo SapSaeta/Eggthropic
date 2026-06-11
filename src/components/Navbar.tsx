@@ -18,7 +18,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-paper-line bg-paper/85 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#262019]/95 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {/* Logo */}
@@ -28,10 +28,10 @@ export function Navbar() {
             onClick={() => setMobileOpen(false)}
           >
             <span className="text-lg font-semibold tracking-tight">
-              <span className="text-egg-600">Egg</span>
-              <span className="text-ink">thropic</span>
+              <span className="text-egg-400">Egg</span>
+              <span className="text-white">thropic</span>
             </span>
-            <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono bg-egg-400/10 text-egg-600 border border-egg-400/20">
+            <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono bg-egg-400/10 text-egg-400 border border-egg-400/20">
               lab
             </span>
           </Link>
@@ -45,8 +45,8 @@ export function Navbar() {
                 className={cn(
                   "px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
                   pathname.startsWith(link.href)
-                    ? "text-ink bg-paper-deep"
-                    : "text-ink-soft hover:text-ink hover:bg-paper-deep"
+                    ? "text-white bg-white/10"
+                    : "text-stone-400 hover:text-white hover:bg-white/10"
                 )}
               >
                 {link.label}
@@ -56,7 +56,7 @@ export function Navbar() {
               href="https://github.com/sapsaeta/eggthropic"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-2 px-3 py-1.5 rounded-md text-sm font-medium text-ink-soft hover:text-ink hover:bg-paper-deep transition-colors flex items-center gap-1.5"
+              className="ml-2 px-3 py-1.5 rounded-md text-sm font-medium text-stone-400 hover:text-white hover:bg-white/10 transition-colors flex items-center gap-1.5"
             >
               <svg
                 className="w-4 h-4"
@@ -72,7 +72,7 @@ export function Navbar() {
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden p-2 text-ink-soft hover:text-ink"
+            className="md:hidden p-2 text-stone-400 hover:text-white"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Abrir o cerrar menú"
           >
@@ -83,7 +83,7 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-paper-line bg-paper/95 backdrop-blur-md">
+        <div className="md:hidden border-t border-white/10 bg-[#262019]/98 backdrop-blur-md">
           <div className="px-4 py-3 flex flex-col gap-1">
             {navLinks.map((link) => (
               <Link
@@ -93,8 +93,8 @@ export function Navbar() {
                 className={cn(
                   "px-3 py-2 rounded-md text-sm font-medium transition-colors",
                   pathname.startsWith(link.href)
-                    ? "text-ink bg-paper-deep"
-                    : "text-ink-soft hover:text-ink hover:bg-paper-deep"
+                    ? "text-white bg-white/10"
+                    : "text-stone-400 hover:text-white hover:bg-white/10"
                 )}
               >
                 {link.label}
@@ -104,7 +104,7 @@ export function Navbar() {
               href="https://github.com/sapsaeta/eggthropic"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-2 rounded-md text-sm font-medium text-ink-soft hover:text-ink"
+              className="px-3 py-2 rounded-md text-sm font-medium text-stone-400 hover:text-white"
               onClick={() => setMobileOpen(false)}
             >
               GitHub
