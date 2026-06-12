@@ -252,7 +252,7 @@ function Sidebar({ experiments }: { experiments: BoardExperiment[] }) {
       : 0;
 
   return (
-    <aside className="flex w-44 shrink-0 flex-col gap-4">
+    <aside className="hidden w-44 shrink-0 flex-col gap-4 lg:flex">
       <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
         <p className="mb-3 font-mono text-[9px] tracking-[0.2em] text-stone-400">{"// CATEGORIES"}</p>
         <ul className="space-y-2.5">
@@ -322,7 +322,7 @@ function TopBar({
   const filters: (BoardCategory | "ALL")[] = ["ALL", ...CATEGORIES];
 
   return (
-    <header className="flex items-center justify-between gap-4 border-b border-white/10 px-6 py-3">
+    <header className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-4 py-3 sm:px-6">
       <div className="flex items-center gap-3">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#ffd21a]/30 bg-[#ffd21a]/10">
           <span className="text-lg">🥚</span>
@@ -334,7 +334,7 @@ function TopBar({
         </div>
       </div>
 
-      <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5">
+      <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 md:flex">
         <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
         <span className="font-mono text-xs tracking-widest text-stone-300">EXPERIMENTS</span>
         <span className="font-mono text-sm font-bold text-stone-100">
@@ -343,7 +343,7 @@ function TopBar({
         <span className="font-mono text-xs tracking-widest text-stone-400">ACTIVE</span>
       </div>
 
-      <nav className="flex items-center gap-1">
+      <nav className="flex flex-wrap items-center gap-1">
         {filters.map((f) => {
           const isActive = activeFilter === f;
           const catMeta = f !== "ALL" ? CATEGORY_META[f] : null;
@@ -405,7 +405,7 @@ function StatusBar({
   node: string;
 }) {
   return (
-    <footer className="flex items-center justify-between border-t border-white/10 px-6 py-2">
+    <footer className="flex items-center justify-between border-t border-white/10 px-4 py-2 sm:px-6">
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -415,7 +415,7 @@ function StatusBar({
           SHOWING <span className="text-[#ffd21a]">{showing}/{total}</span>
         </span>
       </div>
-      <div className="flex items-center gap-6">
+      <div className="hidden items-center gap-6 sm:flex">
         <span className="font-mono text-[10px] tracking-widest text-stone-400">
           BUILD <span className="text-stone-300">{buildVersion}</span>
         </span>
@@ -447,7 +447,7 @@ export default function LabStatusBoard({
   return (
     <div
       className="relative flex flex-col overflow-hidden font-mono rounded-2xl border border-white/10"
-      style={{ backgroundColor: "#262019", minHeight: "600px" }}
+      style={{ backgroundColor: "#262019" }}
     >
       <GridBackground />
 
@@ -457,7 +457,7 @@ export default function LabStatusBoard({
         onFilterChange={setActiveFilter}
       />
 
-      <div className="relative flex min-h-0 flex-1 gap-4 overflow-hidden p-4">
+      <div className="relative flex min-h-0 flex-1 gap-4 overflow-hidden p-3 sm:p-4">
         <Sidebar experiments={experiments} />
 
         <main className="flex flex-1 flex-col gap-3 overflow-y-auto">
@@ -466,7 +466,7 @@ export default function LabStatusBoard({
               <span className="font-mono text-[10px] tracking-widest text-stone-400">[ ACTIVE ]</span>
               <h2 className="text-sm font-bold tracking-wide text-stone-100">Experiment Roster</h2>
             </div>
-            <span className="font-mono text-[10px] tracking-widest text-stone-400">
+            <span className="hidden font-mono text-[10px] tracking-widest text-stone-400 sm:inline">
               SHOWING <span className="text-stone-300">{filtered.length} / {experiments.length}</span>
               {" · "}FILTER: <span className="text-[#ffd21a]">{activeFilter}</span>
             </span>

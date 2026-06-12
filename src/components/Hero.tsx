@@ -144,35 +144,35 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <div className="relative">
+            <div className="relative scale-[0.78] sm:scale-100">
               <EggClickable>
                 <AnimatedEgg size={320} variant="hero" />
               </EggClickable>
 
               {/* Floating labels */}
               <motion.div
-                className="absolute top-8 -left-16 glass rounded-lg px-3 py-2 text-xs font-mono text-egg-600 border border-egg-400/20"
+                className="absolute top-8 -left-4 sm:-left-16 glass rounded-lg px-3 py-2 text-xs font-mono text-egg-600 border border-egg-400/20"
                 animate={{ y: [0, -4, 0] }}
                 transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
               >
                 claude-code
               </motion.div>
               <motion.div
-                className="absolute top-24 -right-20 glass rounded-lg px-3 py-2 text-xs font-mono text-cyan-700 border border-cyan-400/20"
+                className="absolute top-24 -right-6 sm:-right-20 glass rounded-lg px-3 py-2 text-xs font-mono text-cyan-700 border border-cyan-400/20"
                 animate={{ y: [0, -4, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, delay: 1 }}
               >
                 mcp-server
               </motion.div>
               <motion.div
-                className="absolute bottom-20 -left-20 glass rounded-lg px-3 py-2 text-xs font-mono text-fuchsia-700 border border-fuchsia-400/20"
+                className="absolute bottom-20 -left-6 sm:-left-20 glass rounded-lg px-3 py-2 text-xs font-mono text-fuchsia-700 border border-fuchsia-400/20"
                 animate={{ y: [0, -4, 0] }}
                 transition={{ duration: 4, repeat: Infinity, delay: 1.5 }}
               >
                 agent-skill
               </motion.div>
               <motion.div
-                className="absolute bottom-8 -right-12 glass rounded-lg px-3 py-2 text-xs font-mono text-violet-700 border border-violet-400/20"
+                className="absolute bottom-8 -right-3 sm:-right-12 glass rounded-lg px-3 py-2 text-xs font-mono text-violet-700 border border-violet-400/20"
                 animate={{ y: [0, -4, 0] }}
                 transition={{ duration: 3.2, repeat: Infinity, delay: 0.8 }}
               >

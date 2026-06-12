@@ -234,7 +234,43 @@ export default function LabPage() {
             host, cliente y servidor, y qué viaja entre ellos.
           </p>
         </div>
-        <MCPExplainer />
+
+        {/* Escritorio: explicador interactivo completo */}
+        <div className="hidden md:block">
+          <MCPExplainer />
+        </div>
+
+        {/* Móvil: versión compacta vertical */}
+        <div className="md:hidden rounded-2xl border border-white/10 p-5" style={{ backgroundColor: "#262019" }}>
+          <p className="mb-4 font-mono text-[10px] tracking-widest text-stone-400">
+            MCP EN 30 SEGUNDOS
+          </p>
+          <div className="space-y-2">
+            {[
+              { n: "Host", d: "La app de IA que usas: Claude Desktop, Claude Code, tu agente…", c: "border-egg-400/30 text-egg-300" },
+              { n: "Cliente", d: "Vive dentro del host. Habla el protocolo y gestiona la conexión.", c: "border-cyan-400/30 text-cyan-300" },
+              { n: "Servidor", d: "Expone tus datos y herramientas: archivos, APIs, bases de datos, SAP…", c: "border-violet-400/30 text-violet-300" },
+            ].map((x, i, arr) => (
+              <div key={x.n}>
+                <div className={`rounded-xl border bg-white/[0.03] p-4 ${x.c.split(" ")[0]}`}>
+                  <p className={`mb-1 font-mono text-xs font-bold tracking-widest ${x.c.split(" ")[1]}`}>
+                    {x.n.toUpperCase()}
+                  </p>
+                  <p className="text-sm leading-relaxed text-stone-300">{x.d}</p>
+                </div>
+                {i < arr.length - 1 && (
+                  <p className="py-1 text-center font-mono text-stone-500">↓ JSON-RPC 2.0</p>
+                )}
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-xs leading-relaxed text-stone-400">
+            El servidor ofrece tres primitivas: <span className="text-stone-200">Tools</span> (funciones
+            ejecutables), <span className="text-stone-200">Resources</span> (datos) y{" "}
+            <span className="text-stone-200">Prompts</span> (plantillas). El explicador interactivo
+            completo está disponible en pantallas grandes.
+          </p>
+        </div>
       </section>
     </div>
   );
