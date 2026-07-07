@@ -7,7 +7,7 @@ import { ExperimentCard } from "@/components/ExperimentCard";
 import type { Experiment, ExperimentCategory } from "@/types";
 
 const categories: { value: "all" | ExperimentCategory; label: string }[] = [
-  { value: "all", label: "All" },
+  { value: "all", label: "Todos" },
   { value: "claude-code", label: "Claude Code" },
   { value: "skills", label: "Skills" },
   { value: "mcp", label: "MCP" },
@@ -15,6 +15,7 @@ const categories: { value: "all" | ExperimentCategory; label: string }[] = [
   { value: "ux-ui", label: "UX/UI" },
   { value: "automation", label: "Automatización" },
   { value: "enterprise-ai", label: "Enterprise AI" },
+  { value: "sap", label: "SAP" },
 ];
 
 interface Props {
@@ -74,7 +75,7 @@ export function ExperimentsClient({ experiments, initialCategory = "all" }: Prop
 
       {/* Count */}
       <p className="text-xs text-ink-faint font-mono mb-6">
-        {filtered.length} experiment{filtered.length !== 1 ? "s" : ""} found
+        {filtered.length} experimento{filtered.length !== 1 ? "s" : ""} encontrado{filtered.length !== 1 ? "s" : ""}
       </p>
 
       {/* Grid */}
@@ -100,7 +101,7 @@ export function ExperimentsClient({ experiments, initialCategory = "all" }: Prop
             className="py-20 text-center"
           >
             <p className="text-ink-faint text-sm">
-              No experiments found. Try a different filter or search.
+              No hay experimentos con ese filtro. Prueba otra categoría o búsqueda.
             </p>
           </motion.div>
         )}

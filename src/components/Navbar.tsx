@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/experiments", label: "Experimentos" },
   { href: "/notes", label: "Notas" },
   { href: "/lab", label: "Laboratorio" },
+  { href: "/sap", label: "SAP Lab" },
   { href: "/about", label: "Sobre el lab" },
 ];
 

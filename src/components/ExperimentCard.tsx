@@ -16,6 +16,8 @@ const categoryLabel: Record<string, string> = {
   api: "API",
   "ux-ui": "UX/UI",
   automation: "Automatización",
+  "enterprise-ai": "IA empresarial",
+  sap: "SAP",
 };
 
 const difficultyLabel: Record<string, string> = {
