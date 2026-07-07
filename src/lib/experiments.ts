@@ -299,6 +299,142 @@ export const experiments: Experiment[] = [
     ],
     lastVerified: "2026-05-08",
   },
+  {
+    slug: "sap-abap-clean-code-refactor",
+    title: "Refactor de ABAP legacy a Clean ABAP con Claude",
+    description:
+      "Tomar un report ABAP clásico de ausencias HCM con 13 defectos plantados y pedirle a Claude cuatro cosas en orden: revisión con severidades, refactor completo, riesgos y — la parte que casi nadie pide — cuándo NO refactorizar.",
+    category: "sap",
+    difficulty: "intermediate",
+    status: "in-progress",
+    date: "2026-07-06",
+    tools: ["Claude", "Cowork", "ABAP", "Clean ABAP"],
+    goal: "Comprobar si Claude puede revisar un report ABAP clásico contra la guía Clean ABAP oficial de SAP y producir un refactor completo que preserve la semántica, con riesgos documentados y criterios honestos de cuándo no tocar el código.",
+    context:
+      "La revisión y refactor de programas Z heredados es una tarea semanal real de cualquier consultor ABAP: SELECT anidados con patrón N+1, tablas con cabecera, fieldcat manual de 16 líneas, números mágicos y lógica imposible de testear. El experimento usa un report ficticio pero realista de ausencias SAP HCM (IT2001 + PA0001 + T554T) con 13 defectos inventariados a propósito antes de la prueba, para poder medir la detección contra una lista cerrada.",
+    prompt:
+      "Actúa como revisor senior de ABAP aplicando la guía Clean ABAP oficial de SAP. Contexto: release objetivo, módulo, motivo del refactor y restricciones. Haz exactamente esto, en orden: 1) REVISIÓN: problemas clasificados por severidad citando la regla Clean ABAP. 2) REFACTOR: reescribe el programa preservando la semántica; marca cualquier punto donde pueda variar. 3) RIESGOS: qué podría romperse y qué pruebas de regresión harías. 4) NO REFACTORIZAR: di explícitamente si en este caso no conviene tocar el código y por qué. No inventes tablas ni funciones; marca el resultado como pendiente de validación sintáctica en sistema real.",
+    implementationNotes:
+      "El flujo produce cuatro artefactos: review.md con los hallazgos por severidad, after.abap con el refactor (clase local, un único JOIN en vez de miles de accesos a BD, lógica separada del ALV y testeable, CL_SALV_TABLE, constantes con nombre), un checklist Clean ABAP reutilizable con sección específica HCM (delimitaciones, SPRPS, autorizaciones) y el prompt afinado. La estructura del prompt — revisión antes que refactor, y el paso 4 obligatorio — es lo que evita el sesgo de «refactorizar siempre».",
+    result:
+      "Detección 13/13 sobre los defectos inventariados, con severidades y regla Clean ABAP citada. El refactor produjo la estructura esperada. Matices honestos: el 13/13 es cota superior porque el mismo modelo escribió el código defectuoso; la primera versión del refactor usó un tipo de datos inadecuado que hubo que corregir en sesión; y sin sistema SAP nada se compila — todo el código va marcado como pendiente de validar en un sistema real.",
+    whatWorked: [
+      "El orden revisión → refactor → riesgos → cuándo-no-refactorizar produce salidas completas y honestas en una sola pasada",
+      "La sección «cuándo NO refactorizar» salió con criterios accionables: sin regresión definida, cerca de cierre de nómina o sobre código estable, no se toca",
+      "El refactor eliminó el patrón N+1 con un único JOIN y dejó la lógica de negocio testeable con ABAP Unit",
+      "El checklist resultante con sección HCM es reutilizable en revisiones manuales",
+    ],
+    whatFailed: [
+      "La primera versión usó /iwbep/t_cod_select_options como tipo de rango (dependencia innecesaria de Gateway) — corregido a TYPE RANGE OF: la salida necesita revisión humana siempre",
+      "El 13/13 de detección tiene sesgo de auto-revisión: el mismo modelo plantó los defectos",
+      "Sin sistema SAP no hay validación sintáctica ni comparación de salidas antes/después con datos",
+      "El JOIN a PA0001 vigente asume un único registro válido: con delimitaciones no triviales la semántica podría variar",
+    ],
+    nextIteration:
+      "Prueba de control con un report Z real anonimizado que Claude no haya escrito: contar hallazgos correctos, falsos positivos y tiempo frente a una revisión manual. Si supera el control, convertir el flujo en una Agent Skill de revisión ABAP.",
+    references: [
+      {
+        label: "Clean ABAP Style Guide — SAP/styleguides",
+        url: "https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md",
+      },
+      {
+        label: "Clean ABAP Cheat Sheet",
+        url: "https://github.com/SAP/styleguides/blob/main/clean-abap/cheat-sheet/CheatSheet.md",
+      },
+    ],
+    labPage: "/sap",
+    lastVerified: "2026-07-06",
+  },
+  {
+    slug: "sap-abap-legacy-explainer",
+    title: "Explicar ABAP legacy a consultores funcionales",
+    description:
+      "Convertir un cálculo de plus de antigüedad HCM de estilo 2008 — sin un solo comentario útil — en dos explicaciones: una funcional sin jerga y otra técnica con flujo de datos, bugs sospechados y preguntas a verificar.",
+    category: "sap",
+    difficulty: "intermediate",
+    status: "in-progress",
+    date: "2026-07-06",
+    tools: ["Claude", "Cowork", "ABAP", "SAP HCM"],
+    goal: "Comprobar si Claude puede reconstruir la intención funcional de ABAP HCM legacy sin documentación — incluyendo patrones específicos de HR como la LDB PNP, rp_provide_from_last o la estructura DAR/DAT del infotipo 0041 — y servirla a dos audiencias distintas con el mismo análisis.",
+    context:
+      "Todo consultor SAP conoce la escena: un programa Z de hace quince años, sin comentarios, cuyo autor se fue hace una década, y un funcional preguntando «¿pero esto qué calcula exactamente?». El experimento usa un fragmento ficticio pero realista de cálculo de plus de antigüedad con 7 elementos plantados: un bloque de código muerto, un bug latente (índice sin formatear a dos dígitos en un ASSIGN dinámico), tres exclusiones silenciosas y dos supuestos de configuración del cliente.",
+    prompt:
+      "Eres un consultor SAP senior técnico-funcional. Te paso un programa ABAP legacy sin documentación. Genera DOS explicaciones separadas: A) FUNCIONAL, para un consultor sin ABAP — qué hace en una frase, paso a paso en lenguaje de negocio, tabla de infotipos usados, riesgos funcionales y preguntas concretas a validar. B) TÉCNICA, para el ABAPer que lo hereda — arquitectura, flujo de datos, puntos delicados y sugerencia breve de refactor. Regla clave: si un comportamiento depende de configuración del cliente (clases de fecha, CC-nóminas, subtipos), NO lo des por hecho — márcalo como pregunta a verificar. Si sospechas un bug, dilo como sospecha y explica cómo verificarlo.",
+    implementationNotes:
+      "La salida en dos capas permite usar el mismo análisis con dos audiencias sin redactar dos veces. La capa funcional tradujo el código a lenguaje de negocio con tabla de tramos, cinco riesgos (incluido el clásico «hay empleados que desaparecen del listado sin aviso») y cinco preguntas para negocio. La técnica reconstruyó el flujo de datos, señaló el código muerto y levantó la sospecha del bug del índice ('DAR1' vs 'DAR01') con propuesta de verificación.",
+    result:
+      "7/7 elementos plantados detectados: código muerto, bug latente como sospecha verificable, exclusiones silenciosas traducidas a riesgo funcional, y — lo más importante — las convenciones de configuración marcadas como preguntas, no como hechos. Misma advertencia que el caso de refactor: el modelo explicó código que él mismo construyó, así que es cota superior. La interpretación de los patrones HR está pendiente de contraste con documentación oficial y con la experiencia real del consultor.",
+    whatWorked: [
+      "El formato de dos capas (funcional/técnica) produce entregables usables tal cual, sin retrabajo",
+      "La regla «marcar convenciones de cliente como pregunta a verificar» se cumplió — es la mitigación clave contra la sobreconfianza",
+      "Detectó el bug latente del índice dinámico y lo presentó como sospecha con método de verificación, no como certeza",
+      "La aclaración «este programa no graba nada en SAP» evita el malentendido funcional más caro",
+    ],
+    whatFailed: [
+      "Sesgo de auto-explicación: el agente conocía los defectos porque diseñó la entrada",
+      "La corrección de la interpretación de patrones HR (LDB PNP, HR_HK_DIFF_BT_2_DATES) no se ha contrastado contra un sistema",
+      "Sin métrica de tiempo frente a documentar a mano: falta la línea base",
+    ],
+    nextIteration:
+      "Pasar el prompt a un programa Z real del trabajo (anonimizado) y que el consultor puntúe con rúbrica: exactitud funcional, exactitud técnica, errores de interpretación y preguntas útiles generadas. Es el caso con mejor relación esfuerzo/valor: no genera código que deba compilar.",
+    references: [
+      {
+        label: "Clean ABAP Style Guide — SAP/styleguides",
+        url: "https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md",
+      },
+      {
+        label: "Roadmap 2026 de Joule for Developers (ABAP AI) — SAP",
+        url: "https://community.sap.com/t5/technology-blog-posts-by-sap/our-2026-roadmap-for-joule-for-developers-abap-ai-capabilities/ba-p/14360358",
+      },
+    ],
+    labPage: "/sap",
+    lastVerified: "2026-07-06",
+  },
+  {
+    slug: "sap-hcm-excel-validator",
+    title: "Un validador de Excel para cargas SAP HCM, probado de verdad",
+    description:
+      "Reglas de validación → validador Python → Excel con 10 errores plantados → ejecución real con evidencia: 10/10 detecciones, 0 falsos positivos, a la primera. La diferencia entre «la IA me hizo un script» y «tengo un validador fiable».",
+    category: "sap",
+    difficulty: "intermediate",
+    status: "complete",
+    date: "2026-07-06",
+    tools: ["Claude", "Cowork", "Python", "openpyxl", "SAP HCM"],
+    goal: "Comprobar si Claude puede generar un conjunto completo de reglas de validación para una carga masiva del infotipo 2010 y su implementación ejecutable — y verificarlo objetivamente con un Excel de errores plantados y una matriz esperado-vs-real.",
+    context:
+      "Los Excel que llegan de RRHH para cargas masivas traen fechas imposibles, conceptos no autorizados, duplicados y 250 horas donde debían ser 25. Cada error que entra en SAP es una incidencia; cada error cazado antes, minutos de corrección en el fichero. El experimento define primero 12 reglas numeradas con severidad (formatos, catálogos, condicionales entre campos, duplicados y patrones sospechosos), después el validador, y por último un Excel de prueba con 10 incidencias plantadas ANTES de ejecutar nada.",
+    prompt:
+      "Actúa como consultor SAP HCM técnico-funcional. Voy a preparar una carga masiva vía Excel para el infotipo indicado y quiero validar el fichero ANTES de cargarlo. Haz esto en orden: 1) REGLAS: tabla de reglas numeradas con severidad ERROR/WARNING — formatos, fechas vs periodo, catálogos, condicionales entre campos, rangos, duplicados y patrones sospechosos. 2) VALIDADOR: script Python (openpyxl) que aplique las reglas, escriba un errores.csv con mensajes EN LENGUAJE FUNCIONAL y devuelva exit code 1 si hay errores. 3) PRUEBA: Excel de prueba con errores plantados conocidos y matriz esperado-vs-real. 4) RESUMEN FUNCIONAL para el usuario no técnico. El catálogo de valores es configuración del cliente: márcalo como parámetro. El validador NO sustituye las validaciones de SAP: es un prefiltro.",
+    implementationNotes:
+      "Escenario ficticio: carga mensual IT2010 (España), Excel de 6 columnas, catálogo mock de 4 CC-nóminas. Las 12 reglas cubren desde el formato del número de personal hasta la detección de duplicados exactos y avisos por valores sospechosos (más de 80 horas en un registro, mezcla de separadores decimales). El validador genera errores.csv con fila, campo, regla, severidad y mensaje comprensible por un usuario de RRHH, más un veredicto: apto o no apto para carga.",
+    result:
+      "Ejecutado de verdad en sandbox: 14 filas de datos, 8 errores y 2 avisos detectados — los 10 plantados, cero falsos positivos, y el script funcionó a la primera ejecución sin correcciones. Veredicto automático «NO apto para carga» con exit code 1. Es la única prueba de la primera tanda con verificación objetiva: el código se ejecutó contra datos y la salida se comparó mecánicamente con lo esperado. Lo que NO demuestra: que reduzca errores en cargas reales — el escenario era ficticio.",
+    whatWorked: [
+      "El patrón reglas → script → errores plantados → matriz esperado-vs-real funciona de punta a punta sin sistema SAP",
+      "El script fue correcto a la primera ejecución, sin iteraciones de corrección",
+      "Los mensajes en lenguaje funcional permiten que RRHH corrija el fichero sin escalar al técnico",
+      "El exit code hace el validador encadenable en automatizaciones",
+    ],
+    whatFailed: [
+      "No demuestra reducción de errores en cargas reales: los errores los plantó el propio experimento",
+      "El catálogo de CC-nóminas va hardcodeado: en un cliente real debe venir de configuración exportada",
+      "Riesgo de falsa seguridad: «apto» no garantiza que SAP acepte — configuración, bloqueos y autorizaciones quedan fuera",
+    ],
+    nextIteration:
+      "Ejecutar el validador contra el Excel (anonimizado) de una carga real pasada y contar qué habría detectado: esa cifra será la primera métrica real del laboratorio y decidirá si el caso se convierte en Agent Skill.",
+    references: [
+      {
+        label: "openpyxl — documentación oficial",
+        url: "https://openpyxl.readthedocs.io",
+      },
+      {
+        label: "Agent Skills — documentación de Anthropic",
+        url: "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
+      },
+    ],
+    labPage: "/sap",
+    lastVerified: "2026-07-06",
+  },
 ];
 
 export function getExperimentBySlug(slug: string): Experiment | undefined {
