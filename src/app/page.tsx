@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Code2, Cpu, Network, Palette } from "lucide-react";
+import { ArrowRight, Code2, Cpu, Network, Palette, Database } from "lucide-react";
 import { Hero } from "@/components/Hero";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ExperimentCard } from "@/components/ExperimentCard";
@@ -75,6 +75,17 @@ const labSections = [
     border: "border-amber-500/20",
     tag: "ux-ui",
   },
+  {
+    icon: Database,
+    title: "SAP x Claude Lab",
+    description:
+      "Casos reales de Claude aplicado a SAP — ABAP, Clean Code, HCM, Fiori, RAP y CAP — puntuados, probados con experimentos reproducibles y documentados sin humo.",
+    href: "/sap",
+    color: "text-[#0a6ed1]",
+    bg: "bg-[#0a6ed1]/10",
+    border: "border-[#0a6ed1]/20",
+    tag: "sap",
+  },
 ];
 
 export default function HomePage() {
@@ -90,11 +101,11 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             label="Qué exploramos"
-            title="Cuatro áreas, una misión"
-            description="Cada área explora una capa distinta del ecosistema de desarrollo de Claude — del CLI a las integraciones a nivel de protocolo."
+            title="Cinco áreas, una misión"
+            description="Cada área explora una capa distinta del ecosistema de Claude — del CLI a las integraciones a nivel de protocolo, hasta el mundo SAP."
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {labSections.map((section) => {
               const Icon = section.icon;
               return (
