@@ -7,7 +7,8 @@ export type ExperimentCategory =
   | "api"
   | "ux-ui"
   | "automation"
-  | "enterprise-ai";
+  | "enterprise-ai"
+  | "sap";
 
 export interface Experiment {
   slug: string;
