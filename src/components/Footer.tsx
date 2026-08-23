@@ -5,6 +5,7 @@ const footerLinks = {
     { href: "/experiments", label: "Experimentos" },
     { href: "/notes", label: "Notas" },
     { href: "/lab", label: "Laboratorio comunitario" },
+    { href: "/sap", label: "SAP x Claude Lab" },
     { href: "/about", label: "Sobre el lab" },
   ],
   Recursos: [
@@ -51,7 +52,7 @@ export function Footer() {
             </div>
             <p className="text-sm text-ink-faint leading-relaxed max-w-xs">
               Un laboratorio experimental independiente para aprender Claude construyendo
-              real experiments.
+              experimentos reales.
             </p>
             <p className="mt-4 text-xs text-ink-faint leading-relaxed max-w-xs">
               Sin afiliación, respaldo ni conexión oficial con

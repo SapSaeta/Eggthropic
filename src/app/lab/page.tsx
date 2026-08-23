@@ -35,6 +35,8 @@ const categoryMap: Record<string, BoardCategory> = {
   skills: "Skills",
   mcp: "MCP",
   "ux-ui": "UX-UI",
+  sap: "SAP",
+  "enterprise-ai": "SAP",
 };
 
 const difficultyMap: Record<string, BoardDifficulty> = {

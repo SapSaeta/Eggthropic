@@ -4,7 +4,7 @@ import { useState } from "react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export type BoardCategory = "Claude Code" | "Skills" | "MCP" | "UX-UI";
+export type BoardCategory = "Claude Code" | "Skills" | "MCP" | "UX-UI" | "SAP";
 export type BoardStatus = "complete" | "in-progress" | "experimental";
 export type BoardDifficulty = "INICIAL" | "INTERMEDIO" | "AVANZADO";
 
@@ -28,7 +28,7 @@ export interface LabStatusBoardProps {
 
 // ─── Static config ────────────────────────────────────────────────────────────
 
-const CATEGORIES: BoardCategory[] = ["Claude Code", "Skills", "MCP", "UX-UI"];
+const CATEGORIES: BoardCategory[] = ["Claude Code", "Skills", "MCP", "UX-UI", "SAP"];
 
 const CATEGORY_META: Record<
   BoardCategory,
@@ -61,6 +61,13 @@ const CATEGORY_META: Record<
     text: "text-pink-400",
     bg: "bg-pink-500/10",
     icon: "◉",
+  },
+  SAP: {
+    color: "#0a6ed1",
+    border: "border-sky-500/40",
+    text: "text-sky-400",
+    bg: "bg-sky-500/10",
+    icon: "▣",
   },
 };
 
