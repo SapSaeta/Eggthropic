@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validador de carga IT2010 — Eggthropic SAP Lab</title>
+<style>
+  :root{--paper:#f4eee2;--card:#fcf8ef;--ink:#2c2620;--soft:#5c5347;--faint:#8a7e6d;--line:#e0d6c2;--teja:#c2542b;--joule:#0a6ed1;--ok:#0d7a4d;--warn:#9a6b00;--err:#b3261e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);padding:24px;min-height:100vh}
+  .wrap{max-width:960px;margin:0 auto}
+  .chip{display:inline-flex;align-items:center;gap:6px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;color:var(--joule);border:1px solid rgba(10,110,209,.3);background:rgba(10,110,209,.07);padding:4px 10px;border-radius:999px;margin-bottom:14px}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--joule);animation:pulse 2s infinite}
+  @keyframes pulse{50%{opacity:.3}}
+  h1{font-size:26px;letter-spacing:-.02em;margin-bottom:6px}
+  h1 em{font-style:normal;color:var(--teja)}
+  .sub{color:var(--soft);font-size:14px;line-height:1.55;max-width:640px;margin-bottom:22px}
+  .card{background:var(--card);border:1px solid rgba(44,38,32,.12);border-radius:12px;padding:18px;margin-bottom:16px}
+  label{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.15em;color:var(--faint);display:block;margin-bottom:8px}
+  textarea{width:100%;height:220px;font-family:ui-monospace,monospace;font-size:12px;line-height:1.7;border:1px solid var(--line);border-radius:8px;padding:12px;background:#fffdf6;color:var(--ink);resize:vertical}
+  textarea:focus{outline:2px solid rgba(10,110,209,.35)}
+  .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}
+  input[type=month]{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fffdf6;font-size:13px;color:var(--ink)}
+  button{background:var(--teja);color:#fff;border:0;border-radius:8px;padding:10px 22px;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+  button:hover{background:#9e3f1d}
+  button.ghost{background:transparent;color:var(--soft);border:1px solid var(--line);font-weight:500}
+  button.ghost:hover{background:#fffdf6;color:var(--ink)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:14px}
+  .stat{background:var(--card);border:1px solid rgba(44,38,32,.12);border-radius:10px;padding:12px 14px}
+  .stat b{font-size:22px;display:block}
+  .stat span{font-size:11px;color:var(--faint)}
+  .verdict{border-radius:10px;padding:14px 16px;font-weight:600;font-size:14px;margin-bottom:14px;display:none}
+  .verdict.ok{display:block;background:rgba(13,122,77,.09);color:var(--ok);border:1px solid rgba(13,122,77,.3)}
+  .verdict.ko{display:block;background:rgba(179,38,30,.07);color:var(--err);border:1px solid rgba(179,38,30,.3)}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.12em;color:var(--faint);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  td{padding:8px 10px;border-bottom:1px solid rgba(224,214,194,.6);vertical-align:top}
+  .sev{font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.1em;padding:2px 8px;border-radius:4px;white-space:nowrap}
+  .sev.E{background:rgba(179,38,30,.09);color:var(--err);border:1px solid rgba(179,38,30,.3)}
+  .sev.W{background:rgba(154,107,0,.1);color:var(--warn);border:1px solid rgba(154,107,0,.3)}
+  .regla{font-family:ui-monospace,monospace;font-size:11px;color:var(--joule)}
+  .foot{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);font-size:11px;color:var(--faint);line-height:1.6}
+  #results{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="chip"><span class="dot"></span>SAP × CLAUDE LAB · ARTEFACTO</div>
+  <h1>Validador de carga <em>IT2010</em></h1>
+  <p class="sub">Valida un fichero de remuneración por empleado <strong>antes</strong> de que toque SAP. Pega tus filas (separadas por «;») o usa el ejemplo con errores plantados. Reglas R01–R10 del caso 004 del laboratorio. Todo corre en tu navegador: ningún dato sale de esta página.</p>
+
+  <div class="card">
+    <label>DATOS · PERNR;FECHA;CCNOM;HORAS;IMPORTE;CENTRO</label>
+    <textarea id="data" spellcheck="false"></textarea>
+    <div class="row">
+      <label style="margin:0">PERIODO DE CARGA</label>
+      <input type="month" id="periodo" value="2026-06">
+      <button onclick="validar()">Validar fichero</button>
+      <button class="ghost" onclick="cargarEjemplo()">Recargar ejemplo</button>
+    </div>
+  </div>
+
+  <div id="results">
+    <div class="stats">
+      <div class="stat"><b id="sFilas">0</b><span>filas de datos</span></div>
+      <div class="stat"><b id="sOk" style="color:var(--ok)">0</b><span>filas OK</span></div>
+      <div class="stat"><b id="sErr" style="color:var(--err)">0</b><span>errores</span></div>
+      <div class="stat"><b id="sWarn" style="color:var(--warn)">0</b><span>avisos</span></div>
+    </div>
+    <div id="verdict" class="verdict"></div>
+    <div class="card" id="tblCard">
+      <table>
+        <thead><tr><th>FILA</th><th>CAMPO</th><th>REGLA</th><th>SEV.</th><th>VALOR</th><th>MENSAJE</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="foot">Artefacto del laboratorio <strong>Eggthropic · SAP × Claude Lab</strong> (caso 004). Datos y catálogo ficticios: en un cliente real las CC-nóminas válidas vienen de configuración (T512W) y los máximos, de las reglas del proyecto. Este validador es un <strong>prefiltro</strong>: no sustituye las validaciones de SAP (configuración, bloqueos, autorizaciones). Generado con Claude · datos 100% ficticios.</p>
+</div>
+
+<script>
+const CATALOGO = { "2000":"HORAS", "2010":"HORAS", "2500":"IMPORTE", "3100":"IMPORTE" };
+const MAX_HORAS = 200, WARN_HORAS = 80;
+
+const EJEMPLO = [
+ "00001234;05.06.2026;2000;8;;1001",
+ "12A45;05.06.2026;2000;8;;1001",
+ "00001235;31.02.2026;2000;8;;1001",
+ "00001236;05.05.2026;2000;8;;1001",
+ "00001237;05.06.2026;9999;8;;1001",
+ "00001238;05.06.2026;2000;;150,00;1001",
+ "00001239;05.06.2026;2010;250;;1001",
+ "00001240;05.06.2026;2010;90;;1001",
+ "00001241;10.06.2026;2000;7,5;;1001",
+ "00001242;10.06.2026;2000;7.5;;1001",
+ "00001243;05.06.2026;2500;;300,50;",
+ "00001234;05.06.2026;2000;8;;1001",
+ "00001244;15.06.2026;3100;;1200,00;1002",
+ "00001245;20.06.2026;2500;;85,25;1003"
+].join("\n");
+
+function cargarEjemplo(){ document.getElementById("data").value = EJEMPLO; document.getElementById("results").style.display="none"; }
+cargarEjemplo();
+
+function parseDec(s){
+  if(s===undefined || s.trim()==="") return {v:null, sep:null};
+  const t=s.trim(); const sep = t.includes(",") ? "," : (t.includes(".") ? "." : null);
+  const n=parseFloat(t.replace(",", "."));
+  return isNaN(n) ? {v:null, sep:"invalid"} : {v:n, sep:sep};
+}
+
+function validar(){
+  const lines = document.getElementById("data").value.split("\n").map(l=>l.trim()).filter(l=>l!=="");
+  const [anio, mes] = document.getElementById("periodo").value.split("-");
+  const inc=[]; const vistos={}; const seps=new Set(); let filasOk=0;
+  const add=(f,c,r,s,v,m)=>inc.push({f,c,r,s,v:String(v??"—"),m});
+
+  lines.forEach((line,idx)=>{
+    const n=idx+1; let ok=true;
+    const p=line.split(";");
+    if(p.length>6){ add(n,"—","R11","E",line,"La fila tiene más columnas de las esperadas (6)"); return; }
+    while(p.length<6) p.push("");
+    const [pernr,fecha,ccnom,horas,importe,centro]=p.map(x=>x.trim());
+
+    if(!/^\d{1,8}$/.test(pernr)){ add(n,"PERNR","R01","E",pernr,"Nº de personal no válido: numérico de hasta 8 dígitos"); ok=false; }
+
+    let dt=null;
+    const m=fecha.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+    if(m){ const d=new Date(+m[3], +m[2]-1, +m[1]);
+      if(d.getDate()==+m[1] && d.getMonth()==+m[2]-1) dt=d; }
+    if(!dt){ add(n,"FECHA","R02","E",fecha,"Fecha vacía o incorrecta (se espera DD.MM.AAAA)"); ok=false; }
+    else if(String(dt.getMonth()+1).padStart(2,"0")!==mes || String(dt.getFullYear())!==anio){
+      add(n,"FECHA","R03","E",fecha,`La fecha no pertenece al periodo de carga ${mes}.${anio}`); ok=false; }
+
+    const tipo=CATALOGO[ccnom];
+    if(!tipo){ add(n,"CCNOM","R04","E",ccnom,"CC-nómina fuera del catálogo permitido [2000, 2010, 2500, 3100]"); ok=false; }
+
+    const h=parseDec(horas), i=parseDec(importe);
+    if(h.sep==="invalid"){ add(n,"HORAS","R05","E",horas,"Valor de horas no numérico"); ok=false; }
+    if(i.sep==="invalid"){ add(n,"IMPORTE","R05","E",importe,"Valor de importe no numérico"); ok=false; }
+    [h.sep,i.sep].forEach(s=>{ if(s==="," || s===".") seps.add(s); });
+    if(tipo==="HORAS" && (h.v===null || i.v!==null)){ add(n,"HORAS/IMPORTE","R05","E",`H=${horas||"∅"} I=${importe||"∅"}`,`La CC-nómina ${ccnom} exige HORAS informadas e IMPORTE vacío`); ok=false; }
+    if(tipo==="IMPORTE" && (i.v===null || h.v!==null)){ add(n,"HORAS/IMPORTE","R05","E",`H=${horas||"∅"} I=${importe||"∅"}`,`La CC-nómina ${ccnom} exige IMPORTE informado y HORAS vacías`); ok=false; }
+    if(h.v!==null){
+      if(h.v<0 || h.v>MAX_HORAS){ add(n,"HORAS","R06","E",horas,`Horas fuera de rango permitido (0–${MAX_HORAS})`); ok=false; }
+      else if(h.v>WARN_HORAS){ add(n,"HORAS","R07","W",horas,`Más de ${WARN_HORAS} horas en un solo registro: revisar antes de cargar`); }
+    }
+    if(i.v!==null && i.v<0){ add(n,"IMPORTE","R06","E",importe,"Importe negativo no permitido"); ok=false; }
+
+    if(centro===""){ add(n,"CENTRO","R09","E","∅","Centro obligatorio vacío"); ok=false; }
+
+    const clave=[pernr,fecha,ccnom].join("|");
+    vistos[clave]=(vistos[clave]||0)+1;
+    if(vistos[clave]===2){ add(n,"—","R10","E",clave,"Registro duplicado (mismo empleado, fecha y CC-nómina)"); ok=false; }
+
+    if(ok) filasOk++;
+  });
+
+  if(seps.size>1) add("—","HORAS/IMPORTE","R08","W","«,» y «.»","Mezcla de separador decimal coma/punto en el fichero: unificar");
+
+  const errs=inc.filter(x=>x.s==="E").length, warns=inc.filter(x=>x.s==="W").length;
+  document.getElementById("sFilas").textContent=lines.length;
+  document.getElementById("sOk").textContent=filasOk;
+  document.getElementById("sErr").textContent=errs;
+  document.getElementById("sWarn").textContent=warns;
+  const v=document.getElementById("verdict");
+  v.className="verdict "+(errs===0?"ok":"ko");
+  v.textContent = errs===0 ? "✓ APTO PARA CARGA — sin errores bloqueantes (revisa los avisos)" : "✗ NO APTO PARA CARGA — corrige los errores en el Excel antes de cargar";
+  const tb=document.getElementById("tbody"); tb.innerHTML="";
+  inc.forEach(x=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${x.f}</td><td>${x.c}</td><td class="regla">${x.r}</td><td><span class="sev ${x.s}">${x.s==="E"?"ERROR":"AVISO"}</span></td><td style="font-family:ui-monospace,monospace;font-size:11px">${x.v.replace(/</g,"&lt;")}</td><td>${x.m}</td>`;
+    tb.appendChild(tr);
+  });
+  document.getElementById("tblCard").style.display = inc.length ? "block" : "none";
+  document.getElementById("results").style.display="block";
+}
+</script>
+</body>
+</html>
