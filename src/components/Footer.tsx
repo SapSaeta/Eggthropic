@@ -2,11 +2,10 @@ import Link from "next/link";
 
 const footerLinks = {
   Laboratorio: [
-    { href: "/experiments", label: "Experimentos" },
-    { href: "/notes", label: "Notas" },
-    { href: "/lab", label: "Laboratorio comunitario" },
-    { href: "/sap", label: "SAP x Claude Lab" },
     { href: "/artefactos", label: "Artefactos" },
+    { href: "/experiments", label: "Experimentos" },
+    { href: "/experiments?view=notes", label: "Notas" },
+    { href: "/sap", label: "SAP x Claude Lab" },
     { href: "/about", label: "Sobre el lab" },
   ],
   Recursos: [

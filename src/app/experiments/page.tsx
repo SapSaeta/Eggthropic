@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ExperimentsClient } from "@/components/ExperimentsClient";
 import { experiments } from "@/lib/experiments";
+import { notes } from "@/lib/notes";
+import { toBoardExperiments } from "@/lib/board";
 import type { ExperimentCategory } from "@/types";
 
 export const metadata: Metadata = {
@@ -26,17 +28,19 @@ export const metadata: Metadata = {
 };
 
 interface Props {
-  searchParams: Promise<{ category?: string; q?: string }>;
+  searchParams: Promise<{ category?: string; q?: string; view?: string }>;
 }
 
 export default async function ExperimentsPage({ searchParams }: Props) {
-  const { category } = await searchParams;
+  const { category, view } = await searchParams;
   const validCategories: Array<"all" | ExperimentCategory> = [
     "all", "claude-code", "skills", "mcp", "api", "ux-ui", "automation", "enterprise-ai", "sap",
   ];
   const initialCategory = validCategories.includes(category as ExperimentCategory)
     ? (category as "all" | ExperimentCategory)
     : "all";
+  const initialView = view === "board" || view === "notes" ? view : "cards";
+  const boardExperiments = toBoardExperiments(experiments);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -46,7 +50,13 @@ export default async function ExperimentsPage({ searchParams }: Props) {
         title="Qué hemos construido y documentado"
         description="Cada experimento incluye objetivo, contexto, herramientas, prompts, notas de implementación, resultados y un análisis honesto de los fallos."
       />
-      <ExperimentsClient experiments={experiments} initialCategory={initialCategory} />
+      <ExperimentsClient
+        experiments={experiments}
+        notes={notes}
+        boardExperiments={boardExperiments}
+        initialCategory={initialCategory}
+        initialView={initialView}
+      />
     </div>
   );
 }

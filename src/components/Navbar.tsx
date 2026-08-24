@@ -7,11 +7,9 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/experiments", label: "Experimentos" },
-  { href: "/notes", label: "Notas" },
-  { href: "/lab", label: "Laboratorio" },
-  { href: "/sap", label: "SAP Lab" },
   { href: "/artefactos", label: "Artefactos" },
+  { href: "/experiments", label: "Experimentos" },
+  { href: "/sap", label: "SAP Lab" },
   { href: "/about", label: "Sobre el lab" },
 ];
 

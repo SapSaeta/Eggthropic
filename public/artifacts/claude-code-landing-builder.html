@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión Claude Code — Stackr landing | Eggthropic</title>
+<style>
+  :root{--paper:#f4eee2;--card:#fcf8ef;--ink:#2c2620;--soft:#5c5347;--faint:#8a7e6d;--line:#e0d6c2;--teja:#c2542b;--joule:#0a6ed1;--ok:#0d7a4d;--warn:#9a6b00;--err:#b3261e;--egg:#c79b00}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);padding:24px;min-height:100vh}
+  .wrap{max-width:960px;margin:0 auto}
+  .chip{display:inline-flex;gap:6px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;color:var(--joule);border:1px solid rgba(10,110,209,.3);background:rgba(10,110,209,.07);padding:4px 10px;border-radius:999px;margin-bottom:14px}
+  h1{font-size:24px;letter-spacing:-.02em;margin-bottom:6px}
+  .sub{color:var(--soft);font-size:13.5px;line-height:1.55;max-width:680px;margin-bottom:18px}
+  .layout{display:grid;grid-template-columns:260px 1fr;gap:16px}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid rgba(44,38,32,.12);border-radius:12px;overflow:hidden}
+  .panel h2{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.16em;padding:10px 14px;border-bottom:1px solid var(--line);color:var(--faint)}
+  .turns{max-height:520px;overflow:auto}
+  .turn{display:flex;gap:10px;align-items:flex-start;padding:9px 14px;border-bottom:1px solid var(--line);cursor:pointer;font-size:12px}
+  .turn:hover{background:#fffdf6}
+  .turn.active{background:rgba(199,155,0,.12);border-left:3px solid var(--egg)}
+  .turn .n{font-family:ui-monospace,monospace;color:var(--faint);min-width:22px}
+  .turn .tx{color:var(--ink);line-height:1.4}
+  .turn .tx small{display:block;color:var(--faint);font-size:10.5px;margin-top:1px}
+  .preview{padding:0}
+  .browser-bar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#e9e1d0;border-bottom:1px solid var(--line)}
+  .dot{width:8px;height:8px;border-radius:50%}
+  .url{margin-left:8px;font-family:ui-monospace,monospace;font-size:10.5px;color:var(--faint);background:var(--card);border-radius:6px;padding:3px 10px;flex:1}
+  .site{background:#0b0f19;color:#e7e2d6;padding:28px 22px;min-height:420px}
+  .site .badge{display:inline-block;font-family:ui-monospace,monospace;font-size:9.5px;letter-spacing:.16em;color:#ffe04d;border:1px solid rgba(255,224,77,.35);padding:3px 9px;border-radius:999px;margin-bottom:10px}
+  .site h3{font-size:26px;margin-bottom:8px;letter-spacing:-.02em}
+  .site p.lead{color:#9ba3b4;font-size:13px;max-width:420px;margin-bottom:16px;line-height:1.5}
+  .cta{display:inline-block;background:#ffe04d;color:#141a0b;font-size:12px;font-weight:700;padding:8px 16px;border-radius:8px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+  .feat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px}
+  .feat b{display:block;font-size:12px;margin-bottom:4px}
+  .feat span{font-size:11px;color:#9ba3b4;line-height:1.4}
+  .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+  .tier{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px;text-align:center;font-size:11px}
+  .tier.rec{border-color:#ffe04d;background:rgba(255,224,77,.08)}
+  .tier b{display:block;font-size:15px;margin:4px 0}
+  .fade{opacity:0;transform:translateY(6px);animation:in .5s forwards}
+  @keyframes in{to{opacity:1;transform:none}}
+  .stat-row{display:flex;gap:14px;margin:16px 0;flex-wrap:wrap}
+  .stat{background:var(--card);border:1px solid rgba(44,38,32,.12);border-radius:10px;padding:10px 16px}
+  .stat b{display:block;font-size:20px}
+  .stat span{font-size:10.5px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase}
+  footer{margin-top:18px;font-size:11.5px;color:var(--faint);line-height:1.6}
+  footer a{color:var(--joule)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="chip">● sesión reconstruida · claude code · 23 turnos</div>
+  <h1>De un prompt a una landing completa</h1>
+  <p class="sub">Reconstrucción de la sesión de Claude Code que generó la landing de "Stackr" (SaaS ficticio). Recorre los turnos de la izquierda y observa cómo se va montando la página a la derecha — cada turno añade o ajusta una sección real de las 14 que produjo la sesión.</p>
+
+  <div class="stat-row">
+    <div class="stat"><b>14</b><span>archivos creados</span></div>
+    <div class="stat"><b>23</b><span>turnos</span></div>
+    <div class="stat"><b>~4 min</b><span>generación activa</span></div>
+    <div class="stat"><b>0</b><span>cambios de herramienta</span></div>
+  </div>
+
+  <div class="layout">
+    <div class="panel">
+      <h2>SESIÓN · TURNOS CLAVE</h2>
+      <div class="turns" id="turns"></div>
+    </div>
+    <div class="panel preview">
+      <div class="browser-bar">
+        <div class="dot" style="background:#ff5f57"></div><div class="dot" style="background:#febc2e"></div><div class="dot" style="background:#28c840"></div>
+        <div class="url">stackr.dev</div>
+      </div>
+      <div class="site" id="site"></div>
+    </div>
+  </div>
+
+  <footer>
+    Reconstrucción ilustrativa de la sesión descrita en el caso — no es una grabación literal turno a turno. El contenido y el código de Stackr son ficticios. Ver <a href="/experiments/claude-code-landing-page-builder">caso completo →</a>
+  </footer>
+</div>
+<script>
+const steps = [
+  {n:1, label:"Scaffold Next.js + Tailwind", detail:"npx create-next-app, config inicial", stage:"empty"},
+  {n:4, label:"Hero section", detail:"Título, subtítulo, CTA", stage:"hero"},
+  {n:9, label:"Features grid (3 cols)", detail:"Componente reutilizable", stage:"features"},
+  {n:14, label:"Pricing table", detail:"3 tiers, plan recomendado destacado", stage:"pricing"},
+  {n:18, label:"Instala Framer Motion", detail:"Por iniciativa propia, sin pedirlo", stage:"pricing"},
+  {n:20, label:"Animaciones scroll + reduced-motion", detail:"Hook propio, accesibilidad espontánea", stage:"pricing"},
+  {n:23, label:"Revisión responsive final", detail:"Lista todos los breakpoints", stage:"pricing"},
+];
+const site = document.getElementById('site');
+const turnsEl = document.getElementById('turns');
+
+function render(stage){
+  let html = `<div class="badge fade">STACKR · CLI DOCS</div><h3 class="fade">Documentación de API que se escribe sola</h3><p class="lead fade">Stackr lee tu TypeScript y genera documentación de API siempre al día. Cero YAML a mano.</p><a class="cta fade">Empezar gratis →</a>`;
+  if(stage!=="empty" && ["features","pricing"].includes(stage)){
+    html += `<div class="grid3">
+      <div class="feat fade"><b>⚡ Auto-detección</b><span>Analiza tipos TS y genera esquemas al vuelo</span></div>
+      <div class="feat fade"><b>🔄 Siempre al día</b><span>Se regenera en cada commit vía CI</span></div>
+      <div class="feat fade"><b>📦 Cero config</b><span>Funciona desde el primer stackr init</span></div>
+    </div>`;
+  }
+  if(stage==="pricing"){
+    html += `<div class="pricing">
+      <div class="tier fade">Starter<b>$0</b>1 proyecto</div>
+      <div class="tier rec fade">Pro<b>$19/mes</b>Proyectos ilimitados</div>
+      <div class="tier fade">Team<b>$49/mes</b>+ SSO y auditoría</div>
+    </div>`;
+  }
+  site.innerHTML = html;
+}
+
+function buildTurns(){
+  steps.forEach((s,i)=>{
+    const el = document.createElement('div');
+    el.className = 'turn' + (i===0?' active':'');
+    el.dataset.i = i;
+    el.innerHTML = `<span class="n">#${s.n}</span><span class="tx">${s.label}<small>${s.detail}</small></span>`;
+    el.onclick = ()=>{
+      document.querySelectorAll('.turn').forEach(t=>t.classList.remove('active'));
+      el.classList.add('active');
+      render(s.stage);
+    };
+    turnsEl.appendChild(el);
+  });
+}
+buildTurns();
+render('empty');
+</script>
+</body>
+</html>

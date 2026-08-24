@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, XCircle, ArrowRight, FlaskConical } from "lucide-react";
+import { ArrowLeft, CheckCircle2, XCircle, ArrowRight, FlaskConical, ExternalLink } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
 import { ToolBadge } from "@/components/ToolBadge";
 import { BreadcrumbListJsonLd, ExperimentJsonLd } from "@/components/JsonLd";
+import MCPExplainer from "@/components/MCPExplainer";
 import { experiments, getExperimentBySlug } from "@/lib/experiments";
+import { artefactos } from "@/lib/artifacts";
 import { formatDate } from "@/lib/utils";
 
 interface Props {
@@ -58,6 +60,11 @@ export default async function ExperimentPage({ params }: Props) {
   if (!exp) notFound();
 
   const pageUrl = `https://www.eggthropic.com/experiments/${slug}`;
+  const artefactosRelacionados = artefactos.filter(
+    (a) => a.relacionado?.href === `/experiments/${slug}`
+  );
+  const isMcpExplainer = exp.slug === "mcp-visual-explainer";
+  const hasVisual = artefactosRelacionados.length > 0 || isMcpExplainer;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -88,8 +95,8 @@ export default async function ExperimentPage({ params }: Props) {
         <span className="text-ink-soft truncate">{exp.title}</span>
       </div>
 
-      {/* Header */}
-      <div className="mb-10">
+      {/* Título + meta */}
+      <div className="mb-8">
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <span className="text-xs font-mono text-ink-faint">
             {categoryLabel[exp.category]}
@@ -112,12 +119,98 @@ export default async function ExperimentPage({ params }: Props) {
           {exp.title}
         </h1>
         <p className="text-lg text-ink-soft leading-relaxed">{exp.description}</p>
+      </div>
 
-        <div className="flex flex-wrap gap-2 mt-5">
-          {exp.tools.map((tool) => (
-            <ToolBadge key={tool} tool={tool} />
+      {/* Artefacto visual — lo primero que se ve, antes de la explicación */}
+      {hasVisual && (
+        <div className="mb-10 flex flex-col gap-5">
+          {artefactosRelacionados.map((a) => (
+            <div key={a.slug} className="glass rounded-xl overflow-hidden border border-paper-line">
+              <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 border-b border-paper-line bg-paper-deep/50">
+                <span className="font-mono text-[10px] tracking-[0.18em] text-ink-faint">
+                  ARTEFACTO EN VIVO · CORRE EN TU NAVEGADOR
+                </span>
+                <div className="flex items-center gap-4">
+                  <Link
+                    href={`/artefactos/${a.slug}`}
+                    className="text-xs font-medium text-teja hover:text-teja-dark transition-colors"
+                  >
+                    Ficha completa
+                  </Link>
+                  <a
+                    href={`/artifacts/${a.slug}.html`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-teja hover:text-teja-dark transition-colors shrink-0"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    Pantalla completa
+                  </a>
+                </div>
+              </div>
+              <iframe
+                src={`/artifacts/${a.slug}.html`}
+                title={a.titulo}
+                sandbox="allow-scripts allow-modals"
+                className="w-full bg-[#f4eee2]"
+                style={{ height: a.altura }}
+              />
+            </div>
           ))}
+
+          {isMcpExplainer && (
+            <div className="glass rounded-xl overflow-hidden border border-paper-line p-4 sm:p-5">
+              <div className="flex items-center justify-between mb-4">
+                <span className="font-mono text-[10px] tracking-[0.18em] text-ink-faint">
+                  DIAGRAMA INTERACTIVO · CONECTADO A UN SERVIDOR MCP LOCAL
+                </span>
+              </div>
+              {/* Escritorio: explicador interactivo completo */}
+              <div className="hidden md:block">
+                <MCPExplainer />
+              </div>
+
+              {/* Móvil: versión compacta vertical */}
+              <div className="md:hidden rounded-2xl border border-white/10 p-5" style={{ backgroundColor: "#262019" }}>
+                <p className="mb-4 font-mono text-[10px] tracking-widest text-stone-400">
+                  MCP EN 30 SEGUNDOS
+                </p>
+                <div className="space-y-2">
+                  {[
+                    { n: "Host", d: "La app de IA que usas: Claude Desktop, Claude Code, tu agente…", c: "border-egg-400/30 text-egg-300" },
+                    { n: "Cliente", d: "Vive dentro del host. Habla el protocolo y gestiona la conexión.", c: "border-cyan-400/30 text-cyan-300" },
+                    { n: "Servidor", d: "Expone tus datos y herramientas: archivos, APIs, bases de datos, SAP…", c: "border-violet-400/30 text-violet-300" },
+                  ].map((x, i, arr) => (
+                    <div key={x.n}>
+                      <div className={`rounded-xl border bg-white/[0.03] p-4 ${x.c.split(" ")[0]}`}>
+                        <p className={`mb-1 font-mono text-xs font-bold tracking-widest ${x.c.split(" ")[1]}`}>
+                          {x.n.toUpperCase()}
+                        </p>
+                        <p className="text-sm leading-relaxed text-stone-300">{x.d}</p>
+                      </div>
+                      {i < arr.length - 1 && (
+                        <p className="py-1 text-center font-mono text-stone-500">↓ JSON-RPC 2.0</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-4 text-xs leading-relaxed text-stone-400">
+                  El servidor ofrece tres primitivas: <span className="text-stone-200">Tools</span> (funciones
+                  ejecutables), <span className="text-stone-200">Resources</span> (datos) y{" "}
+                  <span className="text-stone-200">Prompts</span> (plantillas). El explicador interactivo
+                  completo está disponible en pantallas grandes.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
+      )}
+
+      {/* Tools */}
+      <div className="flex flex-wrap gap-2 mb-10">
+        {exp.tools.map((tool) => (
+          <ToolBadge key={tool} tool={tool} />
+        ))}
       </div>
 
       {/* Content sections */}
@@ -188,8 +281,8 @@ export default async function ExperimentPage({ params }: Props) {
           <p className="text-ink-soft leading-relaxed">{exp.nextIteration}</p>
         </Section>
 
-        {/* Reprodúcelo tú */}
-        <Section title="Reprodúcelo tú">
+        {/* Reproducelo tú */}
+        <Section title="Reproducelo tú">
           <div className="glass rounded-xl p-5 border border-egg-400/15">
             <p className="text-sm text-ink-soft leading-relaxed mb-4">
               Este experimento es un playbook: con las herramientas de arriba

@@ -10,9 +10,10 @@ import { GithubIcon } from "./GithubIcon";
 interface HeroProps {
   experimentCount: number;
   noteCount: number;
+  artefactoCount: number;
 }
 
-export function Hero({ experimentCount, noteCount }: HeroProps) {
+export function Hero({ experimentCount, noteCount, artefactoCount }: HeroProps) {
   // Foco suave que sigue al cursor
   const mx = useMotionValue(-500);
   const my = useMotionValue(-500);
@@ -62,13 +63,13 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.08 }}
             >
-              Un laboratorio práctico para
+              Un laboratorio práctico
               <br />
-              <span className="gradient-text">aprender Claude</span>
+              con <span className="gradient-text">cosas que se tocan</span>
               <br />
-              construyendo
+              construidas con
               <br />
-              experimentos reales.
+              Claude de verdad.
             </motion.h1>
 
             <motion.p
@@ -77,8 +78,8 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.14 }}
             >
-              Eggthropic explora Claude Code, Agent Skills, servidores MCP,
-              patrones de API y experimentos de UX — todo documentado con
+              Artefactos interactivos que corren en el navegador y experimentos
+              documentados con Claude Code, Agent Skills y MCP — todo con
               honestidad: qué funciona, qué falla y qué viene después.
             </motion.p>
 
@@ -89,18 +90,18 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <Link
-                href="/experiments"
+                href="/artefactos"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-egg-400 text-ink font-semibold text-sm hover:bg-egg-300 transition-colors"
               >
-                Explorar experimentos
+                Ver artefactos
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                href="/notes"
+                href="/experiments"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass border border-paper-line text-ink text-sm font-medium hover:border-teja/50 transition-colors"
               >
                 <BookOpen className="w-4 h-4 text-ink-soft" />
-                Leer las notas
+                Explorar experimentos
               </Link>
               <a
                 href="https://github.com/sapsaeta/eggthropic"
@@ -121,9 +122,9 @@ export function Hero({ experimentCount, noteCount }: HeroProps) {
               transition={{ duration: 0.5, delay: 0.3 }}
             >
               {[
+                { value: String(artefactoCount), label: "Artefactos" },
                 { value: String(experimentCount), label: "Experimentos" },
                 { value: String(noteCount), label: "Notas" },
-                { value: "100%", label: "Documentado" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <div className="text-2xl font-bold text-ink">
