@@ -12,6 +12,7 @@ import {
 import { GithubIcon } from "@/components/GithubIcon";
 import SapLabBoard from "@/components/SapLabBoard";
 import { etiquetas, fases, sapStats } from "@/lib/sap-lab";
+import { artefactos } from "@/lib/artifacts";
 
 export const metadata: Metadata = {
   title: "SAP Lab",
@@ -167,41 +168,58 @@ export default function SapLabPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {casosDestacados.map((c) => {
               const Icon = c.icon;
+              const artefactosCaso = artefactos.filter(
+                (a) => a.relacionado?.href === `/experiments/${c.slug}`
+              );
               return (
-                <Link
-                  key={c.id}
-                  href={`/experiments/${c.slug}`}
-                  className="glass glass-hover rounded-xl p-6 flex flex-col gap-4 group"
-                >
-                  <div className="flex items-center justify-between">
-                    <div
-                      className="w-10 h-10 rounded-lg border flex items-center justify-center transition-transform duration-300 group-hover:-rotate-12 group-hover:scale-110"
-                      style={{ background: `${c.color}12`, borderColor: `${c.color}30` }}
-                    >
-                      <Icon className="w-5 h-5" style={{ color: c.color }} />
+                <div key={c.id} className="glass glass-hover rounded-xl p-6 flex flex-col gap-4 group">
+                  <Link href={`/experiments/${c.slug}`} className="flex flex-col gap-4">
+                    <div className="flex items-center justify-between">
+                      <div
+                        className="w-10 h-10 rounded-lg border flex items-center justify-center transition-transform duration-300 group-hover:-rotate-12 group-hover:scale-110"
+                        style={{ background: `${c.color}12`, borderColor: `${c.color}30` }}
+                      >
+                        <Icon className="w-5 h-5" style={{ color: c.color }} />
+                      </div>
+                      <span className="font-mono text-[10px] tracking-widest text-ink-faint">
+                        {c.id}
+                      </span>
                     </div>
-                    <span className="font-mono text-[10px] tracking-widest text-ink-faint">
-                      {c.id}
-                    </span>
-                  </div>
 
-                  <div>
-                    <h3 className="text-lg font-semibold text-ink group-hover:text-teja transition-colors">
-                      {c.titulo}
-                    </h3>
-                    <p className="mt-2 text-sm text-ink-soft leading-relaxed">{c.resumen}</p>
-                  </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-ink group-hover:text-teja transition-colors">
+                        {c.titulo}
+                      </h3>
+                      <p className="mt-2 text-sm text-ink-soft leading-relaxed">{c.resumen}</p>
+                    </div>
+                  </Link>
 
                   <div className="mt-auto pt-3 border-t border-paper-line">
                     <p className="font-mono text-[10px] tracking-wide text-ink-faint leading-relaxed">
                       {c.resultado}
                     </p>
-                    <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-teja">
+                    <Link
+                      href={`/experiments/${c.slug}`}
+                      className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-teja"
+                    >
                       Leer el experimento
-                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                    {artefactosCaso.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {artefactosCaso.map((a) => (
+                          <Link
+                            key={a.slug}
+                            href={`/artefactos/${a.slug}`}
+                            className="inline-flex items-center gap-1 text-xs font-mono text-egg-600 hover:text-egg-600/80 transition-colors"
+                          >
+                            ▸ Ver artefacto: {a.titulo}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </Link>
+                </div>
               );
             })}
           </div>
