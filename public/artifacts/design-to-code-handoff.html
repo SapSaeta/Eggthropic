@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Design → Claude Code: el handoff | Eggthropic</title>
+<style>
+  :root{--paper:#f4eee2;--card:#fcf8ef;--ink:#2c2620;--soft:#5c5347;--faint:#8a7e6d;--line:#e0d6c2;--teja:#c2542b;--joule:#0a6ed1;--ok:#0d7a4d;--warn:#9a6b00;--err:#b3261e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);padding:24px;min-height:100vh}
+  .wrap{max-width:960px;margin:0 auto}
+  .chip{display:inline-flex;gap:6px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;color:var(--joule);border:1px solid rgba(10,110,209,.3);background:rgba(10,110,209,.07);padding:4px 10px;border-radius:999px;margin-bottom:14px}
+  h1{font-size:24px;letter-spacing:-.02em;margin-bottom:6px}
+  .sub{color:var(--soft);font-size:13.5px;line-height:1.55;max-width:680px;margin-bottom:18px}
+  .flow{display:flex;align-items:center;gap:8px;margin-bottom:18px;font-family:ui-monospace,monospace;font-size:10.5px;color:var(--faint);flex-wrap:wrap}
+  .flow .step{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  .flow .step.hl{background:var(--joule);color:#fff;border-color:var(--joule)}
+  .layout{display:grid;grid-template-columns:1fr 260px;gap:16px}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid rgba(44,38,32,.12);border-radius:12px;overflow:hidden}
+  .panel h2{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.16em;padding:10px 14px;border-bottom:1px solid var(--line);color:var(--faint)}
+  .stage{padding:20px;background:#0b0f19;min-height:260px;display:flex;align-items:center;justify-content:center}
+  .exp-card{width:280px;background:rgba(255,255,255,.05);border-radius:14px;padding:16px;color:#e7e2d6;border:1px solid rgba(255,255,255,.1);transition:all .2s}
+  .exp-card .tag{display:inline-block;font-family:ui-monospace,monospace;font-size:9px;letter-spacing:.1em;color:#ffe04d;border:1px solid rgba(255,224,77,.3);border-radius:999px;padding:2px 8px;margin-bottom:8px}
+  .exp-card h3{font-size:15px;margin-bottom:6px}
+  .exp-card p{font-size:11.5px;color:#9ba3b4;line-height:1.5;margin-bottom:10px}
+  .exp-card .badges{display:flex;gap:5px;flex-wrap:wrap}
+  .exp-card .b{font-size:9.5px;background:rgba(255,255,255,.08);border-radius:6px;padding:2px 6px;color:#c9cfda}
+  .controls{padding:14px}
+  .controls label{display:block;font-size:11px;color:var(--soft);margin:10px 0 4px}
+  .controls input[type=range]{width:100%;accent-color:var(--teja)}
+  .code{background:#1c1712;color:#e8dfce;font-family:ui-monospace,monospace;font-size:10.8px;line-height:1.6;padding:14px;white-space:pre;overflow:auto;max-height:260px}
+  .code .k{color:#7fd0ff}.code .s{color:#9cd67c}.code .p{color:#ffe04d}
+  footer{margin-top:18px;font-size:11.5px;color:var(--faint);line-height:1.6}
+  footer a{color:var(--joule)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="chip">● handoff · claude design → claude code</div>
+  <h1>Claude Design → Claude Code: el handoff en vivo</h1>
+  <p class="sub">Mueve los mandos como se hizo en la sesión real. Cada ajuste actualiza a la vez la vista previa del componente y el fragmento de código que Claude Code produjo a partir del bundle de handoff.</p>
+
+  <div class="flow">
+    <div class="step hl">Brief escrito</div>→
+    <div class="step">Claude Design</div>→
+    <div class="step">Bundle de handoff</div>→
+    <div class="step">Claude Code</div>→
+    <div class="step">ExperimentCard.tsx</div>
+  </div>
+
+  <div class="layout">
+    <div class="panel">
+      <h2>PROTOTIPO · EXPERIMENTCARD</h2>
+      <div class="stage">
+        <div class="exp-card" id="card" style="box-shadow:0 8px 24px rgba(255,224,77,.15)">
+          <div class="tag">UX-UI · INTERMEDIO</div>
+          <h3>Claude Design: del prototipo al código</h3>
+          <p>Convertir un brief escrito en prototipo interactivo y pasarlo a Claude Code.</p>
+          <div class="badges"><span class="b">Claude Design</span><span class="b">Figma</span><span class="b">Opus 4.7</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>MANDOS DE AJUSTE</h2>
+      <div class="controls">
+        <label>Intensidad del glow: <span id="glowVal">15</span>%</label>
+        <input type="range" id="glow" min="0" max="40" value="15">
+        <label>Elevación (hover lift): <span id="elevVal">8</span>px</label>
+        <input type="range" id="elev" min="0" max="20" value="8">
+        <label>Opacidad de badges: <span id="opVal">8</span>%</label>
+        <input type="range" id="op" min="2" max="20" value="8">
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:16px">
+    <h2>SALIDA DE CLAUDE CODE · ExperimentCard.tsx</h2>
+    <div class="code" id="codeOut"></div>
+  </div>
+
+  <footer>
+    Prototipo ilustrativo de los mandos descritos en el caso (glow, elevación, opacidad) — el código mostrado es representativo del componente real, no una captura literal de la sesión. Ver <a href="/experiments/claude-design-prototype-to-code">caso completo →</a>
+  </footer>
+</div>
+<script>
+const card = document.getElementById('card');
+const codeOut = document.getElementById('codeOut');
+const glow = document.getElementById('glow'), elev = document.getElementById('elev'), op = document.getElementById('op');
+const glowVal = document.getElementById('glowVal'), elevVal = document.getElementById('elevVal'), opVal = document.getElementById('opVal');
+
+function update(){
+  const g = glow.value, e = elev.value, o = op.value;
+  glowVal.textContent = g; elevVal.textContent = e; opVal.textContent = o;
+  card.style.boxShadow = `0 ${8+Number(e)}px 24px rgba(255,224,77,${g/100})`;
+  card.querySelectorAll('.b').forEach(b=> b.style.background = `rgba(255,255,255,${o/100})`);
+  codeOut.innerHTML = `<span class="k">export function</span> <span class="p">ExperimentCard</span>({ exp }: Props) {
+  <span class="k">return</span> (
+    <span class="s">&lt;div</span>
+      <span class="k">className</span>=<span class="s">"rounded-2xl border border-white/10 bg-white/5 p-4</span>
+        <span class="s">transition-all hover:-translate-y-[${e}px]</span>
+        <span class="s">hover:shadow-[0_${8+Number(e)}px_24px_rgba(255,224,77,${(g/100).toFixed(2)})]"</span>
+    <span class="s">&gt;</span>
+      <span class="k">...</span>
+      <span class="s">&lt;span className="bg-white/[${(o/100).toFixed(2)}] rounded-md text-[9px]"&gt;</span>
+        {tool}
+      <span class="s">&lt;/span&gt;</span>
+    <span class="s">&lt;/div&gt;</span>
+  );
+}`;
+}
+[glow, elev, op].forEach(i => i.oninput = update);
+update();
+</script>
+</body>
+</html>
