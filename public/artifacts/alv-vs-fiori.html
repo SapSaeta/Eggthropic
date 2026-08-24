@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALV clásico vs Fiori List Report — Eggthropic SAP Lab</title>
+<style>
+  :root{--paper:#f4eee2;--card:#fcf8ef;--ink:#2c2620;--soft:#5c5347;--faint:#8a7e6d;--line:#e0d6c2;--teja:#c2542b;--joule:#0a6ed1}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);padding:24px;min-height:100vh}
+  .wrap{max-width:1100px;margin:0 auto}
+  .chip{display:inline-flex;align-items:center;gap:6px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;color:var(--joule);border:1px solid rgba(10,110,209,.3);background:rgba(10,110,209,.07);padding:4px 10px;border-radius:999px;margin-bottom:14px}
+  h1{font-size:26px;letter-spacing:-.02em;margin-bottom:6px}
+  h1 em{font-style:normal;color:var(--teja)}
+  .sub{color:var(--soft);font-size:14px;line-height:1.55;max-width:700px;margin-bottom:18px}
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:18px;background:var(--card)}
+  .toggle button{border:0;background:transparent;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;color:var(--soft)}
+  .toggle button.on{background:var(--teja);color:#fff}
+  .panes{display:grid;gap:16px}
+  .panes.split{grid-template-columns:1fr 1fr}
+  @media(max-width:900px){.panes.split{grid-template-columns:1fr}}
+  .pane{border-radius:12px;overflow:hidden;border:1px solid rgba(44,38,32,.18);background:#fff;display:none}
+  .pane.show{display:block}
+  .pane-tag{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.15em;padding:8px 12px;color:#fff}
+  .note{background:var(--card);border:1px solid rgba(44,38,32,.12);border-radius:12px;padding:16px 18px;margin-top:16px;font-size:13.5px;line-height:1.65;color:var(--soft)}
+  .note b{color:var(--ink)}
+  .note ul{margin:8px 0 0 18px}
+  .note li{margin-bottom:6px}
+  /* ── SAP GUI clásico ── */
+  .gui{background:#d4d0c8;font-family:"Segoe UI",Tahoma,sans-serif;font-size:11.5px}
+  .gui-title{background:linear-gradient(#3a6ea5,#28527a);color:#fff;padding:5px 8px;font-size:11px;font-weight:700}
+  .gui-menu{background:#ece9e2;border-bottom:1px solid #999;padding:3px 8px;color:#333;font-size:11px}
+  .gui-tb{background:#ece9e2;border-bottom:1px solid #999;padding:4px 8px;display:flex;gap:4px}
+  .gui-tb span{border:1px solid #888;background:linear-gradient(#fdfdfd,#d8d4cc);padding:2px 7px;font-size:10.5px;cursor:default}
+  .gui table{width:100%;border-collapse:collapse;background:#fff}
+  .gui th{background:#c8d4e0;border:1px solid #9aa8b8;padding:3px 6px;font-size:11px;text-align:left;font-weight:700;cursor:pointer;white-space:nowrap}
+  .gui td{border:1px solid #c5c5c5;padding:2.5px 6px;white-space:nowrap}
+  .gui tr:nth-child(even) td{background:#f2f6fa}
+  .gui .num{text-align:right}
+  .gui-status{background:#ece9e2;border-top:1px solid #999;padding:3px 8px;font-size:10.5px;color:#333}
+  /* ── Fiori ── */
+  .fio{background:#f7f7f7;font-family:"Segoe UI",Arial,sans-serif}
+  .fio-shell{background:#354a5f;color:#fff;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;font-size:14px}
+  .fio-shell .avatar{width:26px;height:26px;border-radius:50%;background:#91c8f6;color:#0a3d6b;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .fio-head{background:#fff;padding:14px 16px 10px;border-bottom:1px solid #e5e5e5}
+  .fio-head h2{font-size:18px;font-weight:400;color:#32363a;margin-bottom:10px}
+  .fio-filters{display:flex;gap:8px;flex-wrap:wrap}
+  .fio-filters .ff{font-size:12px;color:#556;display:flex;flex-direction:column;gap:3px}
+  .fio-filters select,.fio-filters input{border:1px solid #bcc3ca;border-radius:6px;padding:5px 8px;font-size:12.5px;background:#fff;min-width:130px}
+  .fio-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:#fff;border-bottom:1px solid #e5e5e5;margin-top:1px}
+  .fio-bar .cnt{font-size:13px;font-weight:600;color:#32363a}
+  .fio-bar .go{background:#0a6ed1;color:#fff;border:0;border-radius:6px;padding:6px 16px;font-size:12.5px;cursor:pointer}
+  .fio table{width:100%;border-collapse:collapse;background:#fff;font-size:12.5px}
+  .fio th{padding:9px 12px;text-align:left;color:#6a6d70;font-weight:400;font-size:11.5px;border-bottom:1px solid #e5e5e5;cursor:pointer;white-space:nowrap}
+  .fio td{padding:9px 12px;border-bottom:1px solid #f0f0f0;color:#32363a;white-space:nowrap}
+  .fio tr:hover td{background:#f5faff}
+  .fio .num{text-align:right}
+  .st{display:inline-flex;align-items:center;gap:5px;font-size:12px}
+  .st i{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .st.ok i{background:#107e3e}.st.ok{color:#107e3e}
+  .st.warn i{background:#e9730c}.st.warn{color:#e9730c}
+  .foot{margin-top:24px;padding-top:14px;border-top:1px solid var(--line);font-size:11px;color:var(--faint);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="chip">SAP × CLAUDE LAB · ARTEFACTO</div>
+  <h1>El mismo report, dos mundos: <em>ALV clásico → Fiori</em></h1>
+  <p class="sub">Listado de ausencias (IT2001) del caso 001 del laboratorio, mostrado como ALV de SAP GUI y como su propuesta equivalente en Fiori Elements List Report. Mismos datos ficticios, ordenables en ambos: haz clic en las cabeceras y usa los filtros del lado Fiori.</p>
+
+  <div class="toggle">
+    <button id="bSplit" class="on" onclick="setView('split')">Lado a lado</button>
+    <button id="bGui" onclick="setView('gui')">Solo ALV</button>
+    <button id="bFio" onclick="setView('fio')">Solo Fiori</button>
+  </div>
+
+  <div class="panes split" id="panes">
+    <div class="pane gui show" id="paneGui">
+      <div class="pane-tag" style="background:#28527a">SAP GUI · ZHR_AUSENCIAS_LIST · REUSE_ALV_GRID_DISPLAY</div>
+      <div class="gui-title">Listado de ausencias — ZHR_AUSENCIAS_LIST</div>
+      <div class="gui-menu">Lista&nbsp;&nbsp;Tratar&nbsp;&nbsp;Pasar a&nbsp;&nbsp;Opciones&nbsp;&nbsp;Sistema&nbsp;&nbsp;Ayuda</div>
+      <div class="gui-tb"><span>✔</span><span>🖨</span><span>▼ Clasif.</span><span>Σ</span><span>Filtro</span><span>Excel</span></div>
+      <table id="tGui"><thead><tr></tr></thead><tbody></tbody></table>
+      <div class="gui-status" id="guiStatus"></div>
+    </div>
+
+    <div class="pane fio show" id="paneFio">
+      <div class="pane-tag" style="background:#0a6ed1">FIORI ELEMENTS · LIST REPORT · OData V4 + ANOTACIONES UI</div>
+      <div class="fio-shell"><span>&larr;&nbsp;&nbsp;Ausencias de empleados</span><span class="avatar">JS</span></div>
+      <div class="fio-head">
+        <h2>Ausencias de empleados</h2>
+        <div class="fio-filters">
+          <div class="ff">Clase de absentismo<select id="fAwart" onchange="renderFio()"><option value="">Todas</option></select></div>
+          <div class="ff">Centro<select id="fWerks" onchange="renderFio()"><option value="">Todos</option></select></div>
+          <div class="ff">Empleado<input id="fName" placeholder="Buscar nombre…" oninput="renderFio()"></div>
+        </div>
+      </div>
+      <div class="fio-bar"><span class="cnt" id="fioCnt"></span><button class="go" onclick="alert('En una app real: navegación a la Object Page del empleado, aprobar/rechazar, export a hoja de cálculo…')">Ir a detalle</button></div>
+      <table id="tFio"><thead><tr></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Qué cambia de verdad (más allá del aspecto):</b>
+    <ul>
+      <li><b>Filtros vivos vs pantalla de selección:</b> en el ALV filtras antes de ejecutar; en Fiori la barra de filtros forma parte de la app y se combina con variantes de usuario.</li>
+      <li><b>Semántica en el dato:</b> el flag «&gt;30 días» del ALV es una X en una columna; en Fiori es un estado con color (criticality) declarado por anotación, no programado.</li>
+      <li><b>Navegación:</b> del listado a la Object Page del empleado sin código de pantalla: lo da el floorplan.</li>
+      <li><b>Coste:</b> el ALV son ~100 líneas de ABAP; la app Fiori exige CDS + anotaciones + servicio OData (o RAP). Menos código de UI, más modelado.</li>
+      <li><b>Cuándo NO migrar:</b> report interno de uso esporádico, sin usuarios de negocio y sin S/4: el ALV sigue siendo la herramienta correcta.</li>
+    </ul>
+  </div>
+
+  <p class="foot">Artefacto del laboratorio <strong>Eggthropic · SAP × Claude Lab</strong> (adelanta el caso 005 del backlog). Mock visual: el lado Fiori imita un List Report pero no usa SAPUI5 real. Datos 100% ficticios · generado con Claude.</p>
+</div>
+
+<script>
+const DATA=[
+ {pernr:"00001234",ename:"García López, M.",awart:"0100",atext:"Enf. con baja",begda:"03.02.2026",endda:"14.03.2026",dias:40,werks:"1001"},
+ {pernr:"00001235",ename:"Pérez Ruiz, A.",awart:"0200",atext:"Vacaciones",begda:"01.06.2026",endda:"15.06.2026",dias:15,werks:"1001"},
+ {pernr:"00001236",ename:"Santos Vega, L.",awart:"0100",atext:"Enf. con baja",begda:"10.04.2026",endda:"12.04.2026",dias:3,werks:"1002"},
+ {pernr:"00001237",ename:"Molina Sanz, C.",awart:"0300",atext:"Permiso retribuido",begda:"20.05.2026",endda:"22.05.2026",dias:3,werks:"1001"},
+ {pernr:"00001238",ename:"Ortiz Camacho, R.",awart:"0100",atext:"Enf. con baja",begda:"01.01.2026",endda:"28.02.2026",dias:59,werks:"1003"},
+ {pernr:"00001239",ename:"Navarro Gil, P.",awart:"0200",atext:"Vacaciones",begda:"04.08.2026",endda:"25.08.2026",dias:22,werks:"1002"},
+ {pernr:"00001240",ename:"Iglesias Marín, S.",awart:"0400",atext:"Ausencia no retrib.",begda:"11.03.2026",endda:"11.03.2026",dias:1,werks:"1003"},
+ {pernr:"00001241",ename:"Crespo Duarte, E.",awart:"0100",atext:"Enf. con baja",begda:"15.06.2026",endda:"30.07.2026",dias:46,werks:"1001"}
+];
+const COLS=[["pernr","Nº pers."],["ename","Nombre"],["awart","ClAbs"],["atext","Denominación"],["begda","Inicio"],["endda","Fin"],["dias","Días"],["flag",">30"]];
+let sortKey="pernr", sortAsc=true;
+
+function fechaKey(s){const [d,m,a]=s.split(".");return a+m+d;}
+function sortData(arr){
+  return [...arr].sort((x,y)=>{
+    let a=x[sortKey],b=y[sortKey];
+    if(sortKey==="begda"||sortKey==="endda"){a=fechaKey(a);b=fechaKey(b);}
+    if(sortKey==="flag"){a=x.dias>30?1:0;b=y.dias>30?1:0;}
+    const r = a<b?-1:a>b?1:0; return sortAsc?r:-r;
+  });
+}
+function setSort(k){ if(sortKey===k) sortAsc=!sortAsc; else {sortKey=k;sortAsc=true;} renderAll(); }
+
+function renderGui(){
+  const thr=document.querySelector("#tGui thead tr"); thr.innerHTML="";
+  COLS.forEach(([k,l])=>{const th=document.createElement("th");th.textContent=l+(sortKey===k?(sortAsc?" ▲":" ▼"):"");th.onclick=()=>setSort(k);thr.appendChild(th);});
+  const tb=document.querySelector("#tGui tbody"); tb.innerHTML="";
+  sortData(DATA).forEach(r=>{
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${r.pernr}</td><td>${r.ename}</td><td>${r.awart}</td><td>${r.atext}</td><td>${r.begda}</td><td>${r.endda}</td><td class="num">${r.dias}</td><td style="text-align:center">${r.dias>30?"X":""}</td></tr>`);
+  });
+  document.getElementById("guiStatus").textContent=`${DATA.length} registros seleccionados`;
+}
+function renderFio(){
+  const fa=document.getElementById("fAwart").value, fw=document.getElementById("fWerks").value, fn=document.getElementById("fName").value.toLowerCase();
+  const rows=sortData(DATA).filter(r=>(!fa||r.atext===fa)&&(!fw||r.werks===fw)&&(!fn||r.ename.toLowerCase().includes(fn)));
+  const thr=document.querySelector("#tFio thead tr"); thr.innerHTML="";
+  [["ename","Empleado"],["atext","Clase de absentismo"],["begda","Inicio"],["endda","Fin"],["dias","Días"],["flag","Duración"]].forEach(([k,l])=>{
+    const th=document.createElement("th");th.textContent=l+(sortKey===k?(sortAsc?" ↑":" ↓"):"");th.onclick=()=>setSort(k);thr.appendChild(th);});
+  const tb=document.querySelector("#tFio tbody"); tb.innerHTML="";
+  rows.forEach(r=>{
+    const st=r.dias>30?`<span class="st warn"><i></i>${r.dias} días — revisar</span>`:`<span class="st ok"><i></i>Normal</span>`;
+    tb.insertAdjacentHTML("beforeend",`<tr><td><b>${r.ename}</b><br><span style="color:#6a6d70;font-size:11px">${r.pernr} · Centro ${r.werks}</span></td><td>${r.atext}</td><td>${r.begda}</td><td>${r.endda}</td><td class="num">${r.dias}</td><td>${st}</td></tr>`);
+  });
+  document.getElementById("fioCnt").textContent=`Ausencias (${rows.length})`;
+}
+function renderAll(){renderGui();renderFio();}
+function setView(v){
+  document.getElementById("panes").className="panes"+(v==="split"?" split":"");
+  document.getElementById("paneGui").classList.toggle("show", v!=="fio");
+  document.getElementById("paneFio").classList.toggle("show", v!=="gui");
+  ["bSplit","bGui","bFio"].forEach(id=>document.getElementById(id).classList.remove("on"));
+  document.getElementById(v==="split"?"bSplit":v==="gui"?"bGui":"bFio").classList.add("on");
+}
+// filtros
+[...new Set(DATA.map(r=>r.atext))].forEach(t=>document.getElementById("fAwart").insertAdjacentHTML("beforeend",`<option>${t}</option>`));
+[...new Set(DATA.map(r=>r.werks))].sort().forEach(w=>document.getElementById("fWerks").insertAdjacentHTML("beforeend",`<option>${w}</option>`));
+renderAll();
+</script>
+</body>
+</html>

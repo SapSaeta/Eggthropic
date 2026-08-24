@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa de infotipos SAP HCM — Eggthropic SAP Lab</title>
+<style>
+  :root{--paper:#f4eee2;--card:#fcf8ef;--ink:#2c2620;--soft:#5c5347;--faint:#8a7e6d;--line:#e0d6c2;--teja:#c2542b;--joule:#0a6ed1;--teal:#0d9488;--purple:#7c3aed}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);padding:24px;min-height:100vh}
+  .wrap{max-width:1000px;margin:0 auto}
+  .chip{display:inline-flex;gap:6px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;color:var(--joule);border:1px solid rgba(10,110,209,.3);background:rgba(10,110,209,.07);padding:4px 10px;border-radius:999px;margin-bottom:14px}
+  h1{font-size:26px;letter-spacing:-.02em;margin-bottom:6px}
+  h1 em{font-style:normal;color:var(--teja)}
+  .sub{color:var(--soft);font-size:14px;line-height:1.55;max-width:680px;margin-bottom:18px}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+  input[type=search]{border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:#fffdf6;font-size:13px;color:var(--ink);width:240px}
+  input[type=search]:focus{outline:2px solid rgba(10,110,209,.35)}
+  .fbtn{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.1em;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--soft);cursor:pointer}
+  .fbtn.on{color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+  .it{background:var(--card);border:1px solid rgba(44,38,32,.12);border-radius:12px;padding:14px 16px;cursor:pointer;transition:border-color .15s,box-shadow .15s;border-left:4px solid var(--line)}
+  .it:hover{border-color:rgba(194,84,43,.45);box-shadow:0 2px 12px rgba(60,46,20,.08)}
+  .it .id{font-family:ui-monospace,monospace;font-size:15px;font-weight:700}
+  .it .nm{font-size:13.5px;font-weight:600;margin:3px 0 5px}
+  .it .cat{font-family:ui-monospace,monospace;font-size:9px;letter-spacing:.12em;color:var(--faint)}
+  /* modal */
+  .overlay{position:fixed;inset:0;background:rgba(44,38,32,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}
+  .overlay.show{display:flex}
+  .modal{background:var(--card);border-radius:14px;max-width:560px;width:100%;max-height:85vh;overflow:auto;padding:24px;border:1px solid rgba(44,38,32,.2)}
+  .modal .id{font-family:ui-monospace,monospace;font-size:13px;color:var(--teja)}
+  .modal h2{font-size:20px;margin:4px 0 10px}
+  .modal p{font-size:13.5px;color:var(--soft);line-height:1.6;margin-bottom:14px}
+  .modal h3{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.15em;color:var(--faint);margin:14px 0 8px}
+  .campos{display:flex;flex-direction:column;gap:5px}
+  .campo{display:flex;gap:10px;font-size:12.5px}
+  .campo code{font-family:ui-monospace,monospace;background:rgba(10,110,209,.08);color:var(--joule);padding:1px 7px;border-radius:4px;font-size:11.5px;white-space:nowrap}
+  .tags{display:flex;gap:6px;flex-wrap:wrap}
+  .tag{font-family:ui-monospace,monospace;font-size:10px;padding:3px 9px;border-radius:5px;background:rgba(13,148,136,.08);color:var(--teal);border:1px solid rgba(13,148,136,.25)}
+  .rel{font-size:11px;padding:3px 9px;border-radius:5px;background:rgba(124,58,237,.07);color:var(--purple);border:1px solid rgba(124,58,237,.25);cursor:pointer}
+  .nota{background:rgba(194,84,43,.06);border:1px solid rgba(194,84,43,.2);border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.55;color:var(--soft);margin-top:12px}
+  .cerrar{float:right;border:0;background:transparent;font-size:20px;cursor:pointer;color:var(--faint)}
+  .foot{margin-top:24px;padding-top:14px;border-top:1px solid var(--line);font-size:11px;color:var(--faint);line-height:1.6}
+  .empty{color:var(--faint);font-size:13px;padding:30px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="chip">SAP × CLAUDE LAB · ARTEFACTO</div>
+  <h1>Mapa de <em>infotipos SAP HCM</em> para funcionales</h1>
+  <p class="sub">Los infotipos que más aparecen en el día a día de PA y tiempos, explicados sin jerga técnica. Haz clic en cualquiera para ver sus campos clave, transacciones y avisos prácticos. Busca por número o por nombre, o filtra por área.</p>
+
+  <div class="controls">
+    <input type="search" id="q" placeholder="Buscar: 0008, ausencias, nómina…" oninput="render()">
+    <button class="fbtn on" data-c="" onclick="setCat(this)" style="background:var(--ink);border-color:var(--ink)">TODOS</button>
+    <button class="fbtn" data-c="maestro" onclick="setCat(this)">DATOS MAESTROS</button>
+    <button class="fbtn" data-c="nomina" onclick="setCat(this)">NÓMINA</button>
+    <button class="fbtn" data-c="tiempos" onclick="setCat(this)">TIEMPOS</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">Sin resultados para esa búsqueda.</div>
+
+  <p class="foot">Artefacto del laboratorio <strong>Eggthropic · SAP × Claude Lab</strong>. Contenido educativo general sobre SAP HCM On-Premise: los subtipos, clases de fecha y CC-nóminas concretos <strong>dependen de la configuración de cada cliente</strong> — verifica siempre en tu sistema. Generado con Claude.</p>
+</div>
+
+<div class="overlay" id="ov" onclick="if(event.target===this)cerrar()">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+const CATS={maestro:{l:"DATOS MAESTROS",c:"#0a6ed1"},nomina:{l:"NÓMINA",c:"#c2542b"},tiempos:{l:"TIEMPOS",c:"#0d9488"}};
+const ITS=[
+ {id:"0000",nm:"Medidas",cat:"maestro",tx:"El historial de eventos de la vida laboral del empleado: alta, cambio organizativo, baja… Cada medida (PA40) crea o delimita otros infotipos en cadena. Es el «índice» de la relación laboral.",
+  campos:[["MASSN","Clase de medida (alta, baja, traslado…)"],["MASSG","Motivo de la medida"],["STAT2","Status de ocupación (activo, dado de baja…)"]],
+  tr:["PA40","PA20"],rel:["0001","0002","0008"],
+  nota:"Si un empleado «no aparece» en un report, lo primero: mirar su STAT2 y si la medida de alta se ejecutó completa."},
+ {id:"0001",nm:"Asignación organizativa",cat:"maestro",tx:"Dónde está el empleado en la organización: sociedad, división de personal, centro de coste, posición y área de nómina. Casi todos los procesos leen este infotipo, y las autorizaciones se apoyan en él.",
+  campos:[["BUKRS","Sociedad"],["WERKS","División de personal"],["BTRTL","Subdivisión de personal"],["KOSTL","Centro de coste"],["PLANS","Posición"],["ABKRS","Área de nómina (a qué cálculo va)"]],
+  tr:["PA30","PA20"],rel:["0000","0008","0007"],
+  nota:"Un cambio de KOSTL o de posición a mitad de mes parte el registro en dos (delimitación). Es normal: no son «duplicados»."},
+ {id:"0002",nm:"Datos personales",cat:"maestro",tx:"Nombre, fecha de nacimiento, nacionalidad, estado civil. Alimenta nómina, informes legales y comunicaciones oficiales.",
+  campos:[["VORNA / NACHN","Nombre y apellidos"],["GBDAT","Fecha de nacimiento"],["FAMST","Estado civil"]],
+  tr:["PA30"],rel:["0006","0021"],
+  nota:"Cambios con fecha pasada tras un cierre pueden disparar retroactividad en nómina. Consultar antes de «corregir» fechas."},
+ {id:"0006",nm:"Direcciones",cat:"maestro",tx:"Direcciones del empleado por subtipos (residencia habitual, temporal…). Se usa para correspondencia y para algunos cálculos legales según país.",
+  campos:[["STRAS","Calle y número"],["ORT01","Población"],["PSTLZ","Código postal"]],
+  tr:["PA30"],rel:["0002"],
+  nota:"El significado de cada subtipo es configuración del cliente: no asumas que el subtipo 1 es siempre la residencia habitual."},
+ {id:"0007",nm:"Horario de trabajo teórico",cat:"tiempos",tx:"La regla de horario del empleado (a qué plan de horario está asignado) y su porcentaje de jornada. De aquí sale cuántas horas «debería» trabajar cada día.",
+  campos:[["SCHKZ","Regla para plan de horario de trabajo"],["EMPCT","Porcentaje de jornada"],["ZTERF","Relevancia para gestión de tiempos"]],
+  tr:["PA30"],rel:["2001","2002","0008"],
+  nota:"Muchos problemas de «me calcula mal las ausencias» empiezan en un IT0007 con regla de horario equivocada, no en el IT2001."},
+ {id:"0008",nm:"Emolumentos básicos",cat:"nomina",tx:"El salario base del empleado: hasta 40 CC-nóminas con sus importes. La estructura salarial (convenio, grupo, nivel) también vive aquí.",
+  campos:[["TRFAR / TRFGB","Tipo y área de convenio"],["TRFGR / TRFST","Grupo y subgrupo profesional"],["LGA01…LGA40","CC-nóminas"],["BET01…BET40","Importes"]],
+  tr:["PA30"],rel:["0001","0014","0015"],
+  nota:"Qué CC-nómina está en qué posición depende del cliente. Un report que lee «siempre BET01» es una apuesta, no una regla."},
+ {id:"0014",nm:"Devengos y deducciones periódicos",cat:"nomina",tx:"Conceptos que se pagan o descuentan cada mes de forma recurrente: plus de transporte, seguro médico… Cada registro es una CC-nómina con su importe y vigencia.",
+  campos:[["LGART","CC-nómina"],["BETRG","Importe"],["ZDATE / ZFPER","Datos de periodicidad"]],
+  tr:["PA30"],rel:["0008","0015"],
+  nota:"La diferencia con el IT0015: esto es recurrente; el 0015 es pago único. Confundirlos es el clásico de las cargas masivas."},
+ {id:"0015",nm:"Pagos complementarios",cat:"nomina",tx:"Pagos o deducciones de una sola vez: un bonus, un atraso, una regularización puntual. Un registro por concepto y fecha.",
+  campos:[["LGART","CC-nómina"],["BETRG","Importe"],["BEGDA","Fecha del pago único"]],
+  tr:["PA30"],rel:["0014","0008"],
+  nota:"Si el mismo concepto aparece todos los meses en el 0015, alguien está usando mal el infotipo (debería ser 0014)."},
+ {id:"0041",nm:"Datos de fecha",cat:"maestro",tx:"Hasta 12 parejas «clase de fecha + fecha» por registro: antigüedad reconocida, fecha de ingreso al grupo, fin de periodo de prueba… Muy usado en cálculos de antigüedad.",
+  campos:[["DAR01…DAR12","Clases de fecha"],["DAT01…DAT12","Fechas asociadas"]],
+  tr:["PA30"],rel:["0000","0008"],
+  nota:"Qué significa la clase de fecha «01» es configuración del cliente. El caso 002 del laboratorio gira exactamente sobre esta trampa."},
+ {id:"2001",nm:"Absentismos",cat:"tiempos",tx:"Las ausencias del empleado: enfermedad, vacaciones, permisos… Cada registro tiene su clase de absentismo y su periodo. Interactúa con el horario teórico (IT0007) para calcular días/horas reales.",
+  campos:[["AWART","Clase de absentismo"],["BEGDA / ENDDA","Periodo de la ausencia"],["ABWTG","Días de absentismo"],["STDAZ","Horas"]],
+  tr:["PA30","PT50"],rel:["0007","2006","2002"],
+  nota:"Registros con SPRPS (bloqueo) no deberían contarse como definitivos. Y ojo a solapamientos con el IT2002 (presencias)."},
+ {id:"2002",nm:"Presencias",cat:"tiempos",tx:"El espejo del 2001: tiempos «positivos» — formación, viaje de trabajo, horas presenciales especiales. Misma mecánica de clases y periodos.",
+  campos:[["AWART","Clase de presencia"],["BEGDA / ENDDA","Periodo"],["STDAZ","Horas"]],
+  tr:["PA30","PT50"],rel:["2001","0007"],
+  nota:"Presencia y absentismo comparten catálogo técnico (T554S): por eso un funcional puede encontrarse clases «hermanas» en ambos."},
+ {id:"2006",nm:"Contingentes de absentismo",cat:"tiempos",tx:"Los «saldos» de los que descuentan las ausencias: días de vacaciones, horas de libre disposición… Cada contingente tiene periodo de validez, derecho generado y consumo.",
+  campos:[["KTART","Clase de contingente"],["ANZHL","Derecho (cantidad)"],["KVERB","Consumo"],["DEEND","Fin de validez para deducción"]],
+  tr:["PA30","PT50"],rel:["2001"],
+  nota:"«Me quedan vacaciones pero no me deja pedirlas»: casi siempre es la ventana de deducción del contingente, no la ausencia."},
+ {id:"2010",nm:"Remuneración por empleado",cat:"nomina",tx:"Entrada manual de conceptos valorados en tiempos: horas extra, pluses por día trabajado… Puente entre gestión de tiempos y nómina. Protagonista de las cargas masivas mensuales.",
+  campos:[["LGART","CC-nómina"],["ANZHL","Cantidad (p. ej. horas)"],["BETRG","Importe"],["BEGDA","Fecha del registro"]],
+  tr:["PA30","PT_EDT"],rel:["2001","0008"],
+  nota:"El validador de cargas del laboratorio (caso 004) trabaja exactamente sobre este infotipo: valida el Excel antes de que toque SAP."}
+];
+let cat="";
+function setCat(btn){
+  cat=btn.dataset.c;
+  document.querySelectorAll(".fbtn").forEach(b=>{b.classList.remove("on");b.style.background="";b.style.borderColor="";b.style.color="";});
+  btn.classList.add("on");
+  const c = cat ? CATS[cat].c : "#2c2620";
+  btn.style.background=c;btn.style.borderColor=c;btn.style.color="#fff";
+  render();
+}
+function render(){
+  const q=document.getElementById("q").value.toLowerCase();
+  const grid=document.getElementById("grid");grid.innerHTML="";
+  const rows=ITS.filter(it=>(!cat||it.cat===cat)&&(!q||it.id.includes(q)||it.nm.toLowerCase().includes(q)||it.tx.toLowerCase().includes(q)));
+  rows.forEach(it=>{
+    const d=document.createElement("div");d.className="it";d.style.borderLeftColor=CATS[it.cat].c;
+    d.innerHTML=`<div class="id" style="color:${CATS[it.cat].c}">IT${it.id}</div><div class="nm">${it.nm}</div><div class="cat">${CATS[it.cat].l}</div>`;
+    d.onclick=()=>abrir(it.id);grid.appendChild(d);
+  });
+  document.getElementById("empty").style.display=rows.length?"none":"block";
+}
+function abrir(id){
+  const it=ITS.find(x=>x.id===id);if(!it)return;
+  const m=document.getElementById("modal");
+  m.innerHTML=`<button class="cerrar" onclick="cerrar()">✕</button>
+   <div class="id">INFOTIPO ${it.id} · ${CATS[it.cat].l}</div><h2>${it.nm}</h2><p>${it.tx}</p>
+   <h3>CAMPOS CLAVE</h3><div class="campos">${it.campos.map(([c,d])=>`<div class="campo"><code>${c}</code><span>${d}</span></div>`).join("")}</div>
+   <h3>TRANSACCIONES HABITUALES</h3><div class="tags">${it.tr.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+   <h3>RELACIONADO CON</h3><div class="tags">${it.rel.map(r=>`<span class="rel" onclick="abrir('${r}')">IT${r} · ${(ITS.find(x=>x.id===r)||{nm:"?"}).nm}</span>`).join("")}</div>
+   <div class="nota"><b>⚠ En la práctica:</b> ${it.nota}</div>`;
+  document.getElementById("ov").classList.add("show");
+}
+function cerrar(){document.getElementById("ov").classList.remove("show");}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")cerrar();});
+render();
+</script>
+</body>
+</html>

@@ -6,6 +6,7 @@ const footerLinks = {
     { href: "/notes", label: "Notas" },
     { href: "/lab", label: "Laboratorio comunitario" },
     { href: "/sap", label: "SAP x Claude Lab" },
+    { href: "/artefactos", label: "Artefactos" },
     { href: "/about", label: "Sobre el lab" },
   ],
   Recursos: [
