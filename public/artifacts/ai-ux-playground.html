@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playground de patrones UI para IA | Eggthropic</title>
+<style>
+  :root{--paper:#f4eee2;--card:#fcf8ef;--ink:#2c2620;--soft:#5c5347;--faint:#8a7e6d;--line:#e0d6c2;--teja:#c2542b;--joule:#0a6ed1;--ok:#0d7a4d;--warn:#9a6b00;--err:#b3261e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);padding:24px;min-height:100vh}
+  .wrap{max-width:920px;margin:0 auto}
+  .chip{display:inline-flex;gap:6px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;color:var(--joule);border:1px solid rgba(10,110,209,.3);background:rgba(10,110,209,.07);padding:4px 10px;border-radius:999px;margin-bottom:14px}
+  h1{font-size:24px;letter-spacing:-.02em;margin-bottom:6px}
+  .sub{color:var(--soft);font-size:13.5px;line-height:1.55;max-width:680px;margin-bottom:18px}
+  .tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+  .tabs button{border:1px solid var(--line);background:var(--card);color:var(--soft);font-size:12px;font-weight:600;padding:8px 14px;border-radius:999px;cursor:pointer}
+  .tabs button.active{background:var(--joule);color:#fff;border-color:var(--joule)}
+  .panel{background:#0e1420;color:#e7e2d6;border-radius:14px;padding:22px;min-height:280px;position:relative}
+  .panel .lbl{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.16em;color:#7d8aa3;margin-bottom:14px}
+  .view{display:none}
+  .view.active{display:block}
+  /* typewriter */
+  .type-out{font-size:15px;line-height:1.7;min-height:90px}
+  .cursor{display:inline-block;width:8px;height:16px;background:#ffe04d;vertical-align:middle;animation:blink 1s step-end infinite}
+  @keyframes blink{50%{opacity:0}}
+  .speedrow{margin-top:16px;display:flex;align-items:center;gap:10px;font-size:11.5px;color:#9ba3b4}
+  input[type=range]{accent-color:#ffe04d}
+  /* confidence */
+  .tok{padding:2px 3px;border-radius:3px;font-size:15px;line-height:2}
+  /* trace */
+  .tool-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;margin-bottom:8px;overflow:hidden}
+  .tool-head{display:flex;justify-content:space-between;padding:10px 14px;cursor:pointer;font-size:12.5px}
+  .tool-head b{color:#7fd0ff}
+  .tool-body{display:none;padding:0 14px 12px;font-family:ui-monospace,monospace;font-size:11px;color:#9ba3b4;white-space:pre-wrap}
+  .tool-card.open .tool-body{display:block}
+  .status-ok{color:#7fe0a8;font-size:11px}
+  /* phases */
+  .phase-row{display:flex;gap:8px;margin-bottom:18px}
+  .phase{font-family:ui-monospace,monospace;font-size:11px;padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);color:#7d8aa3}
+  .phase.active{background:#ffe04d;color:#141a0b;border-color:#ffe04d;font-weight:700}
+  .think-body{font-size:13px;color:#9ba3b4;line-height:1.6;min-height:60px}
+  button.replay{margin-top:16px;border:0;background:#ffe04d;color:#141a0b;font-weight:700;font-size:12px;padding:8px 16px;border-radius:8px;cursor:pointer}
+  footer{margin-top:18px;font-size:11.5px;color:var(--faint);line-height:1.6}
+  footer a{color:var(--joule)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="chip">● playground · 4 patrones ui para ia</div>
+  <h1>Playground de interfaces para IA</h1>
+  <p class="sub">Cuatro patrones de interfaz más allá de la burbuja de chat, simulados en el navegador: streaming ajustable, mapa de confianza (simulado, no usa logprobs reales), traza de tool calls y fases de pensamiento.</p>
+
+  <div class="tabs">
+    <button data-v="type" class="active">01 · Streaming</button>
+    <button data-v="conf">02 · Mapa de confianza</button>
+    <button data-v="trace">03 · Traza de tool calls</button>
+    <button data-v="phase">04 · Fases de pensamiento</button>
+  </div>
+
+  <div class="panel">
+    <div class="view active" id="v-type">
+      <div class="lbl">STREAMING · VELOCIDAD AJUSTABLE</div>
+      <div class="type-out" id="typeOut"><span class="cursor"></span></div>
+      <div class="speedrow"><span>lento</span><input type="range" id="speed" min="10" max="90" value="35"><span>rápido</span></div>
+    </div>
+    <div class="view" id="v-conf">
+      <div class="lbl">MAPA DE CONFIANZA · SIMULADO — NO SON LOGPROBS REALES</div>
+      <div id="confOut" style="font-size:15px;line-height:2.1"></div>
+      <div style="margin-top:14px;font-size:11px;color:#7d8aa3">🟩 alta confianza simulada · 🟨 media · 🟥 baja — la API de Anthropic no expone probabilidades por token públicamente.</div>
+    </div>
+    <div class="view" id="v-trace">
+      <div class="lbl">TRAZA DE TOOL CALLS</div>
+      <div id="traceOut"></div>
+    </div>
+    <div class="view" id="v-phase">
+      <div class="lbl">INDICADOR DE FASES · HEURÍSTICA DE TIMING SSE</div>
+      <div class="phase-row">
+        <div class="phase" id="ph-read">leyendo</div>
+        <div class="phase" id="ph-reason">razonando</div>
+        <div class="phase" id="ph-write">escribiendo</div>
+      </div>
+      <div class="think-body" id="phaseBody">Pulsa reproducir para ver la secuencia de fases inferida por timing de eventos SSE.</div>
+      <button class="replay" id="phaseReplay">▶ Reproducir</button>
+    </div>
+  </div>
+
+  <footer>
+    Todo lo anterior corre en el navegador con datos y tiempos simulados para ilustrar el comportamiento descrito en el caso — no hay llamadas reales a la API de Claude. Ver <a href="/experiments/ai-ux-interface-playground">caso completo →</a>
+  </footer>
+</div>
+<script>
+document.querySelectorAll('.tabs button').forEach(b=>{
+  b.onclick = ()=>{
+    document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById('v-'+b.dataset.v).classList.add('active');
+  };
+});
+
+// 1. typewriter
+const typeText = "Stackr genera documentación de API a partir de tu código TypeScript, sin escribir YAML a mano.";
+const typeOut = document.getElementById('typeOut');
+const speedInput = document.getElementById('speed');
+let ti = 0, typing;
+function startType(){
+  clearInterval(typing);
+  ti = 0;
+  typeOut.innerHTML = '<span class="cursor"></span>';
+  typing = setInterval(()=>{
+    if(ti >= typeText.length){ clearInterval(typing); return; }
+    ti++;
+    typeOut.innerHTML = typeText.slice(0,ti) + '<span class="cursor"></span>';
+  }, 110 - speedInput.value);
+}
+speedInput.oninput = startType;
+startType();
+
+// 2. confidence map
+const confWords = [
+  ["Stackr",0.95],["genera",0.9],["documentación",0.88],["a",0.6],["partir",0.55],
+  ["de",0.9],["tipos",0.7],["TypeScript",0.93],["cada",0.4],["vez",0.35],["que",0.8],["haces",0.3],["commit",0.85]
+];
+const confOut = document.getElementById('confOut');
+confWords.forEach(([w,c])=>{
+  const span = document.createElement('span');
+  span.className = 'tok';
+  span.style.background = c>0.75? 'rgba(127,224,168,.18)' : c>0.5 ? 'rgba(255,224,77,.18)' : 'rgba(255,110,110,.18)';
+  span.style.color = c>0.75? '#7fe0a8' : c>0.5 ? '#ffe04d' : '#ff9d9d';
+  span.textContent = w + ' ';
+  confOut.appendChild(span);
+});
+
+// 3. tool trace
+const tools = [
+  {name:'read_file', input:'{"path": "src/lib/board.ts"}', out:'{"lines": 42, "status": "ok"}'},
+  {name:'grep', input:'{"pattern": "toBoardExperiments"}', out:'{"matches": 3}'},
+  {name:'edit_file', input:'{"path": "src/app/experiments/page.tsx"}', out:'{"status": "applied"}'},
+];
+const traceOut = document.getElementById('traceOut');
+tools.forEach(t=>{
+  const card = document.createElement('div');
+  card.className = 'tool-card';
+  card.innerHTML = `<div class="tool-head"><span><b>${t.name}()</b></span><span class="status-ok">✓ ok</span></div>
+    <div class="tool-body">input: ${t.input}\noutput: ${t.out}</div>`;
+  card.querySelector('.tool-head').onclick = ()=> card.classList.toggle('open');
+  traceOut.appendChild(card);
+});
+
+// 4. phases
+const phaseSeq = [
+  {id:'ph-read', text:'Leyendo el contexto: archivos abiertos, historial reciente…', ms:900},
+  {id:'ph-reason', text:'Razonando sobre el enfoque: qué archivos tocar y en qué orden…', ms:1400},
+  {id:'ph-write', text:'Escribiendo la respuesta / aplicando cambios…', ms:1100},
+];
+document.getElementById('phaseReplay').onclick = ()=>{
+  document.querySelectorAll('.phase').forEach(p=>p.classList.remove('active'));
+  const body = document.getElementById('phaseBody');
+  let delay = 0;
+  phaseSeq.forEach(p=>{
+    setTimeout(()=>{
+      document.querySelectorAll('.phase').forEach(x=>x.classList.remove('active'));
+      document.getElementById(p.id).classList.add('active');
+      body.textContent = p.text;
+    }, delay);
+    delay += p.ms;
+  });
+  setTimeout(()=>{ document.querySelectorAll('.phase').forEach(x=>x.classList.remove('active')); body.textContent = 'Secuencia completa. Esto es una heurística de timing SSE, no una señal oficial del protocolo.'; }, delay);
+};
+</script>
+</body>
+</html>
