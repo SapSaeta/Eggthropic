@@ -1,23 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Code2, Cpu, Network, Palette, Database } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Hero } from "@/components/Hero";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ExperimentCard } from "@/components/ExperimentCard";
 import { NoteCard } from "@/components/NoteCard";
-import { LabPreview } from "@/components/LabPreview";
+import { ArtefactosHomePreview } from "@/components/ArtefactosHomePreview";
 import { experiments } from "@/lib/experiments";
 import { notes } from "@/lib/notes";
+import { artefactos } from "@/lib/artifacts";
 
 export const metadata: Metadata = {
   title: "Eggthropic — Laboratorio de Claude",
   description:
-    "Un laboratorio práctico para aprender Claude construyendo experimentos reales con Claude Code, Agent Skills, MCP y la API de Anthropic. En español.",
+    "Un laboratorio práctico para aprender Claude construyendo artefactos y experimentos reales con Claude Code, Agent Skills, MCP y la API de Anthropic. En español.",
   alternates: { canonical: "https://www.eggthropic.com" },
   openGraph: {
     title: "Eggthropic — Laboratorio de Claude",
     description:
-      "Un laboratorio práctico para aprender Claude construyendo experimentos reales con Claude Code, Agent Skills, MCP y la API de Anthropic. En español.",
+      "Un laboratorio práctico para aprender Claude construyendo artefactos y experimentos reales con Claude Code, Agent Skills, MCP y la API de Anthropic. En español.",
     url: "https://www.eggthropic.com",
     siteName: "Eggthropic",
     type: "website",
@@ -26,67 +27,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Eggthropic — Laboratorio de Claude",
     description:
-      "Un laboratorio práctico para aprender Claude construyendo experimentos reales con Claude Code, Agent Skills, MCP y la API de Anthropic. En español.",
+      "Un laboratorio práctico para aprender Claude construyendo artefactos y experimentos reales con Claude Code, Agent Skills, MCP y la API de Anthropic. En español.",
   },
 };
-
-const labSections = [
-  {
-    icon: Code2,
-    title: "Lab de Claude Code",
-    description:
-      "Experimentos con Claude Code — el CLI agéntico que lee tu base de código, ejecuta comandos y entrega código commiteado en varios archivos.",
-    href: "/experiments?category=claude-code",
-    color: "text-violet-700",
-    bg: "bg-violet-500/10",
-    border: "border-violet-500/20",
-    tag: "claude-code",
-  },
-  {
-    icon: Cpu,
-    title: "Lab de Agent Skills",
-    description:
-      "Skills portables y reutilizables: directorios SKILL.md que dan a Claude capacidades persistentes entre proyectos y plataformas.",
-    href: "/experiments?category=skills",
-    color: "text-fuchsia-700",
-    bg: "bg-fuchsia-500/10",
-    border: "border-fuchsia-500/20",
-    tag: "skills",
-  },
-  {
-    icon: Network,
-    title: "Lab de MCP",
-    description:
-      "Explorando el Model Context Protocol: servidores, clientes y herramientas interactivas sobre el estándar abierto JSON-RPC.",
-    href: "/experiments?category=mcp",
-    color: "text-cyan-700",
-    bg: "bg-cyan-500/10",
-    border: "border-cyan-500/20",
-    tag: "mcp",
-  },
-  {
-    icon: Palette,
-    title: "Experimentos UX/UI",
-    description:
-      "Prototipos de interfaces nativas de IA: streaming, visualización de tool calls y modelos de interacción más allá del chat.",
-    href: "/experiments?category=ux-ui",
-    color: "text-amber-700",
-    bg: "bg-amber-500/10",
-    border: "border-amber-500/20",
-    tag: "ux-ui",
-  },
-  {
-    icon: Database,
-    title: "SAP x Claude Lab",
-    description:
-      "Casos reales de Claude aplicado a SAP — ABAP, Clean Code, HCM, Fiori, RAP y CAP — puntuados, probados con experimentos reproducibles y documentados sin humo.",
-    href: "/sap",
-    color: "text-[#0a6ed1]",
-    bg: "bg-[#0a6ed1]/10",
-    border: "border-[#0a6ed1]/20",
-    tag: "sap",
-  },
-];
 
 export default function HomePage() {
   const latestExperiments = experiments.slice(0, 4);
@@ -94,48 +37,36 @@ export default function HomePage() {
 
   return (
     <div>
-      <Hero experimentCount={experiments.length} noteCount={notes.length} />
+      <Hero experimentCount={experiments.length} noteCount={notes.length} artefactoCount={artefactos.length} />
 
-      {/* Lab sections */}
+      {/* Artefactos destacados */}
       <section className="py-20 border-t border-paper-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            label="Qué exploramos"
-            title="Cinco áreas, una misión"
-            description="Cada área explora una capa distinta del ecosistema de Claude — del CLI a las integraciones a nivel de protocolo, hasta el mundo SAP."
-          />
+          <div className="flex items-end justify-between mb-10">
+            <SectionHeader
+              label="Cosas que se pueden tocar"
+              title="Artefactos en vivo"
+              description="Herramientas HTML autocontenidas: corren enteras en tu navegador, sin nada que instalar. Prueba una ahora mismo."
+              className="mb-0"
+            />
+            <Link
+              href="/artefactos"
+              className="hidden sm:flex items-center gap-1.5 text-sm text-egg-600 hover:text-egg-600 transition-colors font-mono"
+            >
+              Todos los artefactos ({artefactos.length})
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {labSections.map((section) => {
-              const Icon = section.icon;
-              return (
-                <Link
-                  key={section.tag}
-                  href={section.href}
-                  className="glass glass-hover rounded-xl p-5 flex flex-col gap-4 group"
-                >
-                  <div
-                    className={`w-10 h-10 rounded-lg ${section.bg} border ${section.border} flex items-center justify-center transition-transform duration-300 group-hover:-rotate-12 group-hover:scale-110`}
-                  >
-                    <Icon className={`w-5 h-5 ${section.color}`} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-ink mb-1.5 group-hover:text-egg-600 transition-colors text-sm">
-                      {section.title}
-                    </h3>
-                    <p className="text-xs text-ink-faint leading-relaxed">
-                      {section.description}
-                    </p>
-                  </div>
-                  <div
-                    className={`mt-auto flex items-center gap-1 text-xs ${section.color} font-mono`}
-                  >
-                    Explorar
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </Link>
-              );
-            })}
+          <ArtefactosHomePreview />
+
+          <div className="mt-6 sm:hidden">
+            <Link
+              href="/artefactos"
+              className="inline-flex items-center gap-1.5 text-sm text-egg-600"
+            >
+              Todos los artefactos <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       </section>
@@ -187,7 +118,7 @@ export default function HomePage() {
               className="mb-0"
             />
             <Link
-              href="/notes"
+              href="/experiments?view=notes"
               className="hidden sm:flex items-center gap-1.5 text-sm text-egg-600 hover:text-egg-600 transition-colors font-mono"
             >
               Todas las notas
@@ -200,13 +131,6 @@ export default function HomePage() {
               <NoteCard key={note.slug} note={note} index={i} />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Lab preview */}
-      <section className="py-20 border-t border-paper-line">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <LabPreview />
         </div>
       </section>
     </div>
