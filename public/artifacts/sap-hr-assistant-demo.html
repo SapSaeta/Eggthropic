@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asistente funcional SAP HR — demo | Eggthropic</title>
+<style>
+  :root{--paper:#f4eee2;--card:#fcf8ef;--ink:#2c2620;--soft:#5c5347;--faint:#8a7e6d;--line:#e0d6c2;--teja:#c2542b;--joule:#0a6ed1;--ok:#0d7a4d;--warn:#9a6b00;--err:#b3261e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);padding:24px;min-height:100vh}
+  .wrap{max-width:920px;margin:0 auto}
+  .chip{display:inline-flex;gap:6px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;color:var(--joule);border:1px solid rgba(10,110,209,.3);background:rgba(10,110,209,.07);padding:4px 10px;border-radius:999px;margin-bottom:14px}
+  h1{font-size:24px;letter-spacing:-.02em;margin-bottom:6px}
+  .sub{color:var(--soft);font-size:13.5px;line-height:1.55;max-width:680px;margin-bottom:18px}
+  .layout{display:grid;grid-template-columns:1fr 280px;gap:16px}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid rgba(44,38,32,.12);border-radius:12px;overflow:hidden}
+  .panel h2{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.16em;padding:10px 14px;border-bottom:1px solid var(--line);color:var(--faint)}
+  .chat{padding:16px;min-height:340px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .chips button{border:1px solid var(--line);background:#fffdf6;color:var(--soft);font-size:11.5px;padding:7px 12px;border-radius:999px;cursor:pointer;text-align:left}
+  .chips button:hover{border-color:var(--joule);color:var(--joule)}
+  .msg{margin-bottom:14px}
+  .msg .q{font-weight:600;font-size:13.5px;margin-bottom:8px}
+  .msg .a{background:#fffdf6;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.6}
+  .msg .a.decline{border-color:rgba(154,107,0,.4);background:rgba(154,107,0,.06)}
+  .cite{display:inline-flex;align-items:center;gap:4px;font-family:ui-monospace,monospace;font-size:10px;color:var(--joule);background:rgba(10,110,209,.08);border-radius:6px;padding:2px 7px;margin-top:8px}
+  .kb{padding:8px}
+  .kbpage{border:1px solid var(--line);border-radius:8px;padding:9px 10px;margin-bottom:6px;font-size:11.5px;cursor:default}
+  .kbpage b{display:block;font-size:12px;margin-bottom:2px}
+  .kbpage span{color:var(--faint);font-size:10.5px}
+  .kbpage.hit{border-color:var(--joule);background:rgba(10,110,209,.06)}
+  footer{margin-top:18px;font-size:11.5px;color:var(--faint);line-height:1.6}
+  footer a{color:var(--joule)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="chip">● demo · base de conocimiento notion + claude</div>
+  <h1>Asistente funcional para SAP HR legacy</h1>
+  <p class="sub">Elige una pregunta de ejemplo. El asistente responde solo con lo que hay en la base de conocimiento de Notion — y se niega explícitamente a inventar cuando la respuesta depende de configuración del cliente.</p>
+
+  <div class="layout">
+    <div class="panel">
+      <h2>PREGUNTA AL ASISTENTE</h2>
+      <div class="chat">
+        <div class="chips">
+          <button data-q="0">¿Qué campos clave tiene el infotipo 0002?</button>
+          <button data-q="1">¿Qué controla la feature LGMST en nuestro sistema?</button>
+          <button data-q="2">¿Cómo afecta IT0001 a IT0007 en la nómina?</button>
+        </div>
+        <div id="msgArea"><div style="color:var(--faint);font-size:12.5px">Elige una pregunta arriba para ver la respuesta del asistente.</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>BASE DE CONOCIMIENTO · NOTION</h2>
+      <div class="kb" id="kb"></div>
+    </div>
+  </div>
+
+  <footer>
+    Preguntas y respuestas simuladas para reproducir el comportamiento medido en el caso (0 alucinaciones en definiciones de campos, negativa correcta ante dependencias de configuración) — no hay conexión real a Notion ni a la API de Claude en esta página. Ver <a href="/experiments/sap-hr-functional-ai-assistant">caso completo →</a>
+  </footer>
+</div>
+<script>
+const kbPages = [
+  {id:'IT0002', title:'Infotipo 0002 — Datos personales', tag:'maestros'},
+  {id:'IT0001', title:'Infotipo 0001 — Asignación organizativa', tag:'maestros'},
+  {id:'IT0007', title:'Infotipo 0007 — Horario de trabajo', tag:'tiempos'},
+  {id:'PA40', title:'PA40 — Marco de medidas de personal', tag:'proceso'},
+  {id:'LGMST', title:'Feature LGMST — no documentada en KB', tag:'config-cliente'},
+];
+
+const answers = [
+  {
+    q: "¿Qué campos clave tiene el infotipo 0002?",
+    hit: ['IT0002'],
+    decline: false,
+    a: `El infotipo 0002 (Datos personales) almacena: nombre y apellidos, fecha de nacimiento, sexo, nacionalidad, estado civil y forma de tratamiento. Es un infotipo de tiempo (permite varios registros con delimitación de fechas).`,
+  },
+  {
+    q: "¿Qué controla la feature LGMST en nuestro sistema?",
+    hit: ['LGMST'],
+    decline: true,
+    a: `No tengo esta información en la base de conocimiento para vuestro sistema. LGMST es una feature de decisión de nómina que depende de la configuración específica del cliente (árbol de decisión propio) — no puedo inventar su valor. Recomiendo consultar la vista de configuración de la feature (transacción PE03) o al equipo de configuración de nómina.`,
+  },
+  {
+    q: "¿Cómo afecta IT0001 a IT0007 en la nómina?",
+    hit: ['IT0001','IT0007'],
+    decline: true,
+    a: `Esta pregunta cruza dos infotipos y la interacción concreta con el esquema de nómina no está cubierta en la base de conocimiento actual. Puedo confirmar que IT0001 (asignación organizativa) determina el área de nómina y el grupo de cotización que IT0007 (horario) usa para calcular el tiempo objetivo, pero la lógica exacta de interacción en vuestro esquema requiere revisión directa — no la voy a inventar.`,
+  },
+];
+
+const kbEl = document.getElementById('kb');
+function renderKB(hitIds){
+  kbEl.innerHTML = '';
+  kbPages.forEach(p=>{
+    const el = document.createElement('div');
+    el.className = 'kbpage' + (hitIds && hitIds.includes(p.id) ? ' hit' : '');
+    el.innerHTML = `<b>${p.id}</b><span>${p.title.replace(p.id+' — ','')} · ${p.tag}</span>`;
+    kbEl.appendChild(el);
+  });
+}
+renderKB([]);
+
+document.querySelectorAll('.chips button').forEach(b=>{
+  b.onclick = ()=>{
+    const a = answers[Number(b.dataset.q)];
+    renderKB(a.hit);
+    document.getElementById('msgArea').innerHTML = `<div class="msg">
+      <div class="q">${a.q}</div>
+      <div class="a ${a.decline?'decline':''}">${a.a}
+        <div class="cite">📄 fuente: ${a.hit.join(', ')}</div>
+      </div>
+    </div>`;
+  };
+});
+</script>
+</body>
+</html>
