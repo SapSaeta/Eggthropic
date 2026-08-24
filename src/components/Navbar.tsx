@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/notes", label: "Notas" },
   { href: "/lab", label: "Laboratorio" },
   { href: "/sap", label: "SAP Lab" },
+  { href: "/artefactos", label: "Artefactos" },
   { href: "/about", label: "Sobre el lab" },
 ];
 
