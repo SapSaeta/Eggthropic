@@ -24,9 +24,11 @@ export interface LabStatusBoardProps {
   experiments: BoardExperiment[];
   buildVersion?: string;
   node?: string;
+  /** Versión compacta para incrustar en la home: sin sidebar ni barra de estado. */
+  compact?: boolean;
 }
 
-// ─── Static config ────────────────────────────────────────────────────────────
+// ─── Static config ─────────────────────────────────────────────────────────────────
 
 const CATEGORIES: BoardCategory[] = ["Claude Code", "Skills", "MCP", "UX-UI", "SAP"];
 
@@ -443,6 +445,7 @@ export default function LabStatusBoard({
   experiments,
   buildVersion = "v0.1.0-canary",
   node = "lab-east-1",
+  compact = false,
 }: LabStatusBoardProps) {
   const [activeFilter, setActiveFilter] = useState<BoardCategory | "ALL">("ALL");
 
@@ -453,7 +456,9 @@ export default function LabStatusBoard({
 
   return (
     <div
-      className="relative flex flex-col overflow-hidden font-mono rounded-2xl border border-white/10"
+      className={`relative flex flex-col overflow-hidden font-mono rounded-2xl border ${
+        compact ? "border-egg-400/25 glow-egg" : "border-white/10"
+      }`}
       style={{ backgroundColor: "#262019" }}
     >
       <GridBackground />
@@ -465,7 +470,7 @@ export default function LabStatusBoard({
       />
 
       <div className="relative flex min-h-0 flex-1 gap-4 overflow-hidden p-3 sm:p-4">
-        <Sidebar experiments={experiments} />
+        {!compact && <Sidebar experiments={experiments} />}
 
         <main className="flex flex-1 flex-col gap-3 overflow-y-auto">
           <div className="flex items-center justify-between px-1">
@@ -492,12 +497,14 @@ export default function LabStatusBoard({
         </main>
       </div>
 
-      <StatusBar
-        showing={filtered.length}
-        total={experiments.length}
-        buildVersion={buildVersion}
-        node={node}
-      />
+      {!compact && (
+        <StatusBar
+          showing={filtered.length}
+          total={experiments.length}
+          buildVersion={buildVersion}
+          node={node}
+        />
+      )}
     </div>
   );
 }
