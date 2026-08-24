@@ -5,7 +5,9 @@ import { ArrowLeft, CheckCircle2, XCircle, ArrowRight, FlaskConical } from "luci
 import { StatusBadge } from "@/components/StatusBadge";
 import { ToolBadge } from "@/components/ToolBadge";
 import { BreadcrumbListJsonLd, ExperimentJsonLd } from "@/components/JsonLd";
+import MCPExplainer from "@/components/MCPExplainer";
 import { experiments, getExperimentBySlug } from "@/lib/experiments";
+import { artefactos } from "@/lib/artifacts";
 import { formatDate } from "@/lib/utils";
 
 interface Props {
@@ -58,6 +60,9 @@ export default async function ExperimentPage({ params }: Props) {
   if (!exp) notFound();
 
   const pageUrl = `https://www.eggthropic.com/experiments/${slug}`;
+  const artefactosRelacionados = artefactos.filter(
+    (a) => a.relacionado?.href === `/experiments/${slug}`
+  );
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -119,6 +124,25 @@ export default async function ExperimentPage({ params }: Props) {
           ))}
         </div>
       </div>
+
+      {/* Artefacto(s) en vivo relacionados */}
+      {artefactosRelacionados.length > 0 && (
+        <div className="mb-10 flex flex-col gap-3">
+          {artefactosRelacionados.map((a) => (
+            <Link
+              key={a.slug}
+              href={`/artefactos/${a.slug}`}
+              className="glass glass-hover rounded-xl p-5 flex items-center gap-4 border border-egg-400/15 group"
+            >
+              <span className="font-mono text-[10px] tracking-widest text-egg-600 uppercase shrink-0">
+                Artefacto en vivo
+              </span>
+              <span className="text-sm text-ink flex-1">{a.titulo}</span>
+              <ArrowRight className="w-4 h-4 text-ink-faint group-hover:translate-x-1 group-hover:text-egg-600 transition-all shrink-0" />
+            </Link>
+          ))}
+        </div>
+      )}
 
       {/* Content sections */}
       <div className="space-y-10">
@@ -234,6 +258,53 @@ export default async function ExperimentPage({ params }: Props) {
           </Section>
         )}
       </div>
+
+      {/* Bonus interactivo: explicador de MCP */}
+      {exp.slug === "mcp-visual-explainer" && (
+        <div className="mt-10">
+          <h2 className="text-xs font-mono tracking-widest text-egg-600/70 uppercase mb-4 flex items-center gap-2">
+            <span className="w-4 h-px bg-egg-400/30" />
+            Bonus: cómo funciona MCP, en un diagrama
+          </h2>
+
+          {/* Escritorio: explicador interactivo completo */}
+          <div className="hidden md:block">
+            <MCPExplainer />
+          </div>
+
+          {/* Móvil: versión compacta vertical */}
+          <div className="md:hidden rounded-2xl border border-white/10 p-5" style={{ backgroundColor: "#262019" }}>
+            <p className="mb-4 font-mono text-[10px] tracking-widest text-stone-400">
+              MCP EN 30 SEGUNDOS
+            </p>
+            <div className="space-y-2">
+              {[
+                { n: "Host", d: "La app de IA que usas: Claude Desktop, Claude Code, tu agente…", c: "border-egg-400/30 text-egg-300" },
+                { n: "Cliente", d: "Vive dentro del host. Habla el protocolo y gestiona la conexión.", c: "border-cyan-400/30 text-cyan-300" },
+                { n: "Servidor", d: "Expone tus datos y herramientas: archivos, APIs, bases de datos, SAP…", c: "border-violet-400/30 text-violet-300" },
+              ].map((x, i, arr) => (
+                <div key={x.n}>
+                  <div className={`rounded-xl border bg-white/[0.03] p-4 ${x.c.split(" ")[0]}`}>
+                    <p className={`mb-1 font-mono text-xs font-bold tracking-widest ${x.c.split(" ")[1]}`}>
+                      {x.n.toUpperCase()}
+                    </p>
+                    <p className="text-sm leading-relaxed text-stone-300">{x.d}</p>
+                  </div>
+                  {i < arr.length - 1 && (
+                    <p className="py-1 text-center font-mono text-stone-500">↓ JSON-RPC 2.0</p>
+                  )}
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-xs leading-relaxed text-stone-400">
+              El servidor ofrece tres primitivas: <span className="text-stone-200">Tools</span> (funciones
+              ejecutables), <span className="text-stone-200">Resources</span> (datos) y{" "}
+              <span className="text-stone-200">Prompts</span> (plantillas). El explicador interactivo
+              completo está disponible en pantallas grandes.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Lab page link */}
       {exp.labPage && (
