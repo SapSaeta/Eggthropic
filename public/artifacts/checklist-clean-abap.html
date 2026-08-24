@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist Clean ABAP — Eggthropic SAP Lab</title>
+<style>
+  :root{--paper:#f4eee2;--card:#fcf8ef;--ink:#2c2620;--soft:#5c5347;--faint:#8a7e6d;--line:#e0d6c2;--teja:#c2542b;--joule:#0a6ed1;--ok:#0d7a4d;--warn:#9a6b00;--err:#b3261e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);padding:24px;min-height:100vh}
+  .wrap{max-width:860px;margin:0 auto}
+  .chip{display:inline-flex;gap:6px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;color:var(--joule);border:1px solid rgba(10,110,209,.3);background:rgba(10,110,209,.07);padding:4px 10px;border-radius:999px;margin-bottom:14px}
+  h1{font-size:26px;letter-spacing:-.02em;margin-bottom:6px}
+  h1 em{font-style:normal;color:var(--teja)}
+  .sub{color:var(--soft);font-size:14px;line-height:1.55;max-width:640px;margin-bottom:20px}
+  .score-bar{position:sticky;top:0;background:var(--card);border:1px solid rgba(44,38,32,.15);border-radius:12px;padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;z-index:5;box-shadow:0 2px 12px rgba(60,46,20,.06)}
+  .gauge{flex:1;min-width:180px}
+  .gauge .track{height:10px;background:var(--line);border-radius:999px;overflow:hidden}
+  .gauge .fill{height:100%;border-radius:999px;background:var(--err);width:0%;transition:width .3s,background .3s}
+  .gauge label{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.12em;color:var(--faint);display:block;margin-bottom:6px}
+  .pct{font-size:26px;font-weight:700;min-width:80px}
+  .verdict{font-size:13px;font-weight:600}
+  .btns{display:flex;gap:8px}
+  button{border:0;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer}
+  .primary{background:var(--teja);color:#fff}.primary:hover{background:#9e3f1d}
+  .ghost{background:transparent;color:var(--soft);border:1px solid var(--line)}.ghost:hover{color:var(--ink);background:#fffdf6}
+  .grupo{background:var(--card);border:1px solid rgba(44,38,32,.12);border-radius:12px;margin-bottom:14px;overflow:hidden}
+  .grupo h2{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.18em;padding:12px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+  .grupo h2 .cnt{color:var(--faint);font-size:10px}
+  .items{padding:6px 10px}
+  .item{display:flex;gap:12px;align-items:flex-start;padding:10px 8px;border-radius:8px;cursor:pointer}
+  .item:hover{background:#fffdf6}
+  .item input{margin-top:3px;width:16px;height:16px;accent-color:var(--teja);cursor:pointer;flex-shrink:0}
+  .item .tx{font-size:13.5px;line-height:1.5;color:var(--ink)}
+  .item .hint{font-size:11.5px;color:var(--faint);margin-top:2px;line-height:1.5}
+  .item.na .tx{text-decoration:line-through;color:var(--faint)}
+  .na-btn{margin-left:auto;flex-shrink:0;font-size:10px;font-family:ui-monospace,monospace;letter-spacing:.08em;color:var(--faint);border:1px solid var(--line);border-radius:5px;padding:2px 7px;background:transparent;cursor:pointer}
+  .na-btn:hover{color:var(--ink)}
+  .na-btn.on{background:var(--line);color:var(--ink)}
+  .foot{margin-top:24px;padding-top:14px;border-top:1px solid var(--line);font-size:11px;color:var(--faint);line-height:1.6}
+  #copied{display:none;color:var(--ok);font-size:12px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="chip">SAP × CLAUDE LAB · ARTEFACTO</div>
+  <h1>Checklist <em>Clean ABAP</em> para reports Z</h1>
+  <p class="sub">La checklist del caso 001 del laboratorio, convertida en herramienta. Marca lo que cumple el report que estás revisando; lo que no aplique, márcalo N/A. Al final: puntuación, veredicto y resumen en Markdown listo para pegar en tu revisión o en el ticket.</p>
+
+  <div class="score-bar">
+    <div class="gauge"><label>CUMPLIMIENTO (ítems aplicables)</label><div class="track"><div class="fill" id="fill"></div></div></div>
+    <div class="pct" id="pct">0%</div>
+    <div class="verdict" id="verdict">Sin evaluar</div>
+    <div class="btns">
+      <button class="primary" onclick="copiar()">Copiar resumen MD</button>
+      <button class="ghost" onclick="reset()">Reiniciar</button>
+    </div>
+    <span id="copied">✓ Copiado</span>
+  </div>
+
+  <div id="grupos"></div>
+
+  <p class="foot">Basada en la <a href="https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md" style="color:var(--joule)">guía Clean ABAP oficial de SAP</a> y en el caso 001 de <strong>Eggthropic · SAP × Claude Lab</strong>. Regla de oro del laboratorio: no refactorizar sin pruebas de regresión definidas, motivo de negocio y ventana adecuada (nunca antes de un cierre de nómina). Generado con Claude.</p>
+</div>
+
+<script>
+const GRUPOS=[
+ {n:"RENDIMIENTO Y BASE DE DATOS",items:[
+  ["Sin SELECT dentro de bucles (patrón N+1)","Sustituir por JOIN o FOR ALL ENTRIES con tabla no vacía"],
+  ["Todos los filtros posibles en el WHERE, no en ABAP","Cada registro descartado en ABAP viajó desde la BD para nada"],
+  ["Se seleccionan solo los campos necesarios (no SELECT *)","Menos transferencia y menos acoplamiento a la estructura"],
+  ["SELECT ... ENDSELECT sustituido por INTO TABLE","Un solo viaje a BD en lugar de uno por registro"]]},
+ {n:"ESTRUCTURA",items:[
+  ["Lógica separada de la presentación (ALV) y de la selección","Clase local o global; START-OF-SELECTION solo orquesta"],
+  ["Métodos cortos, una responsabilidad por método","Ideal: que se entienda sin scroll"],
+  ["La lógica se puede testear con ABAP Unit sin pantalla ni BD real","Si no se puede, la separación anterior no es real"],
+  ["Sin variables globales de trabajo (TABLES, cabeceras)","El estado global implícito es la fuente clásica de efectos colaterales"]]},
+ {n:"SINTAXIS MODERNA",items:[
+  ["Sin OCCURS, cabeceras, TYPE-POOLS, MOVE ni LIKE","Obsoletos; las cabeceras además confunden línea/tabla"],
+  ["Declaraciones inline donde mejoran la legibilidad","DATA(x) = ... junto a su primer uso"],
+  ["CL_SALV_TABLE (o ALV IDA) en vez de REUSE_ALV_*","Si el release lo permite; adiós fieldcat manual"]]},
+ {n:"NOMBRES Y EXPRESIVIDAD",items:[
+  ["Nombres que revelan intención (no itab, flag, v_aux)","Si necesitas comentario para explicar el nombre, es mal nombre"],
+  ["Constantes con nombre para números y literales mágicos","c_umbral_dias_flag en vez de un 30 suelto"],
+  ["abap_bool + xsdbool en vez de 'X'/space manuales","Intención booleana explícita"]]},
+ {n:"ROBUSTEZ",items:[
+  ["sy-subrc controlado tras cada acceso relevante","Y de forma coherente: no leer campos antes de comprobarlo"],
+  ["Excepciones basadas en clases, no códigos de retorno propios","RAISE EXCEPTION TYPE en vez de rc = 4"],
+  ["Mensajes con MESSAGE y elementos de texto, no WRITE ni literales","Traducibles y localizables en el sistema"]]},
+ {n:"ESPECÍFICO HCM",items:[
+  ["Lecturas de infotipos respetan delimitaciones (BEGDA/ENDDA) explícitamente","¿Qué pasa con registros partidos o múltiples vigencias?"],
+  ["Se considera SPRPS (bloqueo) y el estado del registro","Un registro bloqueado no debería contarse como activo"],
+  ["Autorizaciones (P_ORGIN / estructurales) contempladas o documentado que no aplican","El report que salta autorizaciones acaba en auditoría"],
+  ["MOLGA y agrupadores no hardcodeados sin constante documentada","El '01' mágico de hoy es el incidente de la filial de mañana"]]}
+];
+let estado=[];
+const cont=document.getElementById("grupos");
+GRUPOS.forEach((g,gi)=>{
+  estado.push(g.items.map(()=>({c:false,na:false})));
+  const div=document.createElement("div");div.className="grupo";
+  div.innerHTML=`<h2 onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">${g.n}<span class="cnt" id="cnt${gi}"></span></h2><div class="items" id="it${gi}"></div>`;
+  cont.appendChild(div);
+  g.items.forEach(([t,h],ii)=>{
+    const el=document.createElement("div");el.className="item";el.id=`i${gi}_${ii}`;
+    el.innerHTML=`<input type="checkbox" onclick="event.stopPropagation();tick(${gi},${ii},this.checked)"><div style="flex:1"><div class="tx">${t}</div><div class="hint">${h}</div></div><button class="na-btn" onclick="event.stopPropagation();na(${gi},${ii},this)">N/A</button>`;
+    el.onclick=e=>{const cb=el.querySelector("input");if(!estado[gi][ii].na){cb.checked=!cb.checked;tick(gi,ii,cb.checked);}};
+    document.getElementById(`it${gi}`).appendChild(el);
+  });
+});
+function tick(g,i,v){estado[g][i].c=v;calc();}
+function na(g,i,btn){const s=estado[g][i];s.na=!s.na;btn.classList.toggle("on",s.na);
+  const el=document.getElementById(`i${g}_${i}`);el.classList.toggle("na",s.na);
+  const cb=el.querySelector("input");cb.disabled=s.na;if(s.na){cb.checked=false;s.c=false;}calc();}
+function calc(){
+  let apl=0,ok=0;
+  estado.forEach((g,gi)=>{let ga=0,go=0;
+    g.forEach(s=>{if(!s.na){apl++;ga++;if(s.c){ok++;go++;}}});
+    document.getElementById(`cnt${gi}`).textContent=`${go}/${ga}`;});
+  const pct=apl?Math.round(ok/apl*100):0;
+  document.getElementById("pct").textContent=pct+"%";
+  const f=document.getElementById("fill");f.style.width=pct+"%";
+  f.style.background=pct>=80?"var(--ok)":pct>=50?"#c79b00":"var(--err)";
+  document.getElementById("verdict").textContent =
+    apl===0?"Sin evaluar":
+    pct>=80?"✓ Aceptable — revisar los pendientes":
+    pct>=50?"◐ Deuda técnica notable — priorizar rendimiento y estructura":
+    "✗ Refactor recomendado — pero solo con regresión definida";
+}
+function copiar(){
+  let md=`## Revisión Clean ABAP — ${new Date().toLocaleDateString("es-ES")}\n\n`;
+  let apl=0,ok=0;
+  GRUPOS.forEach((g,gi)=>{
+    md+=`### ${g.n}\n`;
+    g.items.forEach(([t],ii)=>{const s=estado[gi][ii];
+      if(s.na){md+=`- ~~${t}~~ _(N/A)_\n`;}
+      else{apl++;if(s.c)ok++;md+=`- [${s.c?"x":" "}] ${t}\n`;}});
+    md+="\n";});
+  const pct=apl?Math.round(ok/apl*100):0;
+  md+=`**Resultado: ${ok}/${apl} ítems aplicables (${pct}%)** — ${document.getElementById("verdict").textContent}\n\n_Checklist del caso 001 · Eggthropic SAP × Claude Lab · basada en Clean ABAP (SAP/styleguides)_\n`;
+  navigator.clipboard.writeText(md).then(()=>{const c=document.getElementById("copied");c.style.display="inline";setTimeout(()=>c.style.display="none",2000);});
+}
+function reset(){estado.forEach(g=>g.forEach(s=>{s.c=false;s.na=false;}));
+  document.querySelectorAll(".item input").forEach(cb=>{cb.checked=false;cb.disabled=false;});
+  document.querySelectorAll(".item").forEach(el=>el.classList.remove("na"));
+  document.querySelectorAll(".na-btn").forEach(b=>b.classList.remove("on"));calc();}
+calc();
+</script>
+</body>
+</html>
