@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomía de una Agent Skill — pr-describe | Eggthropic</title>
+<style>
+  :root{--paper:#f4eee2;--card:#fcf8ef;--ink:#2c2620;--soft:#5c5347;--faint:#8a7e6d;--line:#e0d6c2;--teja:#c2542b;--joule:#0a6ed1;--ok:#0d7a4d;--warn:#9a6b00;--err:#b3261e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);padding:24px;min-height:100vh}
+  .wrap{max-width:960px;margin:0 auto}
+  .chip{display:inline-flex;gap:6px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;color:var(--joule);border:1px solid rgba(10,110,209,.3);background:rgba(10,110,209,.07);padding:4px 10px;border-radius:999px;margin-bottom:14px}
+  h1{font-size:24px;letter-spacing:-.02em;margin-bottom:6px}
+  .sub{color:var(--soft);font-size:13.5px;line-height:1.55;max-width:680px;margin-bottom:18px}
+  .layout{display:grid;grid-template-columns:220px 1fr;gap:16px}
+  @media(max-width:760px){.layout{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid rgba(44,38,32,.12);border-radius:12px;overflow:hidden}
+  .panel h2{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.16em;padding:10px 14px;border-bottom:1px solid var(--line);color:var(--faint)}
+  .tree{padding:10px}
+  .node{display:flex;align-items:center;gap:7px;padding:7px 8px;border-radius:7px;cursor:pointer;font-family:ui-monospace,monospace;font-size:12px;color:var(--soft)}
+  .node:hover{background:#fffdf6}
+  .node.active{background:rgba(10,110,209,.1);color:var(--joule);font-weight:600}
+  .node.dir{color:var(--ink);font-weight:600}
+  .node .ind{width:14px}
+  .code{background:#1c1712;color:#e8dfce;font-family:ui-monospace,monospace;font-size:12px;line-height:1.6;padding:16px 18px;white-space:pre-wrap;min-height:260px;max-height:400px;overflow:auto}
+  .code .k{color:#ffe04d}
+  .code .s{color:#9cd67c}
+  .code .c{color:#8a7e6d}
+  .tabbar{display:flex;border-bottom:1px solid var(--line)}
+  .tabbar div{padding:8px 14px;font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;color:var(--faint)}
+  .demo{padding:16px}
+  .demo textarea{width:100%;min-height:110px;font-family:ui-monospace,monospace;font-size:11.5px;background:#fffdf6;border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--ink);resize:vertical}
+  .demo button{margin-top:10px;border:0;border-radius:8px;background:var(--teja);color:#fff;font-size:13px;font-weight:600;padding:9px 18px;cursor:pointer}
+  .demo button:hover{background:#9e3f1d}
+  .out{margin-top:14px;background:#fffdf6;border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:12.5px;line-height:1.6;display:none}
+  .out h3{font-size:13px;margin-bottom:6px}
+  .out .badge{display:inline-block;font-family:ui-monospace,monospace;font-size:9.5px;background:rgba(13,122,77,.12);color:var(--ok);border:1px solid rgba(13,122,77,.3);border-radius:999px;padding:2px 8px;margin-bottom:8px}
+  .out ul{margin:6px 0 0 18px}
+  footer{margin-top:18px;font-size:11.5px;color:var(--faint);line-height:1.6}
+  footer a{color:var(--joule)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="chip">● agent skill · .claude/skills/pr-describe/</div>
+  <h1>Anatomía de una Agent Skill a medida</h1>
+  <p class="sub">Explora los tres archivos que forman la skill <code>pr-describe</code> y luego pruébala: pega (o usa el diff de ejemplo) y genera la descripción de PR estructurada tal y como la produce la skill.</p>
+
+  <div class="layout">
+    <div class="panel">
+      <h2>ESTRUCTURA</h2>
+      <div class="tree" id="tree"></div>
+    </div>
+    <div class="panel">
+      <div class="tabbar"><div id="fname">SKILL.md</div></div>
+      <div class="code" id="codeview"></div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:16px">
+    <h2>PROBAR LA SKILL · git diff --staged → descripción de PR</h2>
+    <div class="demo">
+      <textarea id="diffInput">diff --git a/src/lib/board.ts b/src/lib/board.ts
++export function toBoardExperiments(exps: Experiment[]): BoardExperiment[] {
++  return exps.map((e) => ({ id: e.slug, title: e.title, status: e.status }));
++}
+diff --git a/src/app/experiments/page.tsx b/src/app/experiments/page.tsx
+-import { experiments } from "@/lib/experiments";
+-const board = experiments.map((e) => ({ id: e.slug, ... }));
++import { toBoardExperiments } from "@/lib/board";
++const board = toBoardExperiments(experiments);</textarea>
+      <br>
+      <button id="genBtn">Generar descripción de PR</button>
+      <div class="out" id="out"></div>
+    </div>
+  </div>
+
+  <footer>
+    Contenido y salida ilustrativos, generados en el navegador para reproducir el comportamiento descrito en el caso — no invocan la API de Claude en vivo. Ver <a href="/experiments/first-custom-agent-skill">caso completo →</a>
+  </footer>
+</div>
+<script>
+const files = {
+  "SKILL.md": `<span class="c">---</span>
+<span class="k">name</span>: pr-describe
+<span class="k">description</span>: <span class="s">"Genera descripciones de PR estructuradas a partir de git diff --staged, siguiendo conventional commits"</span>
+<span class="c">---</span>
+
+<span class="k">## Cuándo usar</span>
+Cuando el usuario pida describir, resumir o documentar
+un conjunto de cambios staged antes de abrir un PR.
+
+<span class="k">## Proceso</span>
+1. Ejecuta <span class="s">get-diff.sh</span> para obtener el diff staged
+2. Genera: título (conventional commits), Summary
+   (máx 3 bullets), Test Plan (checklist numerado),
+   Breaking Changes (o "None")
+3. Sé conciso y técnico — sin relleno
+
+<span class="k">## Restricciones</span>
+- No inventes cambios que no estén en el diff
+- Si el diff supera ~500 líneas, avisa que el resumen
+  puede perder precisión`,
+  "get-diff.sh": `<span class="c">#!/bin/bash</span>
+<span class="c"># Prepara y canaliza el diff staged para la skill</span>
+git diff --staged --no-color \\
+  | head -c 20000`,
+  "example-output.md": `<span class="k">feat:</span> extract board mapping into shared lib
+
+<span class="k">## Summary</span>
+- Añade <span class="s">toBoardExperiments()</span> en lib/board.ts
+- experiments/page.tsx ahora consume la función compartida
+- Elimina la lógica de mapeo duplicada en la página
+
+<span class="k">## Test Plan</span>
+1. \`npm run build\` sin errores de tipos
+2. Verificar que /experiments?view=board sigue mostrando
+   los mismos datos que antes del refactor
+
+<span class="k">## Breaking Changes</span>
+None`
+};
+
+const tree = document.getElementById('tree');
+const codeview = document.getElementById('codeview');
+const fname = document.getElementById('fname');
+
+function buildTree(){
+  const dirs = [
+    {label:'.claude/', dir:true, ind:0},
+    {label:'skills/', dir:true, ind:1},
+    {label:'pr-describe/', dir:true, ind:2},
+    {label:'SKILL.md', file:'SKILL.md', ind:3},
+    {label:'get-diff.sh', file:'get-diff.sh', ind:3},
+    {label:'example-output.md', file:'example-output.md', ind:3},
+  ];
+  dirs.forEach(d=>{
+    const el = document.createElement('div');
+    el.className = 'node' + (d.dir?' dir':'') + (d.file==='SKILL.md'?' active':'');
+    el.innerHTML = `<span class="ind" style="width:${d.ind*12}px"></span>${d.dir? '📁':'📄'} ${d.label}`;
+    if(d.file){
+      el.onclick = ()=>{
+        document.querySelectorAll('.node').forEach(n=>n.classList.remove('active'));
+        el.classList.add('active');
+        fname.textContent = d.file;
+        codeview.innerHTML = files[d.file];
+      };
+    }
+    tree.appendChild(el);
+  });
+  codeview.innerHTML = files['SKILL.md'];
+}
+buildTree();
+
+document.getElementById('genBtn').onclick = ()=>{
+  const out = document.getElementById('out');
+  out.style.display = 'block';
+  out.innerHTML = `<div class="badge">✓ generado por la skill pr-describe</div>
+  <h3>feat: extract board mapping into shared lib</h3>
+  <b>Summary</b>
+  <ul>
+    <li>Añade <code>toBoardExperiments()</code> en <code>lib/board.ts</code></li>
+    <li><code>experiments/page.tsx</code> consume ahora la función compartida</li>
+    <li>Elimina la lógica de mapeo duplicada en la página</li>
+  </ul>
+  <b style="display:block;margin-top:8px">Test Plan</b>
+  <ul><li>npm run build sin errores de tipos</li><li>/experiments?view=board muestra los mismos datos</li></ul>
+  <b style="display:block;margin-top:8px">Breaking Changes</b>
+  <p>None</p>`;
+};
+</script>
+</body>
+</html>
