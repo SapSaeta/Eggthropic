@@ -113,6 +113,106 @@ export const artefactos: Artefacto[] = [
     relacionado: { label: "Caso 002 — Explicador de ABAP legacy", href: "/experiments/sap-abap-legacy-explainer" },
     altura: 950,
   },
+  {
+    slug: "claude-code-landing-builder",
+    titulo: "Sesión Claude Code: de un prompt a una landing completa",
+    descripcion:
+      "Recorre turno a turno la sesión que generó la landing de \"Stackr\" con Claude Code: 23 turnos, 14 archivos, una vista previa que se va montando sección a sección según el turno que selecciones.",
+    audiencia: ["todos"],
+    fecha: "2026-08-24",
+    herramientas: ["Claude Code", "HTML/JS autocontenido"],
+    prompt:
+      "Reconstruye como línea de tiempo interactiva la sesión de Claude Code del caso 'landing page builder': lista de turnos clave a la izquierda (scaffold, hero, features, pricing, instalación de Framer Motion, animaciones, revisión responsive) y a la derecha una vista previa tipo navegador que se va completando según el turno seleccionado.",
+    comoSeHizo:
+      "Los turnos y hallazgos (14 archivos, 23 turnos, ~4 minutos de generación activa, mejoras de accesibilidad espontáneas) son los descritos en el caso. La vista previa es una reconstrucción ilustrativa de las secciones reales que produjo la sesión, no una grabación literal.",
+    limitaciones: [
+      "No es una grabación real turno a turno: es una reconstrucción basada en las notas de la sesión",
+      "El contenido y código de \"Stackr\" son ficticios",
+      "No refleja tiempos reales de generación por turno",
+    ],
+    relacionado: { label: "Caso — Una landing page completa con Claude Code", href: "/experiments/claude-code-landing-page-builder" },
+    altura: 760,
+  },
+  {
+    slug: "agent-skill-anatomy",
+    titulo: "Anatomía de una Agent Skill — pr-describe",
+    descripcion:
+      "Explora los tres archivos de la skill pr-describe (SKILL.md, get-diff.sh, ejemplo de salida) y pruébala: genera una descripción de PR estructurada a partir de un git diff de ejemplo.",
+    audiencia: ["todos"],
+    fecha: "2026-08-24",
+    herramientas: ["Claude Code", "Agent Skills", "HTML/JS autocontenido"],
+    prompt:
+      "Convierte la skill pr-describe del caso 'first custom agent skill' en un explorador interactivo: árbol de archivos de .claude/skills/pr-describe/ con SKILL.md, get-diff.sh y un ejemplo de salida, más una demo que a partir de un git diff de ejemplo genera una descripción de PR con título conventional commits, Summary, Test Plan y Breaking Changes.",
+    comoSeHizo:
+      "El contenido de SKILL.md, el script auxiliar y el formato de salida reproducen los descritos en el caso (frontmatter YAML, regla de conventional commits, límite de 3 bullets en el Summary). La demo de generación está simulada en el navegador con una salida fija representativa del comportamiento medido (9/10 títulos correctos en conventional commits).",
+    limitaciones: [
+      "La demo 'generar descripción' no llama a la API de Claude: la salida es fija e ilustrativa",
+      "No incluye el guard MAX_DIFF_LINES pendiente identificado como mejora en el caso",
+      "El árbol de archivos es una recreación, no el repositorio real",
+    ],
+    relacionado: { label: "Caso — Mi primera Agent Skill a medida", href: "/experiments/first-custom-agent-skill" },
+    altura: 760,
+  },
+  {
+    slug: "ai-ux-playground",
+    titulo: "Playground de patrones UI para IA",
+    descripcion:
+      "Cuatro patrones de interfaz para IA más allá del chat, simulados en el navegador: streaming con velocidad ajustable, mapa de confianza, traza de tool calls expandible y fases de pensamiento por timing.",
+    audiencia: ["todos"],
+    fecha: "2026-08-24",
+    herramientas: ["Claude API", "React", "HTML/JS autocontenido"],
+    prompt:
+      "Construye un playground con pestañas para los 4 patrones del caso 'ai ux interface playground': máquina de escribir con velocidad ajustable, mapa de calor de confianza por token (marcado como simulado), traza de tool calls con tarjetas expandibles, e indicador de fases leyendo/razonando/escribiendo con un botón de reproducción.",
+    comoSeHizo:
+      "Los cuatro patrones y sus hallazgos (la traza de tool calls como el más valioso para depurar, la latencia percibida cayendo con el primer token a los 300ms) reproducen los del caso original, construido contra la Messages API con streaming real.",
+    limitaciones: [
+      "El mapa de confianza no usa logprobs reales: la API de Anthropic no los expone públicamente, tal y como advierte el caso",
+      "El streaming y las fases de pensamiento están simulados con temporizadores fijos, no con una conexión SSE real",
+      "Los datos de las tool calls son de ejemplo, no de una sesión real",
+    ],
+    relacionado: { label: "Caso — Playground de interfaces para IA", href: "/experiments/ai-ux-interface-playground" },
+    altura: 760,
+  },
+  {
+    slug: "design-to-code-handoff",
+    titulo: "Claude Design → Claude Code: el handoff en vivo",
+    descripcion:
+      "Mueve los mandos de ajuste (glow, elevación, opacidad de badges) sobre el prototipo de ExperimentCard y observa cómo el código React/Tailwind generado cambia con ellos — el ciclo diseño-a-código del caso.",
+    audiencia: ["todos"],
+    fecha: "2026-08-24",
+    herramientas: ["Claude Design", "Claude Code", "HTML/JS autocontenido"],
+    prompt:
+      "Recrea el flujo de handoff del caso 'Claude Design: del prototipo al código': un prototipo de ExperimentCard con mandos de ajuste (intensidad del glow, elevación al hover, opacidad de badges) que actualizan en vivo tanto la vista previa como un fragmento de código Tailwind representativo del componente real.",
+    comoSeHizo:
+      "Los tres mandos de ajuste y el flujo brief → Claude Design → bundle de handoff → Claude Code son los descritos en el caso, donde el traspaso completo tomó unos 18 minutos y el componente resultante necesitó solo ajustes de espaciado.",
+    limitaciones: [
+      "El código mostrado es representativo del componente real, no una captura literal de la sesión de Claude Code",
+      "No reproduce el editor real de Claude Design ni sus comentarios inline",
+      "Los valores de los mandos son ilustrativos, no los exactos usados en la sesión original",
+    ],
+    relacionado: { label: "Caso — Claude Design: del prototipo al código", href: "/experiments/claude-design-prototype-to-code" },
+    altura: 720,
+  },
+  {
+    slug: "sap-hr-assistant-demo",
+    titulo: "Asistente funcional SAP HR — demo de preguntas",
+    descripcion:
+      "Tres preguntas de ejemplo al asistente funcional de SAP HR: una que la base de conocimiento cubre bien, y dos donde se niega correctamente a inventar porque dependen de configuración del cliente.",
+    audiencia: ["funcional-hcm", "tecnico-funcional"],
+    fecha: "2026-08-24",
+    herramientas: ["Claude", "Notion", "HTML/JS autocontenido"],
+    prompt:
+      "Crea una demo de preguntas y respuestas para el asistente funcional de SAP HR del caso: al elegir una pregunta de ejemplo, resalta la página de la base de conocimiento de Notion consultada y muestra la respuesta — incluida la negativa explícita a inventar cuando la pregunta depende de configuración del cliente (p. ej. la feature LGMST) o cruza varios infotipos sin cobertura suficiente.",
+    comoSeHizo:
+      "Las tres preguntas y sus respuestas reproducen el comportamiento medido en el caso: 0 alucinaciones en 40 consultas de prueba sobre definiciones de campos, y negativas correctas y explícitas ante dependencias de configuración del cliente o interacciones multi-infotipo sin cobertura.",
+    limitaciones: [
+      "No hay conexión real a Notion ni a la API de Claude: las tres respuestas están fijadas de antemano",
+      "La base de conocimiento representada es un subconjunto (infotipos 0001-0008, PA40) del caso original",
+      "No demuestra la estrategia de retrieval pendiente identificada como siguiente paso en el caso",
+    ],
+    relacionado: { label: "Caso — Un asistente funcional con IA para SAP HR legacy", href: "/experiments/sap-hr-functional-ai-assistant" },
+    altura: 760,
+  },
 ];
 
 export function getArtefactoBySlug(slug: string): Artefacto | undefined {
