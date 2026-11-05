@@ -148,3 +148,10 @@ main {
 ::-webkit-scrollbar-thumb:hover {
   background: #c2b6a0;
 }
+
+/* Impresión (CV desde Mi ruta): solo el contenido */
+@media print {
+  nav, footer, .no-print { display: none !important; }
+  body { background: #fff; }
+  main { animation: none; }
+}
