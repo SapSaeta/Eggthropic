@@ -1,9 +1,10 @@
 "use client";
 
 import type { ReactNode } from "react";
-import type { VisualKey } from "@/lib/lecciones";
+import type { VisualKey, VisualSpec } from "@/lib/lecciones";
 import { BucleAgente, FlujoAgente, MapaProtocolos, PilaCapas } from "./VisualesAgentes";
 import { CleanCore, ConstructorOData, GrafoEC } from "./VisualesDatos";
+import { VisualGenerico } from "./VisualesGenericos";
 import {
   Anonimizador,
   ConstructorPitch,
@@ -13,7 +14,8 @@ import {
   PiramideRiesgo,
 } from "./VisualesGobierno";
 
-export function Visual({ k }: { k: VisualKey }): ReactNode {
+export function Visual({ k }: { k: VisualKey | VisualSpec }): ReactNode {
+  if (typeof k !== "string") return <VisualGenerico spec={k} />;
   switch (k) {
     case "bucle":
       return <BucleAgente />;

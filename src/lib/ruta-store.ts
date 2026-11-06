@@ -2,16 +2,23 @@
 
 import { useSyncExternalStore } from "react";
 
-// Estado personal de la ruta: vive solo en este navegador (localStorage).
-// Una lección hecha = id → fecha local (AAAA-MM-DD). El quiz guarda la opción elegida.
+// Estado personal: vive solo en este navegador (localStorage).
+//   hechas: id de lección → fecha local (AAAA-MM-DD)
+//   quiz:   "id#n" → opción elegida
+//   pasos:  id de paso → true/false (marca local sobre lo publicado)
+//   base / nombre / contacto: datos para tu título y tu CV
 
 export interface RutaState {
   hechas: Record<string, string>;
   quiz: Record<string, number>;
+  pasos: Record<string, boolean>;
+  base: string;
+  nombre: string;
+  contacto: string;
 }
 
 const KEY = "eggthropic-ruta-v1";
-const VACIO: RutaState = { hechas: {}, quiz: {} };
+const VACIO: RutaState = { hechas: {}, quiz: {}, pasos: {}, base: "hcm", nombre: "", contacto: "" };
 
 let actual: RutaState = VACIO;
 let cargado = false;
@@ -23,10 +30,20 @@ function cargar() {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const p = JSON.parse(raw);
-      actual = { hechas: p.hechas ?? {}, quiz: p.quiz ?? {} };
+      // Migración: las respuestas antiguas eran por lección (sin «#n»).
+      const quiz: Record<string, number> = {};
+      for (const [k, v] of Object.entries<number>(p.quiz ?? {})) quiz[k.includes("#") ? k : `${k}#0`] = v;
+      actual = {
+        hechas: p.hechas ?? {},
+        quiz,
+        pasos: p.pasos ?? {},
+        base: p.base ?? "hcm",
+        nombre: p.nombre ?? "",
+        contacto: p.contacto ?? "",
+      };
     }
   } catch {
-    // sin almacenamiento: la página funciona igual, solo no recuerda
+    // sin almacenamiento: funciona igual, solo no recuerda
   }
 }
 
@@ -68,12 +85,25 @@ export function useRuta(): RutaState {
   return useSyncExternalStore(suscribir, snapshot, () => VACIO);
 }
 
-export function responderQuiz(id: string, opcion: number) {
-  actualizar((s) => (id in s.quiz ? s : { ...s, quiz: { ...s.quiz, [id]: opcion } }));
+export function responderQuiz(id: string, n: number, opcion: number) {
+  const k = `${id}#${n}`;
+  actualizar((s) => (k in s.quiz ? s : { ...s, quiz: { ...s.quiz, [k]: opcion } }));
 }
 
 export function marcarHecha(id: string, fecha: string) {
   actualizar((s) => (id in s.hechas ? s : { ...s, hechas: { ...s.hechas, [id]: fecha } }));
+}
+
+export function marcarPaso(id: string, valor: boolean) {
+  actualizar((s) => ({ ...s, pasos: { ...s.pasos, [id]: valor } }));
+}
+
+export function fijarBase(base: string) {
+  actualizar((s) => ({ ...s, base }));
+}
+
+export function fijarPerfil(campo: "nombre" | "contacto", valor: string) {
+  actualizar((s) => ({ ...s, [campo]: valor }));
 }
 
 export function reiniciar() {

@@ -1,24 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { BookOpen, Check, Flame, IdCard, Radar as RadarIcon, Sun } from "lucide-react";
-import { EJES, lecciones, lecciones_por_id } from "@/lib/lecciones";
+import { BadgeCheck, Egg, Flame, GraduationCap, Radar as RadarIcon, Target } from "lucide-react";
+import { MODULOS, lecciones, lecciones_por_id, nivelConocimiento } from "@/lib/lecciones";
+import { estadosPasos, todosLosPasos } from "@/lib/ruta";
 import { calcularRacha, parseFecha, reiniciar, useHoy, useRuta } from "@/lib/ruta-store";
-import { progreso } from "@/lib/ruta";
 import { Heatmap } from "./Heatmap";
 import { LeccionCard } from "./LeccionCard";
 import { PerfilCv } from "./PerfilCv";
+import { Programa } from "./Programa";
 import { Radar } from "./Radar";
 import { RutaFases } from "./RutaFases";
 import { C } from "./ui";
 
-type Tab = "hoy" | "biblioteca" | "progreso" | "cv";
+type Tab = "hoy" | "programa" | "progreso" | "cv";
 
-const TABS: { id: Tab; label: string; icon: typeof Sun }[] = [
-  { id: "hoy", label: "Hoy", icon: Sun },
-  { id: "biblioteca", label: "Lecciones", icon: BookOpen },
+const TABS: { id: Tab; label: string; icon: typeof Target }[] = [
+  { id: "hoy", label: "Hoy", icon: Target },
+  { id: "programa", label: "Programa", icon: GraduationCap },
   { id: "progreso", label: "Progreso", icon: RadarIcon },
-  { id: "cv", label: "CV", icon: IdCard },
+  { id: "cv", label: "CV", icon: BadgeCheck },
 ];
 
 const INICIO = "2026-11-06";
@@ -67,12 +68,16 @@ export function RutaApp() {
 
   const hechas = estado.hechas;
   const nHechas = lecciones.filter((l) => l.id in hechas).length;
+  const pct = (nHechas / lecciones.length) * 100;
   const racha = calcularRacha(hechas, hoy);
-  const hechaHoy = Object.values(hechas).includes(hoy);
   const dia = Math.max(1, Math.round((parseFecha(hoy).getTime() - parseFecha(INICIO).getTime()) / 86_400_000) + 1);
 
   const sugerida = lecciones.find((l) => !(l.id in hechas)) ?? lecciones[(dia - 1) % lecciones.length];
   const leccion = abierta ? lecciones_por_id[abierta] : sugerida;
+  const modulo = MODULOS.find((m) => m.id === leccion.modulo)!;
+
+  const estadosRuta = estadosPasos(estado.pasos);
+  const hitos = todosLosPasos.filter((p) => estadosRuta[p.id] === "hecho").length;
 
   const otra = () => {
     const sig = lecciones.find((l) => !(l.id in hechas) && l.id !== leccion.id);
@@ -82,107 +87,77 @@ export function RutaApp() {
 
   return (
     <div className="max-w-xl mx-auto px-4 pt-5 pb-[calc(6rem+env(safe-area-inset-bottom))]">
-      {/* cabecera fija de contexto */}
       <header className="no-print flex items-center gap-3 mb-5">
-        <span className="text-4xl leading-none" aria-hidden>
-          {hechaHoy ? "🐣" : "🥚"}
+        <span className="h-11 w-11 shrink-0 rounded-xl bg-ink flex items-center justify-center">
+          <Egg className="w-6 h-6 text-[#ffd21a]" />
         </span>
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <p className="font-mono text-[10px] tracking-[0.2em] text-teja">MI RUTA · DÍA {dia}</p>
-          <p className="text-base font-bold text-ink leading-tight">
-            {hechaHoy ? "Hoy ya cumpliste" : "Una lección, un minuto"}
-          </p>
+          <p className="text-base font-bold text-ink leading-tight truncate">Business AI · HCM</p>
         </div>
-        <div className="flex items-center gap-1 rounded-full bg-white border border-paper-line px-3 py-1.5" title="Días seguidos">
+        <div className="flex items-center gap-1 rounded-full bg-white border border-paper-line px-3 py-1.5" title="Días seguidos con una lección completada">
           <Flame className="w-4 h-4" style={{ color: racha > 0 ? C.teja : C.line }} fill={racha > 0 ? C.teja : "none"} />
           <span className="font-bold tabular-nums text-ink">{racha}</span>
         </div>
         <Anillo hechas={nHechas} total={lecciones.length} />
       </header>
 
-      {/* HOY */}
       {tab === "hoy" && (
         <div>
           {abierta && abierta !== sugerida.id && (
             <button onClick={() => setAbierta(null)} className="mb-3 min-h-10 text-sm font-semibold text-teja">
-              ← Volver a la de hoy
+              ← Volver a la siguiente del programa
             </button>
           )}
-          <p className="font-mono text-[11px] tracking-[0.2em] text-ink-faint mb-3">
-            LECCIÓN {leccion.n} DE {lecciones.length}
-          </p>
-          <LeccionCard
-            key={leccion.id}
-            leccion={leccion}
-            estado={estado}
-            hoy={hoy}
-            onHecha={() => setAbierta(leccion.id)}
-            onSiguiente={otra}
-          />
+          <div className="mb-4 flex items-center gap-3 rounded-xl border border-paper-line bg-white px-3 py-2.5">
+            <span className="h-8 w-8 rounded-lg text-white text-sm font-bold flex items-center justify-center" style={{ background: modulo.color }}>
+              {MODULOS.indexOf(modulo) + 1}
+            </span>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-ink truncate">{modulo.nombre}</p>
+              <p className="font-mono text-[10px] tracking-widest text-ink-faint">
+                LECCIÓN {leccion.n} DE {lecciones.length}
+              </p>
+            </div>
+          </div>
+          <LeccionCard key={leccion.id} leccion={leccion} estado={estado} hoy={hoy} onHecha={() => setAbierta(leccion.id)} onSiguiente={otra} />
         </div>
       )}
 
-      {/* LECCIONES */}
-      {tab === "biblioteca" && (
-        <section>
-          <h2 className="text-2xl font-bold text-ink">Todas las lecciones</h2>
-          <p className="text-ink-soft mt-1 mb-4">Toca una para abrirla. Sin orden obligatorio.</p>
-          <ul className="space-y-2">
-            {lecciones.map((l) => {
-              const hecha = l.id in hechas;
-              const eje = EJES[l.eje];
-              return (
-                <li key={l.id}>
-                  <button
-                    onClick={() => {
-                      setAbierta(l.id);
-                      irA("hoy");
-                    }}
-                    className="w-full min-h-16 rounded-2xl glass glass-hover px-4 py-3 flex items-center gap-3 text-left"
-                  >
-                    <span
-                      className="h-9 w-9 shrink-0 rounded-full flex items-center justify-center text-sm font-bold"
-                      style={hecha ? { background: C.green, color: "#fff" } : { background: `${eje.color}1a`, color: eje.color }}
-                    >
-                      {hecha ? <Check className="w-4 h-4" strokeWidth={3} /> : l.n}
-                    </span>
-                    <span className="flex-1">
-                      <span className="block font-semibold text-ink leading-snug">{l.titulo}</span>
-                      <span className="block font-mono text-[10px] tracking-widest mt-0.5" style={{ color: eje.color }}>
-                        {eje.nombre.toUpperCase()} · {l.minutos} MIN
-                      </span>
-                    </span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
+      {tab === "programa" && (
+        <Programa
+          estado={estado}
+          actualId={leccion.id}
+          onAbrir={(id) => {
+            setAbierta(id);
+            irA("hoy");
+          }}
+        />
       )}
 
-      {/* PROGRESO */}
       {tab === "progreso" && (
         <section className="space-y-5">
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 gap-2">
             {[
               { v: racha, l: racha === 1 ? "día seguido" : "días seguidos", c: C.teja },
-              { v: `${nHechas}/${lecciones.length}`, l: "lecciones", c: C.teal },
-              { v: `${progreso.hechos}/${progreso.total}`, l: "pasos de la ruta", c: C.joule },
+              { v: `${nHechas}/${lecciones.length}`, l: "lecciones completadas", c: C.teal },
+              { v: nivelConocimiento(pct), l: "nivel de conocimiento", c: C.violet },
+              { v: `${hitos}/${todosLosPasos.length}`, l: "hitos de la ruta", c: C.joule },
             ].map((s) => (
-              <div key={s.l} className="glass rounded-2xl px-3 py-3 text-center">
-                <p className="text-2xl font-bold tabular-nums" style={{ color: s.c }}>
+              <div key={s.l} className="glass rounded-2xl px-4 py-3">
+                <p className="text-2xl font-bold tabular-nums leading-tight" style={{ color: s.c }}>
                   {s.v}
                 </p>
-                <p className="text-[11px] text-ink-faint leading-tight">{s.l}</p>
+                <p className="text-xs text-ink-faint leading-tight mt-0.5">{s.l}</p>
               </div>
             ))}
           </div>
           <Radar hechas={hechas} />
           <Heatmap hechas={hechas} hoy={hoy} />
-          <RutaFases />
+          <RutaFases local={estado.pasos} />
           <button
             onClick={() => {
-              if (window.confirm("¿Borrar el progreso guardado en este móvil?")) reiniciar();
+              if (window.confirm("¿Borrar el progreso guardado en este dispositivo?")) reiniciar();
             }}
             className="block mx-auto min-h-10 text-xs text-ink-faint underline underline-offset-2"
           >
@@ -191,10 +166,8 @@ export function RutaApp() {
         </section>
       )}
 
-      {/* CV */}
-      {tab === "cv" && <PerfilCv />}
+      {tab === "cv" && <PerfilCv estado={estado} />}
 
-      {/* barra inferior */}
       <nav
         aria-label="Secciones de Mi ruta"
         className="no-print fixed bottom-0 inset-x-0 z-40 border-t border-white/10 bg-[#262019]/95 backdrop-blur-md pb-[env(safe-area-inset-bottom)]"
